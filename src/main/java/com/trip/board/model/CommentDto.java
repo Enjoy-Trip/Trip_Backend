@@ -1,4 +1,4 @@
-package com.trip.comment.model;
+package com.trip.board.model;
 
 import com.trip.user.model.UserDto;
 

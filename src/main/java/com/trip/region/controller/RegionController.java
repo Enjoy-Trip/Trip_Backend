@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trip.region.model.RegionDto;
+import com.trip.region.model.SidoDto;
 import com.trip.region.service.RegionService;
 import com.trip.util.ExceptionHandler;
 
@@ -23,19 +23,19 @@ public class RegionController {
 		this.regionService = regionService;
 	}
 
-	@GetMapping(value = "/sidolist")
+	@GetMapping(value = "/list")
 	public ResponseEntity<?> sidoList() {
 		try {
-			return new ResponseEntity<List<RegionDto>>(regionService.sidoList(), HttpStatus.OK);
+			return new ResponseEntity<List<SidoDto>>(regionService.sidoList(), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}
 	}
 
-	@GetMapping(value = "/gugunlist/{sidoCode}")
+	@GetMapping(value = "/detail/{sidoCode}")
 	public ResponseEntity<?> gugunList(@PathVariable("sidoCode") int sidoCode) {
 		try {
-			return new ResponseEntity<List<RegionDto>>(regionService.gugunList(sidoCode), HttpStatus.OK);
+			return new ResponseEntity<List<SidoDto>>(regionService.sidoDetail(sidoCode), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}

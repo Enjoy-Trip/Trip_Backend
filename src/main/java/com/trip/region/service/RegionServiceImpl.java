@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.trip.region.mapper.RegionMapper;
-import com.trip.region.model.RegionDto;
+import com.trip.region.model.SidoDto;
 
 @Service
 public class RegionServiceImpl implements RegionService {
@@ -17,12 +17,12 @@ public class RegionServiceImpl implements RegionService {
 	}
 
 	@Override
-	public List<RegionDto> sidoList() {
+	public List<SidoDto> sidoList() {
 		return regionMapper.sidoList();
 	}
 
 	@Override
-	public List<RegionDto> gugunList(int sidoCode) {
-		return regionMapper.gugunList(sidoCode);
+	public List<SidoDto> sidoDetail(int sidoCode) {
+		return regionMapper.sidoDetail(sidoCode);
 	}
 }

@@ -2,7 +2,6 @@ package com.trip.board.model;
 
 import java.util.List;
 
-import com.trip.comment.model.CommentDto;
 import com.trip.user.model.UserDto;
 
 public class BoardDto {

@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.trip.region.model.RegionDto;
+import com.trip.region.model.SidoDto;
 
 @Mapper
 public interface RegionMapper {
-	List<RegionDto> sidoList();
-	List<RegionDto> gugunList(int sidoCode);
+	List<SidoDto> sidoList();
+	List<SidoDto> sidoDetail(int sidoCode);
 }
