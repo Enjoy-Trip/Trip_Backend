@@ -31,6 +31,16 @@ public class UserController {
 		}
 	}
 	
+	@PostMapping(value = "/signup")
+	public ResponseEntity<?> signup(@RequestBody UserDto user){
+		try {
+			return new ResponseEntity<Integer>(userService.signup(user), HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

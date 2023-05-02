@@ -9,4 +9,5 @@ import com.trip.user.model.UserDto;
 @Mapper
 public interface UserMapper {
 	UserDto login(UserDto user) throws SQLException;
+	int signup(UserDto user) throws SQLException;
 }

@@ -25,4 +25,9 @@
 		from user
 		where id = #{userId} and password = #{userPassword}
 	</select>
+	
+	<insert id="signup" parameterType="userDto">
+		insert into user (id, password, name, profile)
+		values (#{userId}, #{userPassword}, #{userName}, #{userProfile})
+	</insert>
 </mapper>
