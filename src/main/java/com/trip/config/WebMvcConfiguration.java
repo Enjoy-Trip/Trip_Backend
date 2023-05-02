@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@MapperScan(basePackages = {"com.trip.*.mapper"})
+@MapperScan(basePackages = {"com.trip.**.mapper"})
 public class WebMvcConfiguration implements WebMvcConfigurer {
 	
 	@Override
