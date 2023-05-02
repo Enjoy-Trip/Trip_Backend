@@ -12,12 +12,6 @@
 		<result column="profile" property="userProfile" />
 	</resultMap>
 
-	<!-- ADMIN -->
-	<!-- <resultMap type="memberDto" id="memberAll" extends="member"> <result 
-		column="user_password" property="userPwd"/> <result column="email_id" property="emailId"/> 
-		<result column="email_domain" property="emailDomain"/> <result column="join_date" 
-		property="joinDate"/> </resultMap> -->
-
 	<select id="login" resultMap="user">
 		select *
 		from user

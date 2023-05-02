@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trip.user.model.UserDto;
 import com.trip.user.service.UserService;
 
+import com.trip.util.ExceptionHandler;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -28,7 +30,7 @@ public class UserController {
 		try {
 			return new ResponseEntity<UserDto>(userService.login(user), HttpStatus.OK);
 		} catch (Exception e) {
-			return exceptionHandling(e);
+			return ExceptionHandler.exceptionHandling(e);
 		}
 	}
 	
@@ -37,7 +39,7 @@ public class UserController {
 		try {
 			return new ResponseEntity<Integer>(userService.signup(user), HttpStatus.OK);
 		} catch (Exception e) {
-			return exceptionHandling(e);
+			return ExceptionHandler.exceptionHandling(e);
 		}
 	}
 	
@@ -47,7 +49,7 @@ public class UserController {
 			user.setUserNo(userNo);
 			return new ResponseEntity<Integer>(userService.modify(user), HttpStatus.OK);
 		} catch (Exception e) {
-			return exceptionHandling(e);
+			return ExceptionHandler.exceptionHandling(e);
 		}
 	}
 	
@@ -56,12 +58,7 @@ public class UserController {
 		try {
 			return new ResponseEntity<Integer>(userService.delete(userNo), HttpStatus.OK);
 		} catch (Exception e) {
-			return exceptionHandling(e);
+			return ExceptionHandler.exceptionHandling(e);
 		}
-	}
-	
-	private ResponseEntity<String> exceptionHandling(Exception e) {
-		e.printStackTrace();
-		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
