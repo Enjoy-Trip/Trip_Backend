@@ -23,8 +23,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int signup(UserDto user) throws SQLException {
-		System.out.println(userMapper.signup(user));
-		
 		return userMapper.signup(user);
 	}
 
