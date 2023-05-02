@@ -20,4 +20,9 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDto> boardList() {
 		return boardMapper.boardList();
 	}
+
+	@Override
+	public BoardDto boardDetail(int boardNo) {
+		return boardMapper.boardDetail(boardNo);
+	}
 }

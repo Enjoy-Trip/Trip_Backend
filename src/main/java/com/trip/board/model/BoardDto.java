@@ -10,8 +10,8 @@ public class BoardDto {
 	private String boardTitle;
 	private String boardTime;
 	private String boardContent;
-	private List<String> boardImages;
 	private UserDto boardUser;
+	private List<String> boardImages;
 	private List<CommentDto> commentList;
 
 	public int getBoardNo() {

@@ -9,4 +9,5 @@ import com.trip.board.model.BoardDto;
 @Mapper
 public interface BoardMapper {
 	List<BoardDto> boardList();
+	BoardDto boardDetail(int boardNo);
 }

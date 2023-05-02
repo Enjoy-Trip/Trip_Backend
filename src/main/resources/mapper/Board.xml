@@ -3,14 +3,76 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.trip.board.mapper.BoardMapper">
-	<resultMap type="boardDto" id="board">
+	<resultMap type="boardDto" id="boardSimple">
 		<result column="board_no" property="boardNo"/>
-		<result column="title" property="boardTitle"/>
-		<result column="time" property="boardTime"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="board_time" property="boardTime"/>
+		<association property="boardUser" javaType="UserDto">
+			<result column="user_no" property="userNo" />
+			<result column="user_id" property="userId" />
+			<result column="user_password" property="userPassword" />
+			<result column="user_name" property="userName" />
+			<result column="user_profile" property="userProfile" />
+		</association>
 	</resultMap>
 	
-	<select id="boardList" resultMap="board">
-		select *
-		from board
+	<resultMap type="boardDto" id="boardDetail">
+		<result column="board_no" property="boardNo"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="board_time" property="boardTime"/>
+		<result column="board_content" property="boardContent"/>
+		<association property="boardUser" javaType="UserDto">
+			<result column="user_no" property="userNo" />
+			<result column="user_id" property="userId" />
+			<result column="user_password" property="userPassword" />
+			<result column="user_name" property="userName" />
+			<result column="user_profile" property="userProfile" />
+		</association>
+		<collection property="boardImages" column="{boardNo = board_no}" select="getImageList" javaType="List" ofType="String" />
+		<collection property="commentList" column="{boardNo = board_no}" select="getCommentList" javaType="List" ofType="comment" />
+	</resultMap>
+	
+	<resultMap type="commentDto" id="comment">
+		<result column="comment_no" property="commentNo"/>
+		<result column="comment_content" property="commentContent"/>
+		<result column="comment_time" property="commentTime"/>
+		<association property="commentUser" javaType="UserDto">
+			<result column="user_no" property="userNo" />
+			<result column="user_id" property="userId" />
+			<result column="user_password" property="userPassword" />
+			<result column="user_name" property="userName" />
+			<result column="user_profile" property="userProfile" />
+		</association>
+	</resultMap>
+	
+	<select id="boardList" resultMap="boardSimple">
+		select b.board_no board_no, b.title board_title, b.time board_time,
+			u.user_no user_no, u.id user_id, u.password user_password, u.name user_name, u.profile user_profile
+		from board b inner join user u
+		on b.user_no = u.user_no
+	</select>
+	
+	<select id="boardDetail" resultMap="boardDetail">
+		select b.board_no board_no, b.title board_title, b.time board_time,
+			u.user_no user_no, u.id user_id, u.password user_password, u.name user_name, u.profile user_profile,
+			bd.content board_content
+		from board b inner join user u inner join board_detail bd
+		on b.user_no = u.user_no
+		where b.board_no = #{boardNo}
+	</select>
+	
+	<select id="getCommentList" resultMap="comment">
+		select c.comment_no comment_no, c.content comment_content, c.time comment_time,
+			u.user_no user_no, u.id user_id, u.password user_password, u.name user_name, u.profile user_profile
+		from comment c inner join user u
+		on c.user_no = u.user_no
+		where board_no = #{boardNo}
+	</select>
+	
+	<select id="getImageList" resultType="String">
+		select bi.image
+		from board_image bi inner join board b
+		on bi.board_no = b.board_no
+		where bi.board_no = #{boardNo}
 	</select>
 </mapper>
