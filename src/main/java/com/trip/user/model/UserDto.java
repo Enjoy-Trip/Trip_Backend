@@ -1,5 +1,8 @@
 package com.trip.user.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 	private int userNo;
 	private String userId;
