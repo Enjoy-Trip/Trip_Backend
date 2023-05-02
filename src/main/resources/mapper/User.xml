@@ -14,8 +14,7 @@
 	<select id="login" resultMap="user">
 		select *
 		from user
-		where id =
-		#{userId} and password = #{userPassword}
+		where id = #{userId} and password = #{userPassword}
 	</select>
 
 	<insert id="signup" parameterType="userDto">
@@ -24,6 +23,12 @@
 		values (#{userId}, #{userPassword},
 		#{userName}, #{userProfile})
 	</insert>
+	
+	<select id="info" resultMap="user">
+		select *
+		from user
+		where user_no = #{userNo}
+	</select>
 
 	<update id="modify" parameterType="userDto">
 		update user

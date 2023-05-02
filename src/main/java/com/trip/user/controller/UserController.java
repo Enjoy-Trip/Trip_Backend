@@ -3,6 +3,7 @@ package com.trip.user.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,6 +39,15 @@ public class UserController {
 	public ResponseEntity<?> signup(@RequestBody UserDto user){
 		try {
 			return new ResponseEntity<Integer>(userService.signup(user), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
+	
+	@GetMapping(value = "/info/{userNo}")
+	public ResponseEntity<?> info(@PathVariable("userNo") int userNo) {
+		try {
+			return new ResponseEntity<UserDto>(userService.info(userNo), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}
