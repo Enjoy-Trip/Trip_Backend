@@ -3,7 +3,10 @@ package com.trip.user.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +43,24 @@ public class UserController {
 		}
 	}
 	
+	@PutMapping(value = "/modify/{userNo}")
+	public ResponseEntity<?> modify(@PathVariable("userNo") int userNo, @RequestBody UserDto user) {
+		try {
+			user.setUserNo(userNo);
+			return new ResponseEntity<Integer>(userService.modify(user), HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@DeleteMapping(value = "/delete/{userNo}")
+	public ResponseEntity<?> delete(@PathVariable("userNo") int userNo) {
+		try {
+			return new ResponseEntity<Integer>(userService.delete(userNo), HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 	
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();

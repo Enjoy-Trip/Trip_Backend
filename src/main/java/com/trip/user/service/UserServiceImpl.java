@@ -26,4 +26,14 @@ public class UserServiceImpl implements UserService {
 		return userMapper.signup(user);
 	}
 
+	@Override
+	public int modify(UserDto user) throws SQLException {
+		return userMapper.modify(user);
+	}
+
+	@Override
+	public int delete(int userNo) throws SQLException {
+		return userMapper.delete(userNo);
+	}
+
 }

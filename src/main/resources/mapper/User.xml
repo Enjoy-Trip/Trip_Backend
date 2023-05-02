@@ -5,29 +5,44 @@
 <mapper namespace="com.trip.user.mapper.UserMapper">
 
 	<resultMap type="userDto" id="user">
-		<result column="user_no" property="userNo"/>
-		<result column="id" property="userId"/>
-		<result column="password" property="userPassword"/>
-		<result column="name" property="userName"/>
-		<result column="profile" property="userProfile"/>
+		<result column="user_no" property="userNo" />
+		<result column="id" property="userId" />
+		<result column="password" property="userPassword" />
+		<result column="name" property="userName" />
+		<result column="profile" property="userProfile" />
 	</resultMap>
-	
+
 	<!-- ADMIN -->
-<!-- 	<resultMap type="memberDto" id="memberAll" extends="member">
-		<result column="user_password" property="userPwd"/>
-		<result column="email_id" property="emailId"/>
-		<result column="email_domain" property="emailDomain"/>
-		<result column="join_date" property="joinDate"/>
-	</resultMap> -->
+	<!-- <resultMap type="memberDto" id="memberAll" extends="member"> <result 
+		column="user_password" property="userPwd"/> <result column="email_id" property="emailId"/> 
+		<result column="email_domain" property="emailDomain"/> <result column="join_date" 
+		property="joinDate"/> </resultMap> -->
 
 	<select id="login" resultMap="user">
 		select *
 		from user
-		where id = #{userId} and password = #{userPassword}
+		where id =
+		#{userId} and password = #{userPassword}
 	</select>
-	
+
 	<insert id="signup" parameterType="userDto">
-		insert into user (id, password, name, profile)
-		values (#{userId}, #{userPassword}, #{userName}, #{userProfile})
+		insert into user (id,
+		password, name, profile)
+		values (#{userId}, #{userPassword},
+		#{userName}, #{userProfile})
 	</insert>
+
+	<update id="modify" parameterType="userDto">
+		update user
+		set password =
+		#{userPassword}, name = #{userName}, profile = #{userProfile}
+		where
+		user_no = #{userNo}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from user
+		where user_no = #{userNo}
+	</delete>
+
 </mapper>
