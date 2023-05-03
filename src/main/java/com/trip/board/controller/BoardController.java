@@ -61,4 +61,14 @@ public class BoardController {
 			return ExceptionHandler.exceptionHandling(e);
 		}
 	}
+	
+	@PostMapping(value = "/update/{boardNo}")
+	public ResponseEntity<?> updateBoard(@PathVariable("boardNo") int boardNo, @RequestBody BoardDto boardDto) {
+		try {
+			boardDto.setBoardNo(boardNo);
+			return new ResponseEntity<Integer>(boardService.updateBoard(boardDto), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
 }

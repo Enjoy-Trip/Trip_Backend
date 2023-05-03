@@ -120,4 +120,23 @@
 		insert into comment (user_no, board_no, content) 
 		values (#{commentUser.userNo}, #{boardNo}, #{commentContent})
 	</insert>
+	
+	<update id="updateBoard" parameterType="boardDto">
+		update board
+		set title = #{boardTitle}
+		where board_no = #{boardNo};
+		
+		update board_detail
+		set content = #{boardContent}
+		where board_no = #{boardNo};
+		
+		delete from board_image
+		where board_no = #{boardNo};
+		
+		insert into board_image (board_no, image) 
+		values
+		<foreach collection="boardImages" item="item" separator=" , ">
+			(#{boardNo}, #{item})
+		</foreach>;
+	</update>
 </mapper>
