@@ -10,4 +10,7 @@ import com.trip.board.model.BoardDto;
 public interface BoardMapper {
 	List<BoardDto> boardList();
 	BoardDto boardDetail(int boardNo);
+	int write(BoardDto boardDto);
+	void writeDetail(BoardDto boardDto);
+	void writeImages(BoardDto boardDto);
 }
