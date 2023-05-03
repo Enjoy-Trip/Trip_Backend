@@ -145,4 +145,23 @@
 		set content = #{commentContent}
 		where comment_no = #{commentNo};
 	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		delete from comment
+		where board_no = #{boardNo};
+		
+		delete from board_detail
+		where board_no = #{boardNo};
+		
+		delete from board_image
+		where board_no = #{boardNo};
+		
+		delete from board
+		where board_no = #{boardNo};
+	</delete>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete from comment
+		where comment_no = #{commentNo};
+	</delete>
 </mapper>

@@ -55,4 +55,14 @@ public class BoardServiceImpl implements BoardService {
 	public int updateComment(CommentDto commentDto) {
 		return boardMapper.updateComment(commentDto);
 	}
+
+	@Override
+	public int deleteBoard(int boardNo) {
+		return boardMapper.deleteBoard(boardNo);
+	}
+
+	@Override
+	public int deleteComment(int commentNo) {
+		return boardMapper.deleteComment(commentNo);
+	}
 }

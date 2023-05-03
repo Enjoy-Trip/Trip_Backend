@@ -81,4 +81,22 @@ public class BoardController {
 			return ExceptionHandler.exceptionHandling(e);
 		}
 	}
+	
+	@GetMapping(value = "/delete/{boardNo}")
+	public ResponseEntity<?> delete(@PathVariable("boardNo") int boardNo) {
+		try {
+			return new ResponseEntity<Integer>(boardService.deleteBoard(boardNo), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
+	
+	@GetMapping(value = "/comment/delete/{commentNo}")
+	public ResponseEntity<?> deleteComment(@PathVariable("commentNo") int commentNo) {
+		try {
+			return new ResponseEntity<Integer>(boardService.deleteComment(commentNo), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
 }
