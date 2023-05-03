@@ -53,12 +53,12 @@ public class BoardController {
 		}
 	}
 	
-//	@PostMapping(value = "/comment/regist")
-//	public ResponseEntity<?> writeComment(@RequestBody CommentDto commentDto) {
-//		try {
-//			return new ResponseEntity<Integer>(boardService.write(boardDto), HttpStatus.OK);
-//		} catch (Exception e) {
-//			return ExceptionHandler.exceptionHandling(e);
-//		}
-//	}
+	@PostMapping(value = "/comment/regist")
+	public ResponseEntity<?> writeComment(@RequestBody CommentDto commentDto) {
+		try {
+			return new ResponseEntity<Integer>(boardService.writeComment(commentDto), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
 }

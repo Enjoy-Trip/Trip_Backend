@@ -38,6 +38,7 @@
 
 	<resultMap type="commentDto" id="comment">
 		<result column="comment_no" property="commentNo" />
+		<result column="board_no" property="boardNo" />
 		<result column="comment_content" property="commentContent" />
 		<result column="comment_time" property="commentTime" />
 		<association property="commentUser" javaType="UserDto">
@@ -79,7 +80,7 @@
 
 	<select id="getCommentList" resultMap="comment">
 		select c.comment_no
-		comment_no, c.content comment_content, c.time comment_time,
+		comment_no, c.board_no board_no, c.content comment_content, c.time comment_time,
 		u.user_no
 		user_no, u.id user_id, u.password user_password, u.name user_name,
 		u.profile user_profile
@@ -117,6 +118,6 @@
 	
 	<insert id="writeComment" parameterType="commentDto">
 		insert into comment (user_no, board_no, content) 
-		values (#{commentUser.userNot}, #{boardNo}, #{commentContent})
+		values (#{commentUser.userNo}, #{boardNo}, #{commentContent})
 	</insert>
 </mapper>

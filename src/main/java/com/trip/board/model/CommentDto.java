@@ -4,6 +4,7 @@ import com.trip.user.model.UserDto;
 
 public class CommentDto {
 	private int commentNo;
+	private int boardNo;
 	private String commentContent;
 	private String commentTime;
 	private UserDto commentUser;
@@ -14,6 +15,14 @@ public class CommentDto {
 
 	public void setCommentNo(int commentNo) {
 		this.commentNo = commentNo;
+	}
+
+	public int getBoardNo() {
+		return boardNo;
+	}
+
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
 	}
 
 	public String getCommentContent() {
@@ -42,7 +51,7 @@ public class CommentDto {
 
 	@Override
 	public String toString() {
-		return "CommentDto [commentNo=" + commentNo + ", commentContent=" + commentContent + ", commentTime="
-				+ commentTime + ", commentUser=" + commentUser + "]";
+		return "CommentDto [commentNo=" + commentNo + ", boardNo=" + boardNo + ", commentContent=" + commentContent
+				+ ", commentTime=" + commentTime + ", commentUser=" + commentUser + "]";
 	}
 }

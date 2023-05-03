@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.trip.board.mapper.BoardMapper;
 import com.trip.board.model.BoardDto;
+import com.trip.board.model.CommentDto;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -32,8 +33,16 @@ public class BoardServiceImpl implements BoardService {
 	public int write(BoardDto boardDto) {
 		boardMapper.write(boardDto);
 		boardMapper.writeDetail(boardDto);
-		boardMapper.writeImages(boardDto);
+		
+		if (boardDto.getBoardImages() != null) {			
+			boardMapper.writeImages(boardDto);
+		}
 
 		return 1;
+	}
+
+	@Override
+	public int writeComment(CommentDto commentDto) {
+		return boardMapper.writeComment(commentDto);
 	}
 }
