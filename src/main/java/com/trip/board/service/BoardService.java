@@ -11,4 +11,5 @@ public interface BoardService {
 	int write(BoardDto boardDto);
 	int writeComment(CommentDto commentDto);
 	int updateBoard(BoardDto boardDto);
+	int updateComment(CommentDto commentDto);
 }

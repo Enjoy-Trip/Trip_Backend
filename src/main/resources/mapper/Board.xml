@@ -139,4 +139,10 @@
 			(#{boardNo}, #{item})
 		</foreach>;
 	</update>
+	
+	<update id="updateComment" parameterType="commentDto">
+		update comment
+		set content = #{commentContent}
+		where comment_no = #{commentNo};
+	</update>
 </mapper>
