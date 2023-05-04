@@ -10,6 +10,7 @@ import com.trip.board.model.BoardDto;
 import com.trip.board.model.CommentDto;
 
 @Service
+@Transactional
 public class BoardServiceImpl implements BoardService {
 	private BoardMapper boardMapper;
 
@@ -29,7 +30,6 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	@Transactional
 	public int write(BoardDto boardDto) {
 		boardMapper.write(boardDto);
 		boardMapper.writeDetail(boardDto);

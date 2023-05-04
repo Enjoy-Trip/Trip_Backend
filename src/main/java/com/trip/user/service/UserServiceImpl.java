@@ -3,11 +3,13 @@ package com.trip.user.service;
 import java.sql.SQLException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.trip.user.mapper.UserMapper;
 import com.trip.user.model.UserDto;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 	

@@ -10,7 +10,6 @@
 		<association property="boardUser" javaType="UserDto">
 			<result column="user_no" property="userNo" />
 			<result column="user_id" property="userId" />
-			<result column="user_password" property="userPassword" />
 			<result column="user_name" property="userName" />
 			<result column="user_profile" property="userProfile" />
 		</association>
@@ -24,7 +23,6 @@
 		<association property="boardUser" javaType="UserDto">
 			<result column="user_no" property="userNo" />
 			<result column="user_id" property="userId" />
-			<result column="user_password" property="userPassword" />
 			<result column="user_name" property="userName" />
 			<result column="user_profile" property="userProfile" />
 		</association>
@@ -44,124 +42,172 @@
 		<association property="commentUser" javaType="UserDto">
 			<result column="user_no" property="userNo" />
 			<result column="user_id" property="userId" />
-			<result column="user_password" property="userPassword" />
 			<result column="user_name" property="userName" />
 			<result column="user_profile" property="userProfile" />
 		</association>
 	</resultMap>
 
 	<select id="boardList" resultMap="boardSimple">
-		select b.board_no board_no,
-		b.title board_title, b.time board_time,
-		u.user_no user_no, u.id
-		user_id, u.password user_password, u.name user_name,
-		u.profile
-		user_profile
-		from board b inner join user u
-		on b.user_no =
-		u.user_no
+		select 
+			b.board_no board_no,
+			b.title board_title,
+			b.time board_time,
+			u.user_no user_no,
+			u.id user_id,
+			u.name user_name,
+			u.profile user_profile
+		from 
+			board b inner join user u
+		on 
+			b.user_no = u.user_no
 	</select>
 
 	<select id="boardDetail" resultMap="boardDetail">
-		select b.board_no board_no,
-		b.title board_title, b.time board_time,
-		u.user_no user_no, u.id
-		user_id, u.password user_password, u.name user_name,
-		u.profile
-		user_profile,
-		bd.content board_content
-		from board b inner join user u
-		left outer join
-		board_detail bd
-		on b.user_no = u.user_no and b.board_no
-		= bd.board_no
-		where b.board_no = #{boardNo}
+		select 
+			b.board_no board_no,
+			b.title board_title,
+			b.time board_time,
+			u.user_no user_no,
+			u.id user_id,
+			u.name user_name,
+			u.profile user_profile,
+			bd.content board_content
+		from 
+			board b
+			inner join
+			user u
+			left outer join
+			board_detail bd
+		on 
+			b.user_no = u.user_no
+			and 
+			b.board_no = bd.board_no
+		where 
+			b.board_no = #{boardNo}
 	</select>
 
 	<select id="getCommentList" resultMap="comment">
-		select c.comment_no
-		comment_no, c.board_no board_no, c.content comment_content, c.time comment_time,
-		u.user_no
-		user_no, u.id user_id, u.password user_password, u.name user_name,
-		u.profile user_profile
-		from comment c inner join user u
-		on c.user_no =
-		u.user_no
-		where board_no = #{boardNo}
+		select 
+			c.comment_no comment_no,
+			c.board_no board_no,
+			c.content comment_content,
+			c.time comment_time,
+			u.user_no user_no,
+			u.id user_id,
+			u.name user_name,
+			u.profile user_profile
+		from 
+			comment c 
+			inner join 
+			user u
+		on 
+			c.user_no = u.user_no
+		where 
+			board_no = #{boardNo}
 	</select>
 
 	<select id="getImageList" resultType="String">
-		select image
-		from
-		board_image
-		where board_no = #{boardNo}
+		select 
+			image
+		from 
+			board_image
+		where 
+			board_no = #{boardNo}
 	</select>
 
-	<insert id="write" parameterType="boardDto"
-		useGeneratedKeys="true" keyProperty="boardNo">
-		insert into board (user_no, title)
-		values(#{boardUser.userNo}, #{boardTitle})
+	<insert id="write" parameterType="boardDto" useGeneratedKeys="true" keyProperty="boardNo">
+		insert into 
+			board (user_no, title)
+		values 
+			(#{boardUser.userNo}, #{boardTitle})
 	</insert>
 
 	<insert id="writeDetail" parameterType="boardDto">
-		insert into board_detail (board_no, content) 
-		values(#{boardNo}, #{boardContent})
+		insert into 
+			board_detail (board_no, content) 
+		values 
+			(#{boardNo}, #{boardContent})
 	</insert>
 	
 	<insert id="writeImages" parameterType="boardDto">
-		insert into board_image (board_no, image) 
-		values
-		<foreach collection="boardImages" item="item" separator=" , ">
-			(#{boardNo}, #{item})
-		</foreach>
+		insert into 
+			board_image (board_no, image) 
+		values 
+			<foreach collection="boardImages" item="item" separator=" , ">
+				(#{boardNo}, #{item})
+			</foreach>
 	</insert>
 	
 	<insert id="writeComment" parameterType="commentDto">
-		insert into comment (user_no, board_no, content) 
-		values (#{commentUser.userNo}, #{boardNo}, #{commentContent})
+		insert into 
+			comment (user_no, board_no, content) 
+		values 
+			(#{commentUser.userNo}, #{boardNo}, #{commentContent})
 	</insert>
 	
 	<update id="updateBoard" parameterType="boardDto">
-		update board
-		set title = #{boardTitle}
-		where board_no = #{boardNo};
+		update 
+			board
+		set 
+			title = #{boardTitle}
+		where 
+			board_no = #{boardNo};
 		
-		update board_detail
-		set content = #{boardContent}
-		where board_no = #{boardNo};
+		update 
+			board_detail
+		set 
+			content = #{boardContent}
+		where 
+			board_no = #{boardNo};
 		
-		delete from board_image
-		where board_no = #{boardNo};
+		delete from 
+			board_image
+		where 
+			board_no = #{boardNo};
 		
-		insert into board_image (board_no, image) 
-		values
-		<foreach collection="boardImages" item="item" separator=" , ">
-			(#{boardNo}, #{item})
-		</foreach>;
+		insert into 
+			board_image (board_no, image) 
+		values 
+			<foreach collection="boardImages" item="item" separator=" , ">
+				(#{boardNo}, #{item})
+			</foreach>;
 	</update>
 	
 	<update id="updateComment" parameterType="commentDto">
-		update comment
-		set content = #{commentContent}
-		where comment_no = #{commentNo};
+		update 
+			comment
+		set 
+			content = #{commentContent}
+		where 
+			comment_no = #{commentNo};
 	</update>
 	
 	<delete id="deleteBoard" parameterType="int">
-		delete from comment
-		where board_no = #{boardNo};
+		delete from 
+			comment
+		where 
+			board_no = #{boardNo};
 		
-		delete from board_detail
-		where board_no = #{boardNo};
+		delete from 
+			board_detail
+		where 
+			board_no = #{boardNo};
 		
-		delete from board_image
-		where board_no = #{boardNo};
+		delete from 
+			board_image
+		where 
+			board_no = #{boardNo};
 		
-		delete from board
-		where board_no = #{boardNo};
+		delete from 
+			board
+		where 
+			board_no = #{boardNo};
 	</delete>
 	
 	<delete id="deleteComment" parameterType="int">
-		delete from comment
-		where comment_no = #{commentNo};
+		delete from 
+			comment
+		where 
+			comment_no = #{commentNo};
 	</delete>
 </mapper>

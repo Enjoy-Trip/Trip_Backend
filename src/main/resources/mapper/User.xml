@@ -12,34 +12,47 @@
 	</resultMap>
 
 	<select id="login" resultMap="user">
-		select *
-		from user
-		where id = #{userId} and password = #{userPassword}
+		select 
+			*
+		from 
+			user
+		where 
+			id = #{userId} 
+			and
+			password = #{userPassword}
 	</select>
 
 	<insert id="signup" parameterType="userDto">
-		insert into user (id,
-		password, name, profile)
-		values (#{userId}, #{userPassword},
-		#{userName}, #{userProfile})
+		insert into 
+			user (id, password, name, profile)
+		values 
+			(#{userId}, #{userPassword}, #{userName}, #{userProfile})
 	</insert>
 	
 	<select id="info" resultMap="user">
-		select *
-		from user
-		where user_no = #{userNo}
+		select 
+			*
+		from 
+			user
+		where 
+			user_no = #{userNo}
 	</select>
 
 	<update id="modify" parameterType="userDto">
-		update user
-		set password =
-		#{userPassword}, name = #{userName}, profile = #{userProfile}
-		where
-		user_no = #{userNo}
+		update 
+			user
+		set 
+			password = #{userPassword}, 
+			name = #{userName}, 
+			profile = #{userProfile}
+		where 
+			user_no = #{userNo}
 	</update>
 
 	<delete id="delete" parameterType="int">
-		delete from user
-		where user_no = #{userNo}
+		delete from 
+			user
+		where 
+			user_no = #{userNo}
 	</delete>
 </mapper>
