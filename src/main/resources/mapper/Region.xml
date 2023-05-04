@@ -21,14 +21,16 @@
 
 	<select id="sidoList" resultMap="sidoSimple">
 		select 
-			*
+			sido_code,
+			sido_name
 		from 
 			sido
 	</select>
 	
 	<select id="sidoDetail" parameterType="Integer" resultMap="sidoDetail">
 		select 
-			*
+			sido_code,
+			sido_name
 		from 
 			sido
 		where 
@@ -37,7 +39,9 @@
 	
 	<select id="gugunList" resultMap="gugun">
 		select 
-			*
+			gugun_code,
+			gugun_name,
+			sido_code
 		from 
 			gugun
 		where 

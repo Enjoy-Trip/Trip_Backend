@@ -13,8 +13,8 @@ public class AttractionDto {
 	private String firstImage;
 	private String firstImage2;
 	private int readCount;
-	private int sido_code;
-	private int gugun_code;
+	private int sidoCode;
+	private int gugunCode;
 	private double latitude;
 	private double longitude;
 	private String mlevel;
@@ -109,20 +109,20 @@ public class AttractionDto {
 		this.readCount = readCount;
 	}
 
-	public int getSido_code() {
-		return sido_code;
+	public int getSidoCode() {
+		return sidoCode;
 	}
 
-	public void setSido_code(int sido_code) {
-		this.sido_code = sido_code;
+	public void setSidoCode(int sidoCode) {
+		this.sidoCode = sidoCode;
 	}
 
-	public int getGugun_code() {
-		return gugun_code;
+	public int getGugunCode() {
+		return gugunCode;
 	}
 
-	public void setGugun_code(int gugun_code) {
-		this.gugun_code = gugun_code;
+	public void setGugunCode(int gugunCode) {
+		this.gugunCode = gugunCode;
 	}
 
 	public double getLatitude() {
@@ -233,8 +233,8 @@ public class AttractionDto {
 	public String toString() {
 		return "AttractionDto [contentId=" + contentId + ", contentTypeId=" + contentTypeId + ", title=" + title
 				+ ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", tel=" + tel + ", firstImage="
-				+ firstImage + ", firstImage2=" + firstImage2 + ", readCount=" + readCount + ", sido_code=" + sido_code
-				+ ", gugun_code=" + gugun_code + ", latitude=" + latitude + ", longitude=" + longitude + ", mlevel="
+				+ firstImage + ", firstImage2=" + firstImage2 + ", readCount=" + readCount + ", sidoCode=" + sidoCode
+				+ ", gugunCode=" + gugunCode + ", latitude=" + latitude + ", longitude=" + longitude + ", mlevel="
 				+ mlevel + ", homepage=" + homepage + ", overview=" + overview + ", telname=" + telname + ", cat1="
 				+ cat1 + ", cat2=" + cat2 + ", cat3=" + cat3 + ", createdTime=" + createdTime + ", modifiedTime="
 				+ modifiedTime + ", booktour=" + booktour + ", attractionCommentList=" + attractionCommentList + "]";
