@@ -84,28 +84,7 @@
 			attraction_no = #{contentId}
 	</select>
 	
-	<select id="attractionListAll" resultMap="attractionSimple">
-		select
-			content_id,
-			content_type_id,
-			title,
-			addr1,
-			addr2,
-			zipcode,
-			tel,
-			first_image,
-			first_image2,
-			readcount,
-			sido_code,
-			gugun_code,
-			latitude,
-			longitude,
-			mlevel
-		from
-			attraction_info
-	</select>
-	
-	<select id="attractionListSido" resultMap="attractionSimple" parameterType="map">
+	<select id="attractionList" parameterType="map" resultMap="attractionSimple">
 		select
 			content_id,
 			content_type_id,
@@ -125,81 +104,18 @@
 		from
 			attraction_info
 		where
-			sido_code = #{sidoCode}
-	</select>
-	
-	<select id="attractionListSidoGugun" resultMap="attractionSimple" parameterType="map">
-		select
-			content_id,
-			content_type_id,
-			title,
-			addr1,
-			addr2,
-			zipcode,
-			tel,
-			first_image,
-			first_image2,
-			readcount,
-			sido_code,
-			gugun_code,
-			latitude,
-			longitude,
-			mlevel
-		from
-			attraction_info
-		where
-			sido_code = #{sidoCode}
-			and
-			gugun_code = #{gugunCode}
-	</select>
-	
-	<select id="attractionListTypeId" resultMap="attractionSimple" parameterType="map">
-		select
-			content_id,
-			content_type_id,
-			title,
-			addr1,
-			addr2,
-			zipcode,
-			tel,
-			first_image,
-			first_image2,
-			readcount,
-			sido_code,
-			gugun_code,
-			latitude,
-			longitude,
-			mlevel
-		from
-			attraction_info
-		where
-			content_type_id = #{typdId}
-	</select>
-	
-	<select id="attractionListSidoGugunTypeId" resultMap="attractionSimple" parameterType="map">
-		select
-			content_id,
-			content_type_id,
-			title,
-			addr1,
-			addr2,
-			zipcode,
-			tel,
-			first_image,
-			first_image2,
-			readcount,
-			sido_code,
-			gugun_code,
-			latitude,
-			longitude,
-			mlevel
-		from
-			attraction_info
-		where
-			sido_code = #{sidoCode}
-			and
-			gugun_code = #{gugunCode}
-			and
-			content_type_id = #{typdId}
+			1 = 1
+			<if test="sidoCode != null and sidoCode != '' and sidoCode != 'null'">
+				and sido_code = #{sidoCode}
+			</if> 			
+			<if test="gugunCode != null and gugunCode != '' and gugunCode != 'null'">
+				and gugun_code = #{gugunCode}
+			</if>
+			<if test="typeId != null and typeId != '' and typeId != 'null'">
+				and content_type_id = #{typeId}
+			</if>
+			<if test="keyword != null and keyword != '' and keyword != 'null'">
+				and title like concat('%', #{keyword}, '%') or addr1 like concat('%', #{keyword}, '%') or addr2 like concat('%', #{keyword}, '%')
+			</if>
 	</select>
 </mapper>

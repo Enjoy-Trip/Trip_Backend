@@ -20,28 +20,8 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
-	public List<AttractionDto> attractionListAll() {
-		return attractionMapper.attractionListAll();
-	}
-
-	@Override
-	public List<AttractionDto> attractionListSido(HashMap<String, Integer> map) {
-		return attractionMapper.attractionListSido(map);
-	}
-
-	@Override
-	public List<AttractionDto> attractionListSidoGugun(HashMap<String, Integer> map) {
-		return attractionMapper.attractionListSidoGugun(map);
-	}
-
-	@Override
-	public List<AttractionDto> attractionListTypeId(HashMap<String, Integer> map) {
-		return attractionMapper.attractionListTypeId(map);
-	}
-
-	@Override
-	public List<AttractionDto> attractionListSidoGugunTypeId(HashMap<String, Integer> map) {
-		return attractionMapper.attractionListSidoGugunTypeId(map);
+	public List<AttractionDto> attractionList(HashMap<String, String> map) {
+		return attractionMapper.attractionList(map);
 	}
 
 }
