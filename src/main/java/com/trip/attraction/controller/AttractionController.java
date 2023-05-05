@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,15 @@ public class AttractionController {
 	public ResponseEntity<?> attractionDetail(@PathVariable("contentId") int contentId) {
 		try {
 			return new ResponseEntity<AttractionDto>(attractionService.attractionDetail(contentId), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
+	
+	@DeleteMapping("/comment/{commentNo}")
+	public ResponseEntity<?> deleteAttractionComment(@PathVariable("commentNo") int commentNo) {
+		try {
+			return new ResponseEntity<Integer>(attractionService.deleteComment(commentNo), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}
