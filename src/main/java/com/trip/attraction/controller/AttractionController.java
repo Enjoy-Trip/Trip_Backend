@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ public class AttractionController {
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<?> attractionListSido(@RequestParam(value = "sidocode", required = false) Integer sidocode, @RequestParam(value = "guguncode", required = false) Integer guguncode, @RequestParam(value = "typeid", required = false) Integer typeid, @RequestParam(value = "keyword", required = false) String keyword) {
+	public ResponseEntity<?> attractionList(@RequestParam(value = "sidocode", required = false) Integer sidocode, @RequestParam(value = "guguncode", required = false) Integer guguncode, @RequestParam(value = "typeid", required = false) Integer typeid, @RequestParam(value = "keyword", required = false) String keyword) {
 		try {
 			HashMap<String, String> map = new HashMap<>();
 			
@@ -34,9 +35,16 @@ public class AttractionController {
 			map.put("typeId", "" + typeid);
 			map.put("keyword", keyword);
 			
-			System.out.println(map);
-			
 			return new ResponseEntity<List<AttractionDto>>(attractionService.attractionList(map), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
+	
+	@GetMapping("/detail/{contentId}")
+	public ResponseEntity<?> attractionDetail(@PathVariable("contentId") int contentId) {
+		try {
+			return new ResponseEntity<AttractionDto>(attractionService.attractionDetail(contentId), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}

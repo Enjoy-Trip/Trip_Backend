@@ -7,4 +7,5 @@ import com.trip.attraction.model.AttractionDto;
 
 public interface AttractionService {
 	List<AttractionDto> attractionList(HashMap<String, String> map);
+	AttractionDto attractionDetail(int contentId);
 }

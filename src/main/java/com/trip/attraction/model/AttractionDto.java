@@ -2,6 +2,9 @@ package com.trip.attraction.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttractionDto {
 	private int contentId;
 	private int contentTypeId;

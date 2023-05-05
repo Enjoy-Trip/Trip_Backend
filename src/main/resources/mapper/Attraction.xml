@@ -54,8 +54,8 @@
 	<resultMap type="attractionCommentDto" id="comment">
 		<result column="comment_no" property="commentNo" />
 		<result column="attraction_no" property="contentId" />
-		<result column="content" property="content" />
-		<result column="time" property="time" />
+		<result column="comment_content" property="content" />
+		<result column="comment_time" property="time" />
 		<association property="commentUser" javaType="UserDto">
 			<result column="user_no" property="userNo" />
 			<result column="user_id" property="userId" />
@@ -117,5 +117,45 @@
 			<if test="keyword != null and keyword != '' and keyword != 'null'">
 				and title like concat('%', #{keyword}, '%') or addr1 like concat('%', #{keyword}, '%') or addr2 like concat('%', #{keyword}, '%')
 			</if>
+	</select>
+	
+	<select id="attractionDetail" parameterType="map" resultMap="attractionDetail">
+		select
+			ai.content_id content_id,
+			ai.content_type_id content_type_id,
+			ai.title title,
+			ai.addr1 addr1,
+			ai.addr2 addr2,
+			ai.zipcode zipcode,
+			ai.tel tel,
+			ai.first_image first_image,
+			ai.first_image2 first_image2,
+			ai.readcount readcount,
+			ai.sido_code sido_code,
+			ai.gugun_code gugun_code,
+			ai.latitude latitude,
+			ai.longitude longitude,
+			ai.mlevel mlevel,
+			adesc.homepage homepage,
+			adesc.overview overview,
+			adesc.telname telname,
+			ad.cat1 cat1,
+			ad.cat2 cat2,
+			ad.cat3 cat3,
+			ad.created_time created_time,
+			ad.modified_time modified_time,
+			ad.booktour booktour
+		from
+			attraction_info ai
+			inner join
+			attraction_detail ad
+			inner join
+			attraction_description adesc
+		on
+			ai.content_id = ad.content_id
+			and
+			ai.content_id = adesc.content_id
+		where
+			ai.content_id = #{contentId}
 	</select>
 </mapper>

@@ -24,4 +24,9 @@ public class AttractionServiceImpl implements AttractionService {
 		return attractionMapper.attractionList(map);
 	}
 
+	@Override
+	public AttractionDto attractionDetail(int contentId) {
+		return attractionMapper.attractionDetail(contentId);
+	}
+
 }

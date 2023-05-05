@@ -10,4 +10,5 @@ import com.trip.attraction.model.AttractionDto;
 @Mapper
 public interface AttractionMapper {
 	List<AttractionDto> attractionList(HashMap<String, String> map);
+	AttractionDto attractionDetail(int contentId);
 }

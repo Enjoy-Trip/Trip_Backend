@@ -1,7 +1,9 @@
 package com.trip.board.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.trip.user.model.UserDto;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommentDto {
 	private int commentNo;
 	private int boardNo;
