@@ -16,9 +16,23 @@
 			search_result
 	</select>
 	
-	 
+	<select id="getSearchResultCount" parameterType="String" resultType="int">
+		select
+			search_count
+		from 
+			search_result
+		where
+			search_word = #{word}
+	</select>
 	
-	<update id="updateCount" parameterType="String">
+	<insert id="createSearchResult" parameterType="String">
+		insert into
+			search_result (search_word)
+		values
+			(#{word})
+	</insert>
+	
+	<update id="updateCount" parameterType="map">
 		update
 			search_result
 		set
