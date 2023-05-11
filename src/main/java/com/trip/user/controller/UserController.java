@@ -35,7 +35,7 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping(value = "/signup")
+	@PostMapping(value = "")
 	public ResponseEntity<?> signup(@RequestBody UserDto user){
 		try {
 			return new ResponseEntity<Integer>(userService.signup(user), HttpStatus.OK);
@@ -44,7 +44,7 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping(value = "/info/{userNo}")
+	@GetMapping(value = "/{userNo}")
 	public ResponseEntity<?> info(@PathVariable("userNo") int userNo) {
 		try {
 			return new ResponseEntity<UserDto>(userService.info(userNo), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class UserController {
 		}
 	}
 	
-	@PutMapping(value = "/modify/{userNo}")
+	@PutMapping(value = "/{userNo}")
 	public ResponseEntity<?> modify(@PathVariable("userNo") int userNo, @RequestBody UserDto user) {
 		try {
 			user.setUserNo(userNo);
@@ -63,7 +63,7 @@ public class UserController {
 		}
 	}
 	
-	@DeleteMapping(value = "/delete/{userNo}")
+	@DeleteMapping(value = "/{userNo}")
 	public ResponseEntity<?> delete(@PathVariable("userNo") int userNo) {
 		try {
 			return new ResponseEntity<Integer>(userService.delete(userNo), HttpStatus.OK);

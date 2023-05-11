@@ -29,7 +29,7 @@ public class AttractionController {
 		this.attractionService = attractionService;
 	}
 
-	@GetMapping("/list")
+	@GetMapping("")
 	public ResponseEntity<?> attractionList(@RequestParam(value = "sidocode", required = false) Integer sidocode, @RequestParam(value = "guguncode", required = false) Integer guguncode, @RequestParam(value = "typeid", required = false) Integer typeid, @RequestParam(value = "keyword", required = false) String keyword) {
 		try {
 			HashMap<String, String> map = new HashMap<>();
@@ -45,7 +45,7 @@ public class AttractionController {
 		}
 	}
 	
-	@GetMapping("/detail/{contentId}")
+	@GetMapping("/{contentId}")
 	public ResponseEntity<?> attractionDetail(@PathVariable("contentId") int contentId) {
 		try {
 			return new ResponseEntity<AttractionDto>(attractionService.attractionDetail(contentId), HttpStatus.OK);
@@ -54,7 +54,7 @@ public class AttractionController {
 		}
 	}
 	
-	@PutMapping("/comment/update/{commentNo}")
+	@PutMapping("/comment/{commentNo}")
 	public ResponseEntity<?> updateAttractionComment(@PathVariable("commentNo") int commentNo, @RequestBody AttractionCommentDto attractionCommentDto) {
 		try {
 			attractionCommentDto.setCommentNo(commentNo);
@@ -67,7 +67,7 @@ public class AttractionController {
 		}
 	}
 	
-	@DeleteMapping("/comment/delete/{commentNo}")
+	@DeleteMapping("/comment/{commentNo}")
 	public ResponseEntity<?> deleteAttractionComment(@PathVariable("commentNo") int commentNo) {
 		try {
 			return new ResponseEntity<Integer>(attractionService.deleteComment(commentNo), HttpStatus.OK);

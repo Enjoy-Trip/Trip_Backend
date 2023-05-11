@@ -28,7 +28,7 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 	
-	@GetMapping(value = "/list")
+	@GetMapping(value = "")
 	public ResponseEntity<?> boardList() {
 		try {
 			return new ResponseEntity<List<BoardDto>>(boardService.boardList(), HttpStatus.OK);
@@ -37,7 +37,7 @@ public class BoardController {
 		}
 	}
 	
-	@GetMapping(value = "/detail/{boardNo}")
+	@GetMapping(value = "/{boardNo}")
 	public ResponseEntity<?> boardDetail(@PathVariable("boardNo") int boardNo) {
 		try {
 			return new ResponseEntity<BoardDto>(boardService.boardDetail(boardNo), HttpStatus.OK);
@@ -46,7 +46,7 @@ public class BoardController {
 		}
 	}
 	
-	@PostMapping(value = "/write")
+	@PostMapping(value = "")
 	public ResponseEntity<?> write(@RequestBody BoardDto boardDto) {
 		try {
 			return new ResponseEntity<Integer>(boardService.write(boardDto), HttpStatus.OK);
@@ -55,7 +55,7 @@ public class BoardController {
 		}
 	}
 	
-	@PostMapping(value = "/comment/regist")
+	@PostMapping(value = "/comment")
 	public ResponseEntity<?> writeComment(@RequestBody CommentDto commentDto) {
 		try {
 			return new ResponseEntity<Integer>(boardService.writeComment(commentDto), HttpStatus.OK);
@@ -64,7 +64,7 @@ public class BoardController {
 		}
 	}
 	
-	@PutMapping(value = "/update/{boardNo}")
+	@PutMapping(value = "/{boardNo}")
 	public ResponseEntity<?> updateBoard(@PathVariable("boardNo") int boardNo, @RequestBody BoardDto boardDto) {
 		try {
 			boardDto.setBoardNo(boardNo);
@@ -74,7 +74,7 @@ public class BoardController {
 		}
 	}
 	
-	@PutMapping(value = "/comment/update/{commentNo}")
+	@PutMapping(value = "/comment/{commentNo}")
 	public ResponseEntity<?> updateComment(@PathVariable("commentNo") int commentNo, @RequestBody CommentDto commentDto) {
 		try {
 			commentDto.setCommentNo(commentNo);
@@ -84,7 +84,7 @@ public class BoardController {
 		}
 	}
 	
-	@DeleteMapping(value = "/delete/{boardNo}")
+	@DeleteMapping(value = "/{boardNo}")
 	public ResponseEntity<?> delete(@PathVariable("boardNo") int boardNo) {
 		try {
 			return new ResponseEntity<Integer>(boardService.deleteBoard(boardNo), HttpStatus.OK);
@@ -93,7 +93,7 @@ public class BoardController {
 		}
 	}
 	
-	@DeleteMapping(value = "/comment/delete/{commentNo}")
+	@DeleteMapping(value = "/comment/{commentNo}")
 	public ResponseEntity<?> deleteComment(@PathVariable("commentNo") int commentNo) {
 		try {
 			return new ResponseEntity<Integer>(boardService.deleteComment(commentNo), HttpStatus.OK);

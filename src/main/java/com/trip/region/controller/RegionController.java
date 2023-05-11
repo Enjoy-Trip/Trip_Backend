@@ -23,7 +23,7 @@ public class RegionController {
 		this.regionService = regionService;
 	}
 
-	@GetMapping(value = "/list")
+	@GetMapping(value = "/sido")
 	public ResponseEntity<?> sidoList() {
 		try {
 			return new ResponseEntity<List<SidoDto>>(regionService.sidoList(), HttpStatus.OK);
@@ -32,7 +32,7 @@ public class RegionController {
 		}
 	}
 
-	@GetMapping(value = "/detail/{sidoCode}")
+	@GetMapping(value = "/sido/{sidoCode}")
 	public ResponseEntity<?> gugunList(@PathVariable("sidoCode") int sidoCode) {
 		try {
 			return new ResponseEntity<List<SidoDto>>(regionService.sidoDetail(sidoCode), HttpStatus.OK);
