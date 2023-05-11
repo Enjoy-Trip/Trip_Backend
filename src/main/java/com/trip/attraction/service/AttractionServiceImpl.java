@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.trip.attraction.mapper.AttractionMapper;
+import com.trip.attraction.model.AttractionCommentDto;
 import com.trip.attraction.model.AttractionDto;
 
 @Service
@@ -32,6 +33,11 @@ public class AttractionServiceImpl implements AttractionService {
 	@Override
 	public int deleteComment(int commentNo) {
 		return attractionMapper.deleteComment(commentNo);
+	}
+
+	@Override
+	public Integer updateComment(AttractionCommentDto attractionCommentDto) {
+		return attractionMapper.updateComment(attractionCommentDto);
 	}
 
 }

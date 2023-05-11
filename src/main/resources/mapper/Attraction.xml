@@ -159,6 +159,15 @@
 			ai.content_id = #{contentId}
 	</select>
 	
+	<delete id="updateComment" parameterType="attractionCommentDto">
+		update
+			attraction_comment
+		set
+			content = #{content}
+		where
+			comment_no = #{commentNo}
+	</delete>
+	
 	<delete id="deleteComment" parameterType="int">
 		delete from 
 			attraction_comment

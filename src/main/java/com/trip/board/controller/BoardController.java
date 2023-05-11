@@ -1,12 +1,14 @@
-package com.trip.board.controller;
+	package com.trip.board.controller;
 
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,7 +64,7 @@ public class BoardController {
 		}
 	}
 	
-	@PostMapping(value = "/update/{boardNo}")
+	@PutMapping(value = "/update/{boardNo}")
 	public ResponseEntity<?> updateBoard(@PathVariable("boardNo") int boardNo, @RequestBody BoardDto boardDto) {
 		try {
 			boardDto.setBoardNo(boardNo);
@@ -72,7 +74,7 @@ public class BoardController {
 		}
 	}
 	
-	@PostMapping(value = "/comment/update/{commentNo}")
+	@PutMapping(value = "/comment/update/{commentNo}")
 	public ResponseEntity<?> updateComment(@PathVariable("commentNo") int commentNo, @RequestBody CommentDto commentDto) {
 		try {
 			commentDto.setCommentNo(commentNo);
@@ -82,7 +84,7 @@ public class BoardController {
 		}
 	}
 	
-	@GetMapping(value = "/delete/{boardNo}")
+	@DeleteMapping(value = "/delete/{boardNo}")
 	public ResponseEntity<?> delete(@PathVariable("boardNo") int boardNo) {
 		try {
 			return new ResponseEntity<Integer>(boardService.deleteBoard(boardNo), HttpStatus.OK);
@@ -91,7 +93,7 @@ public class BoardController {
 		}
 	}
 	
-	@GetMapping(value = "/comment/delete/{commentNo}")
+	@DeleteMapping(value = "/comment/delete/{commentNo}")
 	public ResponseEntity<?> deleteComment(@PathVariable("commentNo") int commentNo) {
 		try {
 			return new ResponseEntity<Integer>(boardService.deleteComment(commentNo), HttpStatus.OK);
