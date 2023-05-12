@@ -1,4 +1,4 @@
-package com.trip.region.controller;
+package com.trip.info.controller;
 
 import java.util.List;
 
@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trip.region.model.SidoDto;
-import com.trip.region.service.RegionService;
+import com.trip.info.service.InfoService;
+import com.trip.info.model.SidoDto;
 import com.trip.util.ExceptionHandler;
 
 @RestController
-@RequestMapping(value = "/region")
-public class RegionController {
-	private RegionService regionService;
+@RequestMapping(value = "/info")
+public class InfoController {
+	private InfoService infoService;
 
-	public RegionController(RegionService regionService) {
+	public InfoController(InfoService infoService) {
 		super();
-		this.regionService = regionService;
+		this.infoService = infoService;
 	}
 
 	@GetMapping(value = "/sido")
 	public ResponseEntity<?> sidoList() {
 		try {
-			return new ResponseEntity<List<SidoDto>>(regionService.sidoList(), HttpStatus.OK);
+			return new ResponseEntity<List<SidoDto>>(infoService.sidoList(), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}
@@ -35,7 +35,7 @@ public class RegionController {
 	@GetMapping(value = "/sido/{sidoCode}")
 	public ResponseEntity<?> gugunList(@PathVariable("sidoCode") int sidoCode) {
 		try {
-			return new ResponseEntity<List<SidoDto>>(regionService.sidoDetail(sidoCode), HttpStatus.OK);
+			return new ResponseEntity<List<SidoDto>>(infoService.sidoDetail(sidoCode), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}

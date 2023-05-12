@@ -1,13 +1,13 @@
-package com.trip.region.mapper;
+package com.trip.info.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.trip.region.model.SidoDto;
+import com.trip.info.model.SidoDto;
 
 @Mapper
-public interface RegionMapper {
+public interface InfoMapper {
 	List<SidoDto> sidoList();
 	List<SidoDto> sidoDetail(int sidoCode);
 }

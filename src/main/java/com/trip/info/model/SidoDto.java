@@ -1,4 +1,4 @@
-package com.trip.region.model;
+package com.trip.info.model;
 
 import java.util.List;
 

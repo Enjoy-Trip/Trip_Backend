@@ -1,4 +1,4 @@
-package com.trip.region.model;
+package com.trip.info.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
