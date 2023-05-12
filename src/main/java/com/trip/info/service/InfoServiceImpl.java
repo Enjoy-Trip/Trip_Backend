@@ -1,4 +1,0 @@
-package com.trip.info.service;import java.util.List;import org.springframework.stereotype.Service;import org.springframework.transaction.annotation.Transactional;import com.trip.info.mapper.InfoMapper;import com.trip.info.model.SidoDto;@Service@Transactionalpublic class InfoServiceImpl implements InfoService {	private InfoMapper infoMapper;	public InfoServiceImpl(InfoMapper infoMapper) {
-		super();
-		this.infoMapper = infoMapper;
-	}	@Override	public List<SidoDto> sidoList() {		return infoMapper.sidoList();	}	@Override	public List<SidoDto> sidoDetail(int sidoCode) {		return infoMapper.sidoDetail(sidoCode);	}}
