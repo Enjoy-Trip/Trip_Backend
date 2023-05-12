@@ -5,29 +5,29 @@
 <mapper namespace="com.trip.user.mapper.UserMapper">
 	<resultMap type="userDto" id="user">
 		<result column="user_no" property="userNo" />
-		<result column="id" property="userId" />
-		<result column="password" property="userPassword" />
-		<result column="name" property="userName" />
-		<result column="profile" property="userProfile" />
+		<result column="user_id" property="userId" />
+		<result column="user_password" property="userPassword" />
+		<result column="user_name" property="userName" />
+		<result column="user_profile" property="userProfile" />
 	</resultMap>
 
 	<select id="login" resultMap="user">
 		select 
 			user_no,
-			id,
-			name,
-			profile
+			user_id,
+			user_name,
+			user_profile
 		from 
 			user
 		where 
-			id = #{userId} 
+			user_id = #{userId} 
 			and
-			password = #{userPassword}
+			user_password = #{userPassword}
 	</select>
 
 	<insert id="signup" parameterType="userDto">
 		insert into 
-			user (id, password, name, profile)
+			user (user_id, user_password, user_name, user_profile)
 		values 
 			(#{userId}, #{userPassword}, #{userName}, #{userProfile})
 	</insert>
@@ -35,9 +35,9 @@
 	<select id="info" resultMap="user">
 		select 
 			user_no,
-			id,
-			name,
-			profile
+			user_id,
+			user_name,
+			user_profile
 		from 
 			user
 		where 
@@ -48,9 +48,9 @@
 		update 
 			user
 		set 
-			password = #{userPassword}, 
-			name = #{userName}, 
-			profile = #{userProfile}
+			user_password = #{userPassword}, 
+			user_name = #{userName}, 
+			user_profile = #{userProfile}
 		where 
 			user_no = #{userNo}
 	</update>
