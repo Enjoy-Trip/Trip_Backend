@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.trip.user.mapper.UserMapper">
+	<resultMap type="userDto" id="user">
+		<result column="user_no" property="userNo" />
+		<result column="id" property="userId" />
+		<result column="password" property="userPassword" />
+		<result column="name" property="userName" />
+		<result column="profile" property="userProfile" />
+	</resultMap>
+
+	<select id="login" resultMap="user">
+		select 
+			user_no,
+			id,
+			name,
+			profile
+		from 
+			user
+		where 
+			id = #{userId} 
+			and
+			password = #{userPassword}
+	</select>
+
+	<insert id="signup" parameterType="userDto">
+		insert into 
+			user (id, password, name, profile)
+		values 
+			(#{userId}, #{userPassword}, #{userName}, #{userProfile})
+	</insert>
+	
+	<select id="info" resultMap="user">
+		select 
+			user_no,
+			id,
+			name,
+			profile
+		from 
+			user
+		where 
+			user_no = #{userNo}
+	</select>
+
+	<update id="modify" parameterType="userDto">
+		update 
+			user
+		set 
+			password = #{userPassword}, 
+			name = #{userName}, 
+			profile = #{userProfile}
+		where 
+			user_no = #{userNo}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from 
+			user
+		where 
+			user_no = #{userNo}
+	</delete>
+</mapper>
