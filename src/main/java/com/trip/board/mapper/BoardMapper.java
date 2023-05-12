@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.trip.board.model.BoardDto;
-import com.trip.board.model.CommentDto;
+import com.trip.board.model.BoardCommentDto;
 
 @Mapper
 public interface BoardMapper {
@@ -14,9 +14,9 @@ public interface BoardMapper {
 	int write(BoardDto boardDto);
 	void writeDetail(BoardDto boardDto);
 	void writeImages(BoardDto boardDto);
-	int writeComment(CommentDto commentDto);
+	int writeComment(BoardCommentDto commentDto);
 	int updateBoard(BoardDto boardDto);
-	int updateComment(CommentDto commentDto);
+	int updateComment(BoardCommentDto commentDto);
 	int deleteBoard(int boardNo);
 	int deleteComment(int commentNo);
 }

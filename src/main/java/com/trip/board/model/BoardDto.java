@@ -13,7 +13,7 @@ public class BoardDto {
 	private String boardContent;
 	private UserDto boardUser;
 	private List<String> boardImages;
-	private List<CommentDto> commentList;
+	private List<BoardCommentDto> boardCommentList;
 
 	public int getBoardNo() {
 		return boardNo;
@@ -63,18 +63,18 @@ public class BoardDto {
 		this.boardUser = boardUser;
 	}
 
-	public List<CommentDto> getCommentList() {
-		return commentList;
+	public List<BoardCommentDto> getboardCommentList() {
+		return boardCommentList;
 	}
 
-	public void setCommentList(List<CommentDto> commentList) {
-		this.commentList = commentList;
+	public void setboardCommentList(List<BoardCommentDto> boardCommentList) {
+		this.boardCommentList = boardCommentList;
 	}
 
 	@Override
 	public String toString() {
 		return "BoardDto [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardTime=" + boardTime
 				+ ", boardContent=" + boardContent + ", boardImages=" + boardImages + ", boardUser=" + boardUser
-				+ ", commentList=" + commentList + "]";
+				+ ", boardCommentList=" + boardCommentList + "]";
 	}
 }

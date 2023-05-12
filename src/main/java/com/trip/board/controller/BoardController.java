@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.board.model.BoardDto;
-import com.trip.board.model.CommentDto;
+import com.trip.board.model.BoardCommentDto;
 import com.trip.board.service.BoardService;
 import com.trip.util.ExceptionHandler;
 
@@ -56,7 +56,7 @@ public class BoardController {
 	}
 	
 	@PostMapping(value = "/comment")
-	public ResponseEntity<?> writeComment(@RequestBody CommentDto commentDto) {
+	public ResponseEntity<?> writeComment(@RequestBody BoardCommentDto commentDto) {
 		try {
 			return new ResponseEntity<Integer>(boardService.writeComment(commentDto), HttpStatus.OK);
 		} catch (Exception e) {
@@ -75,9 +75,9 @@ public class BoardController {
 	}
 	
 	@PutMapping(value = "/comment/{commentNo}")
-	public ResponseEntity<?> updateComment(@PathVariable("commentNo") int commentNo, @RequestBody CommentDto commentDto) {
+	public ResponseEntity<?> updateComment(@PathVariable("commentNo") int commentNo, @RequestBody BoardCommentDto commentDto) {
 		try {
-			commentDto.setCommentNo(commentNo);
+			commentDto.setboardCommentNo(commentNo);
 			return new ResponseEntity<Integer>(boardService.updateComment(commentDto), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
