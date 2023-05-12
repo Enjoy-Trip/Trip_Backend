@@ -16,7 +16,7 @@
 			search_result
 	</select>
 	
-	<select id="getSearchResultCount" parameterType="String" resultType="int">
+	<select id="getSearchResultCount" parameterType="String" resultType="Integer">
 		select
 			search_count
 		from 
@@ -25,18 +25,18 @@
 			search_word = #{word}
 	</select>
 	
-	<insert id="createSearchResult" parameterType="String">
-		insert into
-			search_result (search_word)
-		values
-			(#{word})
-	</insert>
-	
 	<update id="updateCount" parameterType="map">
+		<if test="count == null or count == '' or count == 'null'">
+			insert into
+				search_result (search_word)
+			values
+				(#{word});
+		</if>
+	
 		update
 			search_result
 		set
-			search_result = search_result + 1
+			search_count = search_count + 1
 		where
 			search_word = #{word}
 	</update>
