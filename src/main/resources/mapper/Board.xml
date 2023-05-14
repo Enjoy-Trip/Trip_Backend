@@ -49,59 +49,61 @@
 
 	<select id="boardList" resultMap="boardSimple">
 		select 
-			b.board_no board_no,
-			b.board_title board_title,
-			b.board_time board_time,
-			u.user_no user_no,
-			u.user_id user_id,
-			u.user_name user_name,
-			u.user_profile user_profile
+			board_no,
+			board_title,
+			board_time,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile
 		from 
-			board b inner join user u
+			board
+			inner join
+			user
 		on 
-			b.user_no = u.user_no
+			board.user_no = user.user_no
 	</select>
 
 	<select id="boardDetail" resultMap="boardDetail">
 		select 
-			b.board_no board_no,
-			b.board_title board_title,
-			b.board_time board_time,
-			u.user_no user_no,
-			u.user_id user_id,
-			u.user_name user_name,
-			u.user_profile user_profile,
-			bd.board_content board_content
+			board.board_no,
+			board_title,
+			board_time,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile,
+			board_content
 		from 
-			board b
+			board
 			inner join
-			user u
+			user
 			left outer join
-			board_detail bd
+			board_detail
 		on 
-			b.user_no = u.user_no
+			board.user_no = user.user_no
 			and 
-			b.board_no = bd.board_no
+			board.board_no = board_detail.board_no
 		where 
-			b.board_no = #{boardNo}
+			board.board_no = #{boardNo}
 	</select>
 
 	<select id="getCommentList" resultMap="comment">
 		select 
-			c.board_comment_no board_comment_no,
-			c.board_no board_no,
-			c.board_comment_content board_comment_content,
-			c.board_comment_time board_comment_time,
-			u.user_no user_no,
-			u.user_id user_id,
-			u.user_name user_name,
-			u.user_profile user_profile
+			board_comment_no,
+			board_no,
+			board_comment_content,
+			board_comment_time,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile
 		from 
-			board_comment c 
+			board_comment
 			inner join 
-			user u
+			user
 		on 
-			c.user_no = u.user_no
+			board_comment.user_no = user.user_no
 		where 
 			board_no = #{boardNo}
 	</select>
