@@ -18,6 +18,12 @@
 		<result column="mapx" property="mapx" />
 		<result column="mapy" property="mapy" />
 		<result column="mlevel" property="mlevel" />
+		<association property="attractionUser" javaType="UserDto">
+			<result column="user_no" property="userNo" />
+			<result column="user_id" property="userId" />
+			<result column="user_name" property="userName" />
+			<result column="user_profile" property="userProfile" />
+		</association>
 	</resultMap>
 
 	<resultMap type="attractionDto" id="attractionDetail">
@@ -44,6 +50,12 @@
 		<result column="createdtime" property="createdtime" />
 		<result column="modifiedtime" property="modifiedtime" />
 		<result column="booktour" property="booktour" />
+		<association property="attractionUser" javaType="UserDto">
+			<result column="user_no" property="userNo" />
+			<result column="user_id" property="userId" />
+			<result column="user_name" property="userName" />
+			<result column="user_profile" property="userProfile" />
+		</association>
 		<collection property="attractionCommentList"
 			column="contentid = contentid" select="getCommentList" javaType="List"
 			ofType="comment" />
@@ -64,20 +76,20 @@
 	
 	<select id="getCommentList" resultMap="comment">
 		select 
-			c.attraction_comment_no attraction_comment_no,
-			c.contentid contentid,
-			c.attraction_comment_content attraction_comment_content,
-			c.attraction_comment_time attraction_comment_time,
-			u.user_no user_no,
-			u.user_id user_id,
-			u.user_name user_name,
-			u.user_profile user_profile
+			attraction_comment_no,
+			contentid,
+			attraction_comment_content,
+			attraction_comment_time,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile
 		from 
-			attraction_comment c
+			attraction_comment
 			inner join 
-			user u
+			user
 		on 
-			c.user_no = u.user_no
+			attraction_comment.user_no = user.user_no
 		where 
 			contentid = #{contentid}
 	</select>
@@ -97,9 +109,15 @@
 			sigungucode,
 			mapx,
 			mapy,
-			mlevel
+			mlevel,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile
 		from
 			attraction_info
+			inner join
+			user
 		where
 			1 = 1
 			<if test="areacode != null and areacode != '' and areacode != 'null'">
@@ -118,41 +136,47 @@
 	
 	<select id="attractionDetail" parameterType="map" resultMap="attractionDetail">
 		select
-			ai.contentid contentid,
-			ai.contenttypeid contenttypeid,
-			ai.title title,
-			ai.addr1 addr1,
-			ai.addr2 addr2,
-			ai.zipcode zipcode,
-			ai.tel tel,
-			ai.firstimage firstimage,
-			ai.firstimage2 firstimage2,
-			ai.areacode areacode,
-			ai.sigungucode sigungucode,
-			ai.mapx mapx,
-			ai.mapy mapy,
-			ai.mlevel mlevel,
-			adesc.homepage homepage,
-			adesc.overview overview,
-			adesc.telname telname,
-			ad.cat1 cat1,
-			ad.cat2 cat2,
-			ad.cat3 cat3,
-			ad.createdtime createdtime,
-			ad.modifiedtime modifiedtime,
-			ad.booktour booktour
+			attraction_info.contentid,
+			contenttypeid,
+			title,
+			addr1,
+			addr2,
+			zipcode,
+			tel,
+			firstimage,
+			firstimage2,
+			areacode,
+			sigungucode,
+			mapx,
+			mapy,
+			mlevel,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile,
+			homepage,
+			overview,
+			telname,
+			cat1,
+			cat2,
+			cat3,
+			createdtime,
+			modifiedtime,
+			booktour
 		from
-			attraction_info ai
+			attraction_info
 			inner join
-			attraction_detail_info ad
+			user
 			inner join
-			attraction_description adesc
+			attraction_detail_info
+			inner join
+			attraction_description
 		on
-			ai.contentid = ad.contentid
+			attraction_info.contentid = attraction_detail_info.contentid
 			and
-			ai.contentid = adesc.contentid
+			attraction_info.contentid = attraction_description.contentid
 		where
-			ai.contentid = #{contentid}
+			attraction_info.contentid = #{contentid}
 	</select>
 	
 	<insert id="writeComment" parameterType="attractionCommentDto">

@@ -3,10 +3,12 @@ package com.trip.attraction.model;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.trip.user.model.UserDto;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttractionDto {
 	private int contentid;
+	private UserDto attractionUser;
 	private int contenttypeid;
 	private String title;
 	private String addr1;
@@ -37,6 +39,14 @@ public class AttractionDto {
 
 	public void setContentid(int contentid) {
 		this.contentid = contentid;
+	}
+
+	public UserDto getAttractionUser() {
+		return attractionUser;
+	}
+
+	public void setAttractionUser(UserDto attractionUser) {
+		this.attractionUser = attractionUser;
 	}
 
 	public int getContenttypeid() {
@@ -225,12 +235,12 @@ public class AttractionDto {
 
 	@Override
 	public String toString() {
-		return "AttractionDto [contentid=" + contentid + ", contenttypeid=" + contenttypeid + ", title=" + title
-				+ ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", tel=" + tel + ", firstimage="
-				+ firstimage + ", firstimage2=" + firstimage2 + ", areacode=" + areacode + ", sigungucode="
-				+ sigungucode + ", mapx=" + mapx + ", mapy=" + mapy + ", mlevel=" + mlevel + ", homepage=" + homepage
-				+ ", overview=" + overview + ", telname=" + telname + ", cat1=" + cat1 + ", cat2=" + cat2 + ", cat3="
-				+ cat3 + ", createdtime=" + createdtime + ", modifiedtime=" + modifiedtime + ", booktour=" + booktour
-				+ ", attractionCommentList=" + attractionCommentList + "]";
+		return "AttractionDto [contentid=" + contentid + ", attractionUser=" + attractionUser + ", contenttypeid="
+				+ contenttypeid + ", title=" + title + ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode
+				+ ", tel=" + tel + ", firstimage=" + firstimage + ", firstimage2=" + firstimage2 + ", areacode="
+				+ areacode + ", sigungucode=" + sigungucode + ", mapx=" + mapx + ", mapy=" + mapy + ", mlevel=" + mlevel
+				+ ", homepage=" + homepage + ", overview=" + overview + ", telname=" + telname + ", cat1=" + cat1
+				+ ", cat2=" + cat2 + ", cat3=" + cat3 + ", createdtime=" + createdtime + ", modifiedtime="
+				+ modifiedtime + ", booktour=" + booktour + ", attractionCommentList=" + attractionCommentList + "]";
 	}
 }
