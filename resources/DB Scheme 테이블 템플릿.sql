@@ -81,8 +81,8 @@ CREATE TABLE `attraction_detail_info` (
 	`cat1` varchar(3) DEFAULT NULL,
 	`cat2` varchar(5) DEFAULT NULL,
 	`cat3` varchar(9) DEFAULT NULL,
-	`createdtime` varchar(14) DEFAULT NULL,
-	`modifiedtime` varchar(14) DEFAULT NULL,--__
+	`createdtime` DATETIME DEFAULT CURRENT_TIMESTAMP,
+	`modifiedtime` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	`booktour` varchar(5) DEFAULT NULL,
 	PRIMARY KEY (`contentid`),
 	CONSTRAINT `attraction_info_to_attraction_detail_info_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`)

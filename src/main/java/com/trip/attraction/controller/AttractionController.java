@@ -55,6 +55,15 @@ public class AttractionController {
 		}
 	}
 	
+	@PostMapping(value = "")
+	public ResponseEntity<?> createAttraction(@RequestBody AttractionDto attractionDto) {
+		try {
+			return new ResponseEntity<Integer>(attractionService.createAttraction(attractionDto), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
+	
 	@PostMapping(value = "/comment")
 	public ResponseEntity<?> writeAttractionComment(@RequestBody AttractionCommentDto attractionCommentDto) {
 		try {

@@ -44,4 +44,19 @@ public class AttractionServiceImpl implements AttractionService {
 	public int deleteComment(int commentNo) {
 		return attractionMapper.deleteComment(commentNo);
 	}
+
+	@Override
+	public Integer createAttraction(AttractionDto attractionDto) {
+		attractionMapper.createAttraction(attractionDto);
+		
+		if (attractionDto.getHomepage() != null || attractionDto.getOverview() != null || attractionDto.getTelname() != null) {
+			attractionMapper.createAttractionDescription(attractionDto);
+		}
+		
+		if (attractionDto.getCat1() != null || attractionDto.getCat2() != null|| attractionDto.getCat3() != null || attractionDto.getBooktour() != null) {
+			attractionMapper.createAttractionDetailInfo(attractionDto);
+		}
+		
+		return 1;
+	}
 }

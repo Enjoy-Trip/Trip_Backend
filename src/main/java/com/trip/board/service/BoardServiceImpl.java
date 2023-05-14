@@ -32,7 +32,10 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int write(BoardDto boardDto) {
 		boardMapper.write(boardDto);
-		boardMapper.writeDetail(boardDto);
+		
+		if (boardDto.getBoardContent() != null) {			
+			boardMapper.writeDetail(boardDto);
+		}
 		
 		if (boardDto.getBoardImages() != null) {			
 			boardMapper.writeImages(boardDto);

@@ -179,6 +179,54 @@
 			attraction_info.contentid = #{contentid}
 	</select>
 	
+	<insert id="createAttraction" parameterType="attractionDto" useGeneratedKeys="true" keyProperty="contentid">
+		insert into
+			attraction_info
+			(contenttypeid,
+			title,
+			addr1,
+			addr2,
+			zipcode,
+			tel,
+			firstimage,
+			firstimage2,
+			areacode,
+			sigungucode,
+			mapx,
+			mapy,
+			mlevel,
+			user_no)
+		values
+			(#{contenttypeid},
+			#{title},
+			#{addr1},
+			#{addr2},
+			#{zipcode},
+			#{tel},
+			#{firstimage},
+			#{firstimage2},
+			#{areacode},
+			#{sigungucode},
+			#{mapx},
+			#{mapy},
+			#{mlevel},
+			#{attractionUser.userNo})
+	</insert>
+	
+	<insert id="createAttractionDescription" parameterType="attractionDto">
+		insert into
+			attraction_description (contentid, homepage, overview, telname)
+		values
+			(#{contentid}, #{homepage}, #{overview}, #{telname})
+	</insert>
+	
+	<insert id="createAttractionDetailInfo" parameterType="attractionDto">
+		insert into
+			attraction_detail_info (contentid, cat1, cat2, cat3, booktour)
+		values
+			(#{contentid}, #{cat1}, #{cat2}, #{cat3}, #{booktour})
+	</insert>
+	
 	<insert id="writeComment" parameterType="attractionCommentDto">
 		insert into 
 			attraction_comment (user_no, contentid, attraction_comment_content) 
