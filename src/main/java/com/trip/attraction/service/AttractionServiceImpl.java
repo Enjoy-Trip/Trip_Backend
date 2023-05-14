@@ -26,13 +26,8 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
-	public AttractionDto attractionDetail(int contentId) {
-		return attractionMapper.attractionDetail(contentId);
-	}
-
-	@Override
-	public int deleteComment(int commentNo) {
-		return attractionMapper.deleteComment(commentNo);
+	public AttractionDto attractionDetail(int contentid) {
+		return attractionMapper.attractionDetail(contentid);
 	}
 
 	@Override
@@ -40,4 +35,8 @@ public class AttractionServiceImpl implements AttractionService {
 		return attractionMapper.updateComment(attractionCommentDto);
 	}
 
+	@Override
+	public int deleteComment(int commentNo) {
+		return attractionMapper.deleteComment(commentNo);
+	}
 }

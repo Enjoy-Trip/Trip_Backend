@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `attraction_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `attraction_info` (
-	`contentid` int NOT NULL,
+	`contentid` int NOT NULL AUTO_INCREMENT,
 	`contenttypeid` int DEFAULT NULL,
 	`title` varchar(100) DEFAULT NULL,
 	`addr1` varchar(100) DEFAULT NULL,

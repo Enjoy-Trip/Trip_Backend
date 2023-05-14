@@ -8,7 +8,7 @@ import com.trip.attraction.model.AttractionDto;
 
 public interface AttractionService {
 	List<AttractionDto> attractionList(HashMap<String, String> map);
-	AttractionDto attractionDetail(int contentId);
+	AttractionDto attractionDetail(int contentid);
 	Integer updateComment(AttractionCommentDto attractionCommentDto);
 	int deleteComment(int commentNo);
 }

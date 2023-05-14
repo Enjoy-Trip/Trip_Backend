@@ -30,13 +30,13 @@ public class AttractionController {
 	}
 
 	@GetMapping("")
-	public ResponseEntity<?> attractionList(@RequestParam(value = "sidocode", required = false) Integer sidocode, @RequestParam(value = "guguncode", required = false) Integer guguncode, @RequestParam(value = "typeid", required = false) Integer typeid, @RequestParam(value = "keyword", required = false) String keyword) {
+	public ResponseEntity<?> attractionList(@RequestParam(value = "areacode", required = false) Integer areacode, @RequestParam(value = "sigungucode", required = false) Integer sigungucode, @RequestParam(value = "contenttypeid", required = false) Integer contenttypeid, @RequestParam(value = "keyword", required = false) String keyword) {
 		try {
 			HashMap<String, String> map = new HashMap<>();
 			
-			map.put("sidoCode", "" + sidocode);
-			map.put("gugunCode", "" + guguncode);
-			map.put("typeId", "" + typeid);
+			map.put("areacode", "" + areacode);
+			map.put("sigungucode", "" + sigungucode);
+			map.put("contenttypeid", "" + contenttypeid);
 			map.put("keyword", keyword);
 			
 			return new ResponseEntity<List<AttractionDto>>(attractionService.attractionList(map), HttpStatus.OK);
@@ -45,10 +45,10 @@ public class AttractionController {
 		}
 	}
 	
-	@GetMapping("/{contentId}")
-	public ResponseEntity<?> attractionDetail(@PathVariable("contentId") int contentId) {
+	@GetMapping("/{contentid}")
+	public ResponseEntity<?> attractionDetail(@PathVariable("contentid") int contentid) {
 		try {
-			return new ResponseEntity<AttractionDto>(attractionService.attractionDetail(contentId), HttpStatus.OK);
+			return new ResponseEntity<AttractionDto>(attractionService.attractionDetail(contentid), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}
@@ -57,9 +57,7 @@ public class AttractionController {
 	@PutMapping("/comment/{commentNo}")
 	public ResponseEntity<?> updateAttractionComment(@PathVariable("commentNo") int commentNo, @RequestBody AttractionCommentDto attractionCommentDto) {
 		try {
-			attractionCommentDto.setCommentNo(commentNo);
-			
-			System.out.println(attractionCommentDto);
+			attractionCommentDto.setAttractionCommentNo(commentNo);
 			
 			return new ResponseEntity<Integer>(attractionService.updateComment(attractionCommentDto), HttpStatus.OK);
 		} catch (Exception e) {

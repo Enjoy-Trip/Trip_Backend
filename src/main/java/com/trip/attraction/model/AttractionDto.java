@@ -6,20 +6,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttractionDto {
-	private int contentId;
-	private int contentTypeId;
+	private int contentid;
+	private int contenttypeid;
 	private String title;
 	private String addr1;
 	private String addr2;
 	private String zipcode;
 	private String tel;
-	private String firstImage;
-	private String firstImage2;
-	private int readCount;
-	private int sidoCode;
-	private int gugunCode;
-	private double latitude;
-	private double longitude;
+	private String firstimage;
+	private String firstimage2;
+	private int areacode;
+	private int sigungucode;
+	private double mapx;
+	private double mapy;
 	private String mlevel;
 	private String homepage;
 	private String overview;
@@ -27,25 +26,25 @@ public class AttractionDto {
 	private String cat1;
 	private String cat2;
 	private String cat3;
-	private String createdTime;
-	private String modifiedTime;
+	private String createdtime;
+	private String modifiedtime;
 	private String booktour;
 	private List<AttractionCommentDto> attractionCommentList;
 
-	public int getContentId() {
-		return contentId;
+	public int getContentid() {
+		return contentid;
 	}
 
-	public void setContentId(int contentId) {
-		this.contentId = contentId;
+	public void setContentid(int contentid) {
+		this.contentid = contentid;
 	}
 
-	public int getContentTypeId() {
-		return contentTypeId;
+	public int getContenttypeid() {
+		return contenttypeid;
 	}
 
-	public void setContentTypeId(int contentTypeId) {
-		this.contentTypeId = contentTypeId;
+	public void setContenttypeid(int contenttypeid) {
+		this.contenttypeid = contenttypeid;
 	}
 
 	public String getTitle() {
@@ -88,60 +87,52 @@ public class AttractionDto {
 		this.tel = tel;
 	}
 
-	public String getFirstImage() {
-		return firstImage;
+	public String getFirstimage() {
+		return firstimage;
 	}
 
-	public void setFirstImage(String firstImage) {
-		this.firstImage = firstImage;
+	public void setFirstimage(String firstimage) {
+		this.firstimage = firstimage;
 	}
 
-	public String getFirstImage2() {
-		return firstImage2;
+	public String getFirstimage2() {
+		return firstimage2;
 	}
 
-	public void setFirstImage2(String firstImage2) {
-		this.firstImage2 = firstImage2;
+	public void setFirstimage2(String firstimage2) {
+		this.firstimage2 = firstimage2;
 	}
 
-	public int getReadCount() {
-		return readCount;
+	public int getAreacode() {
+		return areacode;
 	}
 
-	public void setReadCount(int readCount) {
-		this.readCount = readCount;
+	public void setAreacode(int areacode) {
+		this.areacode = areacode;
 	}
 
-	public int getSidoCode() {
-		return sidoCode;
+	public int getSigungucode() {
+		return sigungucode;
 	}
 
-	public void setSidoCode(int sidoCode) {
-		this.sidoCode = sidoCode;
+	public void setSigungucode(int sigungucode) {
+		this.sigungucode = sigungucode;
 	}
 
-	public int getGugunCode() {
-		return gugunCode;
+	public double getMapx() {
+		return mapx;
 	}
 
-	public void setGugunCode(int gugunCode) {
-		this.gugunCode = gugunCode;
+	public void setMapx(double mapx) {
+		this.mapx = mapx;
 	}
 
-	public double getLatitude() {
-		return latitude;
+	public double getMapy() {
+		return mapy;
 	}
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setMapy(double mapy) {
+		this.mapy = mapy;
 	}
 
 	public String getMlevel() {
@@ -200,20 +191,20 @@ public class AttractionDto {
 		this.cat3 = cat3;
 	}
 
-	public String getCreatedTime() {
-		return createdTime;
+	public String getCreatedtime() {
+		return createdtime;
 	}
 
-	public void setCreatedTime(String createdTime) {
-		this.createdTime = createdTime;
+	public void setCreatedtime(String createdtime) {
+		this.createdtime = createdtime;
 	}
 
-	public String getModifiedTime() {
-		return modifiedTime;
+	public String getModifiedtime() {
+		return modifiedtime;
 	}
 
-	public void setModifiedTime(String modifiedTime) {
-		this.modifiedTime = modifiedTime;
+	public void setModifiedtime(String modifiedtime) {
+		this.modifiedtime = modifiedtime;
 	}
 
 	public String getBooktour() {
@@ -234,12 +225,12 @@ public class AttractionDto {
 
 	@Override
 	public String toString() {
-		return "AttractionDto [contentId=" + contentId + ", contentTypeId=" + contentTypeId + ", title=" + title
-				+ ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", tel=" + tel + ", firstImage="
-				+ firstImage + ", firstImage2=" + firstImage2 + ", readCount=" + readCount + ", sidoCode=" + sidoCode
-				+ ", gugunCode=" + gugunCode + ", latitude=" + latitude + ", longitude=" + longitude + ", mlevel="
-				+ mlevel + ", homepage=" + homepage + ", overview=" + overview + ", telname=" + telname + ", cat1="
-				+ cat1 + ", cat2=" + cat2 + ", cat3=" + cat3 + ", createdTime=" + createdTime + ", modifiedTime="
-				+ modifiedTime + ", booktour=" + booktour + ", attractionCommentList=" + attractionCommentList + "]";
+		return "AttractionDto [contentid=" + contentid + ", contenttypeid=" + contenttypeid + ", title=" + title
+				+ ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", tel=" + tel + ", firstimage="
+				+ firstimage + ", firstimage2=" + firstimage2 + ", areacode=" + areacode + ", sigungucode="
+				+ sigungucode + ", mapx=" + mapx + ", mapy=" + mapy + ", mlevel=" + mlevel + ", homepage=" + homepage
+				+ ", overview=" + overview + ", telname=" + telname + ", cat1=" + cat1 + ", cat2=" + cat2 + ", cat3="
+				+ cat3 + ", createdtime=" + createdtime + ", modifiedtime=" + modifiedtime + ", booktour=" + booktour
+				+ ", attractionCommentList=" + attractionCommentList + "]";
 	}
 }

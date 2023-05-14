@@ -5,55 +5,56 @@ import com.trip.user.model.UserDto;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttractionCommentDto {
-	private int commentNo;
-	private int contentId;
-	private String content;
-	private String time;
-	private UserDto commentUser;
+	private int attractionCommentNo;
+	private int contentid;
+	private String attractionCommentContent;
+	private String attractionCommentTime;
+	private UserDto attractionCommentUser;
 
-	public int getCommentNo() {
-		return commentNo;
+	public int getAttractionCommentNo() {
+		return attractionCommentNo;
 	}
 
-	public void setCommentNo(int commentNo) {
-		this.commentNo = commentNo;
+	public void setAttractionCommentNo(int attractionCommentNo) {
+		this.attractionCommentNo = attractionCommentNo;
 	}
 
-	public int getContentId() {
-		return contentId;
+	public int getContentid() {
+		return contentid;
 	}
 
-	public void setContentId(int contentId) {
-		this.contentId = contentId;
+	public void setContentid(int contentid) {
+		this.contentid = contentid;
 	}
 
-	public String getContent() {
-		return content;
+	public String getAttractionCommentContent() {
+		return attractionCommentContent;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setAttractionCommentContent(String attractionCommentContent) {
+		this.attractionCommentContent = attractionCommentContent;
 	}
 
-	public String getTime() {
-		return time;
+	public String getAttractionCommentTime() {
+		return attractionCommentTime;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
+	public void setAttractionCommentTime(String attractionCommentTime) {
+		this.attractionCommentTime = attractionCommentTime;
 	}
 
-	public UserDto getCommentUser() {
-		return commentUser;
+	public UserDto getAttractionCommentUser() {
+		return attractionCommentUser;
 	}
 
-	public void setCommentUser(UserDto commentUser) {
-		this.commentUser = commentUser;
+	public void setAttractionCommentUser(UserDto attractionCommentUser) {
+		this.attractionCommentUser = attractionCommentUser;
 	}
 
 	@Override
 	public String toString() {
-		return "AttractionCommentDto [commentNo=" + commentNo + ", contentId=" + contentId + ", content=" + content
-				+ ", time=" + time + ", commentUser=" + commentUser + "]";
+		return "AttractionCommentDto [attractionCommentNo=" + attractionCommentNo + ", contentid=" + contentid
+				+ ", attractionCommentContent=" + attractionCommentContent + ", attractionCommentTime="
+				+ attractionCommentTime + ", attractionCommentUser=" + attractionCommentUser + "]";
 	}
 }
