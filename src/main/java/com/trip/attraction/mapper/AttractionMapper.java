@@ -12,6 +12,7 @@ import com.trip.attraction.model.AttractionDto;
 public interface AttractionMapper {
 	List<AttractionDto> attractionList(HashMap<String, String> map);
 	AttractionDto attractionDetail(int contentid);
+	int writeComment(AttractionCommentDto attractionCommentDto);
 	int updateComment(AttractionCommentDto attractionCommentDto);
 	int deleteComment(int contentId);
 }

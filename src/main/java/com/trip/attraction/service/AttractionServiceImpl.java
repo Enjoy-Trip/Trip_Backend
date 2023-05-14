@@ -31,6 +31,11 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
+	public Integer writeComment(AttractionCommentDto attractionCommentDto) {
+		return attractionMapper.writeComment(attractionCommentDto);
+	}
+
+	@Override
 	public Integer updateComment(AttractionCommentDto attractionCommentDto) {
 		return attractionMapper.updateComment(attractionCommentDto);
 	}

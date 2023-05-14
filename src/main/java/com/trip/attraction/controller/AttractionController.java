@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,6 +50,15 @@ public class AttractionController {
 	public ResponseEntity<?> attractionDetail(@PathVariable("contentid") int contentid) {
 		try {
 			return new ResponseEntity<AttractionDto>(attractionService.attractionDetail(contentid), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
+	
+	@PostMapping(value = "/comment")
+	public ResponseEntity<?> writeAttractionComment(@RequestBody AttractionCommentDto attractionCommentDto) {
+		try {
+			return new ResponseEntity<Integer>(attractionService.writeComment(attractionCommentDto), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}
