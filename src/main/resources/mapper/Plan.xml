@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.trip.plan.mapper.PlanMapper">
+	<resultMap type="PlanDto" id="planDto">
+		<result column="plan_no" property="planNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="plan_content" property="planContent"/>
+		<result column="plan_time" property="planTime"/>
+		<result column="plan_title" property="planTitle"/>
+		<result column="plan_start_date" property="planStartDate"/>
+		<result column="plan_end_date" property="planEndDate"/>
+	</resultMap>
+
+	<select id="planList" parameterType="int" resultMap="planDto">
+		select 
+			p.user_no, 
+			p.plan_no, 
+			pd.plan_start_date,
+			pd.plan_end_date, 
+			p.plan_time,
+			pd.plan_content, 
+			p.plan_title
+		from 
+			plan p, plan_detail pd
+		where
+			p.plan_no = pd.plan_no
+		And
+			user_no = #{userNo}
+	</select>
+
+	<insert id="planAdd" parameterType="planDto">
+		insert into
+			plan (plan_no, user_no, plan_title, plan_time)
+		values
+			(#{planNo}, #{userNo}, #{planTitle}, #{planTime});
+			
+		insert into
+			plan_detail	(plan_no, plan_start_date, plan_end_date, plan_content)
+		values
+			(#{planNo}, #{planStartDate}, #{planEndDate}, #{planContent})
+	</insert>
+
+</mapper>
