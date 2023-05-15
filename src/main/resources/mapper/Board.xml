@@ -58,7 +58,7 @@
 			user_profile
 		from 
 			board
-			inner join
+		inner join
 			user
 		on 
 			board.user_no = user.user_no
@@ -78,11 +78,11 @@
 			board
 			inner join
 			user
-			left outer join
+		on
+			board.user_no = user.user_no
+		left outer join
 			board_detail
 		on 
-			board.user_no = user.user_no
-			and 
 			board.board_no = board_detail.board_no
 		where 
 			board.board_no = #{boardNo}
@@ -100,7 +100,7 @@
 			user_profile
 		from 
 			board_comment
-			inner join 
+		inner join 
 			user
 		on 
 			board_comment.user_no = user.user_no

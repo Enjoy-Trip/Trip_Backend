@@ -86,7 +86,7 @@
 			user_profile
 		from 
 			attraction_comment
-			inner join 
+		inner join 
 			user
 		on 
 			attraction_comment.user_no = user.user_no
@@ -116,8 +116,10 @@
 			user_profile
 		from
 			attraction_info
-			inner join
+		inner join
 			user
+		on
+			attraction_info.user_no = user.user_no
 		where
 			1 = 1
 			<if test="areacode != null and areacode != '' and areacode != 'null'">
@@ -167,6 +169,8 @@
 			attraction_info
 		inner join
 			user
+		on
+			attraction_info.user_no = user.user_no
 		left outer join
 			attraction_detail_info
 		on
