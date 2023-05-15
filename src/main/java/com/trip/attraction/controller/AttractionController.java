@@ -31,15 +31,8 @@ public class AttractionController {
 	}
 
 	@GetMapping("")
-	public ResponseEntity<?> attractionList(@RequestParam(value = "areacode", required = false) Integer areacode, @RequestParam(value = "sigungucode", required = false) Integer sigungucode, @RequestParam(value = "contenttypeid", required = false) Integer contenttypeid, @RequestParam(value = "keyword", required = false) String keyword) {
+	public ResponseEntity<?> attractionList(@RequestParam HashMap<String, String> map) {
 		try {
-			HashMap<String, String> map = new HashMap<>();
-			
-			map.put("areacode", "" + areacode);
-			map.put("sigungucode", "" + sigungucode);
-			map.put("contenttypeid", "" + contenttypeid);
-			map.put("keyword", keyword);
-			
 			return new ResponseEntity<List<AttractionDto>>(attractionService.attractionList(map), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
