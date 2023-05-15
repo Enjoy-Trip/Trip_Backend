@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS `attraction_info`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `attraction_info` (
 	`contentid` int NOT NULL AUTO_INCREMENT,
-    `user_no` int NOT NULL,
+   	`user_no` int NOT NULL,
 	`contenttypeid` int DEFAULT NULL,
 	`title` varchar(100) DEFAULT NULL,
 	`addr1` varchar(100) DEFAULT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `attraction_info` (
 	`mapy` decimal(20, 17) DEFAULT NULL,
 	`mlevel` varchar(2) DEFAULT NULL,
 	PRIMARY KEY (`contentid`),
-    CONSTRAINT `user_to_attraction_info_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`)
+    	CONSTRAINT `user_to_attraction_info_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`)
 ) 	ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

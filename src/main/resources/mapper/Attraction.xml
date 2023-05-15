@@ -165,15 +165,15 @@
 			booktour
 		from
 			attraction_info
-			inner join
+		inner join
 			user
-			inner join
+		left outer join
 			attraction_detail_info
-			inner join
-			attraction_description
 		on
 			attraction_info.contentid = attraction_detail_info.contentid
-			and
+		left outer join
+			attraction_description
+		on
 			attraction_info.contentid = attraction_description.contentid
 		where
 			attraction_info.contentid = #{contentid}
@@ -226,6 +226,69 @@
 		values
 			(#{contentid}, #{cat1}, #{cat2}, #{cat3}, #{booktour})
 	</insert>
+	
+	<update id="updateAttraction" parameterType="attractionDto">
+		update
+			attraction_info
+		set
+			contenttypeid = #{contenttypeid},
+			title = #{title},
+			addr1 = #{addr1},
+			addr2 = #{addr2},
+			zipcode = #{zipcode},
+			tel = #{tel},
+			firstimage = #{firstimage},
+			firstimage2 = #{firstimage2},
+			areacode = #{areacode},
+			sigungucode = #{sigungucode},
+			mapx = #{mapx},
+			mapy = #{mapy},
+			mlevel = #{mlevel}
+		where
+			contentid = #{contentid};
+		
+		update
+			attraction_detail_info
+		set
+			cat1 = #{cat1},
+			cat2 = #{cat2},
+			cat3 = #{cat3},
+			modifiedtime = now(),
+			booktour = #{booktour}
+		where
+			contentid = #{contentid};
+			
+		update
+			attraction_description
+		set
+			homepage = #{homepage},
+			overview = #{overview},
+			telname = #{telname}
+		where
+			contentid = #{contentid}
+	</update>
+	
+	<delete id="deleteAttraction" parameterType="int">
+		delete from
+			attraction_comment
+		where
+			contentid = #{contentid};
+			
+		delete from
+			attraction_description
+		where
+			contentid = #{contentid};
+		
+		delete from
+			attraction_detail_info
+		where
+			contentid = #{contentid};
+			
+		delete from
+			attraction_info
+		where
+			contentid = #{contentid};
+	</delete>
 	
 	<insert id="writeComment" parameterType="attractionCommentDto">
 		insert into 

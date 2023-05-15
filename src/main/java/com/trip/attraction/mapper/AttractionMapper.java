@@ -15,7 +15,9 @@ public interface AttractionMapper {
 	int createAttraction(AttractionDto attractionDto);
 	void createAttractionDescription(AttractionDto attractionDto);
 	void createAttractionDetailInfo(AttractionDto attractionDto);
+	int updateAttraction(AttractionDto attractionDto);
+	int deleteAttraction(int contentid);
 	int writeComment(AttractionCommentDto attractionCommentDto);
 	int updateComment(AttractionCommentDto attractionCommentDto);
-	int deleteComment(int contentId);
+	int deleteComment(int commentNo);
 }

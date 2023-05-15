@@ -10,6 +10,8 @@ public interface AttractionService {
 	List<AttractionDto> attractionList(HashMap<String, String> map);
 	AttractionDto attractionDetail(int contentid);
 	Integer createAttraction(AttractionDto attractionDto);
+	Integer updateAttraction(AttractionDto attractiontDto);
+	Integer deleteAttraction(int contentid);
 	Integer writeComment(AttractionCommentDto attractionCommentDto);
 	Integer updateComment(AttractionCommentDto attractionCommentDto);
 	int deleteComment(int commentNo);

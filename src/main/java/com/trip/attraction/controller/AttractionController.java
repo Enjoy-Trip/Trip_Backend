@@ -64,6 +64,25 @@ public class AttractionController {
 		}
 	}
 	
+	@PutMapping(value = "/{contentid}")
+	public ResponseEntity<?> updateAttraction(@PathVariable("contentid") int contentid, @RequestBody AttractionDto attractiontDto) {
+		try {
+			attractiontDto.setContentid(contentid);
+			return new ResponseEntity<Integer>(attractionService.updateAttraction(attractiontDto), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
+	
+	@DeleteMapping(value = "/{contentid}")
+	public ResponseEntity<?> deleteAttraction(@PathVariable("contentid") int contentid) {
+		try {
+			return new ResponseEntity<Integer>(attractionService.deleteAttraction(contentid), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
+	
 	@PostMapping(value = "/comment")
 	public ResponseEntity<?> writeAttractionComment(@RequestBody AttractionCommentDto attractionCommentDto) {
 		try {

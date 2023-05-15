@@ -31,21 +31,6 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
-	public Integer writeComment(AttractionCommentDto attractionCommentDto) {
-		return attractionMapper.writeComment(attractionCommentDto);
-	}
-
-	@Override
-	public Integer updateComment(AttractionCommentDto attractionCommentDto) {
-		return attractionMapper.updateComment(attractionCommentDto);
-	}
-
-	@Override
-	public int deleteComment(int commentNo) {
-		return attractionMapper.deleteComment(commentNo);
-	}
-
-	@Override
 	public Integer createAttraction(AttractionDto attractionDto) {
 		attractionMapper.createAttraction(attractionDto);
 		
@@ -58,5 +43,30 @@ public class AttractionServiceImpl implements AttractionService {
 		}
 		
 		return 1;
+	}
+
+	@Override
+	public Integer updateAttraction(AttractionDto attractiontDto) {
+		return attractionMapper.updateAttraction(attractiontDto);
+	}
+	
+	@Override
+	public Integer deleteAttraction(int contentid) {
+		return attractionMapper.deleteAttraction(contentid);
+	}
+
+	@Override
+	public Integer writeComment(AttractionCommentDto attractionCommentDto) {
+		return attractionMapper.writeComment(attractionCommentDto);
+	}
+
+	@Override
+	public Integer updateComment(AttractionCommentDto attractionCommentDto) {
+		return attractionMapper.updateComment(attractionCommentDto);
+	}
+
+	@Override
+	public int deleteComment(int commentNo) {
+		return attractionMapper.deleteComment(commentNo);
 	}
 }
