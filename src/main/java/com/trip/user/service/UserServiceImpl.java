@@ -29,6 +29,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public String check(String userId) throws SQLException {
+		return userMapper.check(userId);
+	}
+
+	@Override
 	public UserDto info(int userNo) throws SQLException {
 		return userMapper.info(userNo);
 	}

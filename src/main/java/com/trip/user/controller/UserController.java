@@ -15,25 +15,23 @@ import com.trip.response.model.ResponseDto;
 import com.trip.user.model.UserDto;
 import com.trip.user.service.UserService;
 
-import com.trip.util.ExceptionHandler;
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
 	private UserService userService;
-	
+
 	public UserController(UserService userService) {
 		super();
 		this.userService = userService;
 	}
-	
+
 	@PostMapping(value = "/login")
 	public ResponseEntity<?> login(@RequestBody UserDto user) {
 		ResponseDto<UserDto> response = new ResponseDto<UserDto>();
-		
+
 		try {
 			UserDto loginUser = userService.login(user);
-			
+
 			if (loginUser == null) {
 				response.setState("FAIL");
 				response.setMessage("아이디 혹은 비밀번호가 일치하지 않습니다.");
@@ -42,50 +40,137 @@ public class UserController {
 				response.setMessage("정상적으로 로그인이 진행되었습니다.");
 				response.setData(loginUser);
 			}
-			
+
 			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			response.setState("FAIL");
 			response.setMessage("로그인 도중 오류가 발생했습니다.");
-			
+
 			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
-	@PostMapping(value = "")
-	public ResponseEntity<?> signup(@RequestBody UserDto user){
+
+	@GetMapping(value = "/check/{userid}")
+	public ResponseEntity<?> check(@PathVariable("userid") String userId) {
+		ResponseDto<String> response = new ResponseDto<String>();
+
 		try {
-			return new ResponseEntity<Integer>(userService.signup(user), HttpStatus.OK);
+			String rst = userService.check(userId);
+
+			if (rst == null) {
+				response.setState("SUCCESS");
+				response.setMessage("중복되는 아이디가 없습니다.");
+			} else {
+				response.setState("FAIL");
+				response.setMessage("중복되는 아이디가 존재합니다.");
+				response.setData(rst);
+			}
+
+			return new ResponseEntity<ResponseDto<String>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("아이디 체크 도중 오류가 발생했습니다.");
+
+			return new ResponseEntity<ResponseDto<String>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
+	@PostMapping(value = "")
+	public ResponseEntity<?> signup(@RequestBody UserDto user) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+
+		try {
+			int rst = userService.signup(user);
+
+			response.setState("SUCCESS");
+			response.setMessage("정상적으로 회원가입이 진행되었습니다.");
+			response.setData(rst);
+
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.setState("FAIL");
+			response.setMessage("회원가입 도중 오류가 발생했습니다.");
+
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+		}
+	}
+
 	@GetMapping(value = "/{userNo}")
 	public ResponseEntity<?> info(@PathVariable("userNo") int userNo) {
+		ResponseDto<UserDto> response = new ResponseDto<UserDto>();
+
 		try {
-			return new ResponseEntity<UserDto>(userService.info(userNo), HttpStatus.OK);
+			UserDto user = userService.info(userNo);
+
+			if (user == null) {
+				response.setState("FAIL");
+				response.setMessage("찾으시는 사용자가 존재하지 않습니다.");
+			} else {
+				response.setState("SUCCESS");
+				response.setMessage("찾으시는 사용자가 존재합니다.");
+				response.setData(user);
+			}
+
+			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("사용자 검색 도중 오류가 발생했습니다.");
+
+			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	@PutMapping(value = "/{userNo}")
 	public ResponseEntity<?> modify(@PathVariable("userNo") int userNo, @RequestBody UserDto user) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+
 		try {
-			user.setUserNo(userNo);
-			return new ResponseEntity<Integer>(userService.modify(user), HttpStatus.OK);
+			UserDto modifyUser = userService.info(userNo);
+
+			if (modifyUser == null) {
+				response.setState("FAIL");
+				response.setMessage("수정하고자 하는 사용자가 존재하지 않습니다.");
+			} else {
+				int rst = userService.modify(user);
+
+				response.setState("SUCCESS");
+				response.setMessage("정상적으로 회원 정보 수정이 진행되었습니다.");
+				response.setData(rst);
+			}
+
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("회원 정보 수정 도중 오류가 발생했습니다.");
+
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	@DeleteMapping(value = "/{userNo}")
 	public ResponseEntity<?> delete(@PathVariable("userNo") int userNo) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+
 		try {
-			return new ResponseEntity<Integer>(userService.delete(userNo), HttpStatus.OK);
+			UserDto modifyUser = userService.info(userNo);
+
+			if (modifyUser == null) {
+				response.setState("FAIL");
+				response.setMessage("삭제하고자 하는 사용자가 존재하지 않습니다.");
+			} else {
+				int rst = userService.delete(userNo);
+
+				response.setState("SUCCESS");
+				response.setMessage("정상적으로 회원 정보 삭제가 완료되었습니다.");
+				response.setData(rst);
+			}
+
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("회원 정보 삭제 도중 오류가 발생했습니다.");
+
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 }
