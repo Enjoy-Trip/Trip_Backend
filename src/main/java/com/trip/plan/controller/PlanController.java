@@ -33,16 +33,14 @@ public class PlanController {
 	@GetMapping("/{userno}")
 	ResponseEntity<?> planList(@PathVariable("userno") int userNo) {
 		ResponseDto<List<PlanDto>> response = new ResponseDto<List<PlanDto>>();
+		
 		try {
 			List<PlanDto> planList = planService.planList(userNo);
-			if (planList.size() == 0) {
-				response.setState("FAIL");
-				response.setMessage("계획이 하나도 없네요.");
-			} else {
-				response.setState("SUCCESS");
-				response.setMessage("계획들을 불러옵니다.");
-				response.setData(planList);
-			}
+			
+			response.setState("SUCCESS");
+			response.setMessage("계획들을 불러옵니다.");
+			response.setData(planList);
+			
 			return new ResponseEntity<ResponseDto<List<PlanDto>>>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionResponse(response, e);
@@ -56,34 +54,11 @@ public class PlanController {
 		planDto.setUserNo(userNo);
 		try {
 			int rst = planService.planAdd(planDto);
-			if (rst == 0) {
-				response.setState("FAIL");
-				response.setMessage("등록에 실패 하였습니다.");
-			}
-			else {
-				response.setState("SUCCESS");
-				response.setMessage("등록에 성공 하였습니다.");
-			}
-			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
-		} catch (Exception e) {
-			return ExceptionHandler.exceptionResponse(response, e);
-		}
-	}
 
-	// 계획 삭제
-	@DeleteMapping("/{planno}")
-	ResponseEntity<?> planDelete(@PathVariable("planno") int planNo) {
-		ResponseDto<Integer> response = new ResponseDto<Integer>();
-		try {
-			int rst = planService.planDelete(planNo);
-			if (rst == 0) {
-				response.setState("FAIL");
-				response.setMessage("삭제에 실패 하였습니다.");
-			}
-			else {
-				response.setState("SUCCESS");
-				response.setMessage("삭제에 성공 하였습니다.");
-			}
+			response.setState("SUCCESS");
+			response.setMessage("등록에 성공 하였습니다.");
+			response.setData(rst);
+			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionResponse(response, e);
@@ -97,14 +72,28 @@ public class PlanController {
 		try {
 			planDto.setPlanNo(planNo);
 			int rst = planService.planModify(planDto);
-			if (rst == 0) {
-				response.setState("FAIL");
-				response.setMessage("수정에 실패 하였습니다.");
-			}
-			else {
-				response.setState("SUCCESS");
-				response.setMessage("수정에 성공 하였습니다.");
-			}
+
+			response.setState("SUCCESS");
+			response.setMessage("수정에 성공 하였습니다.");
+			response.setData(rst);
+			
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionResponse(response, e);
+		}
+	}
+
+	// 계획 삭제
+	@DeleteMapping("/{planno}")
+	ResponseEntity<?> planDelete(@PathVariable("planno") int planNo) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		try {
+			int rst = planService.planDelete(planNo);
+
+			response.setState("SUCCESS");
+			response.setMessage("삭제에 성공 하였습니다.");
+			response.setData(rst);
+			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionResponse(response, e);
