@@ -47,7 +47,7 @@ public class SearchResultController {
 		} catch (Exception e) {
 			response.setState("FAIL");
 			response.setMessage("검색어 정보를 불러오는 중에 오류가 발생했습니다.");
-			return new ResponseEntity<ResponseDto<List<SearchResultDto>>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 	
@@ -72,17 +72,32 @@ public class SearchResultController {
 		} catch (Exception e) {
 			response.setState("FAIL");
 			response.setMessage("검색 횟수를 증가시키는 중에 오류가 발생했습니다.");
-			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 	
 	//주기적으로 초기화 할 때 사용.
 	@DeleteMapping(value = "")
 	public ResponseEntity<?> deleteSearchResult() {
+		
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		
 		try {
-			return new ResponseEntity<Integer>(searchResultService.deleteSearchResult(), HttpStatus.OK);
+			int count = searchResultService.deleteSearchResult();
+			if(count != 0) {
+				response.setState("SUCCESS");
+				response.setMessage("정상적으로 검색 횟수를 초기화했습니다.");
+				response.setData(count);
+			}
+			else {
+				response.setState("FAIL");
+				response.setMessage("검색 횟수 초기화 하지 못했습니다.");
+			}
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("검색 횟수 초기화 하는 중에 오류가 발생했습니다.");
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 }
