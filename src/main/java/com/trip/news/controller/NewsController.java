@@ -16,7 +16,6 @@ import com.trip.util.ExceptionHandler;
 @RestController
 @RequestMapping("/news")
 public class NewsController {
-
 	private NewsService newsService;
 
 	public NewsController(NewsService newsService) {
@@ -27,19 +26,19 @@ public class NewsController {
 	@GetMapping(value = "")
 	public ResponseEntity<?> newsList(){
 		ResponseDto<List<NewsDto>> response = new ResponseDto<List<NewsDto>>();
+		
 		try {
-			
 			List<NewsDto> newsList = newsService.newsList();
-			if(newsList.size()==0) {
-				response.setState("FAIL");
-				response.setMessage("불러 올 뉴스가 없습니다.");
-			}else {
-				response.setState("SUCCESS");
-				response.setMessage("뉴스 불러오기 성공 했습니다.");
-				response.setData(newsList);
-			}
+			
+			response.setState("SUCCESS");
+			response.setMessage("뉴스 불러오기 성공 했습니다.");
+			response.setData(newsList);
+			
 			return new ResponseEntity<ResponseDto<List<NewsDto>>>(response, HttpStatus.OK);
 		}catch (Exception e) {
+			response.setState("FAIL");
+			response.setMessage("뉴스 불러오는 중 오류가 발생했습니다.");
+			
 			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
