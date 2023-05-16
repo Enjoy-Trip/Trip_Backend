@@ -132,6 +132,8 @@ public class UserController {
 				response.setState("FAIL");
 				response.setMessage("수정하고자 하는 사용자가 존재하지 않습니다.");
 			} else {
+				user.setUserNo(userNo);
+				
 				int rst = userService.modify(user);
 
 				response.setState("SUCCESS");
