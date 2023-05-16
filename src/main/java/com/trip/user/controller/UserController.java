@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trip.response.model.ResponseDto;
 import com.trip.user.model.UserDto;
 import com.trip.user.service.UserService;
 
@@ -28,10 +29,26 @@ public class UserController {
 	
 	@PostMapping(value = "/login")
 	public ResponseEntity<?> login(@RequestBody UserDto user) {
+		ResponseDto<UserDto> response = new ResponseDto<UserDto>();
+		
 		try {
-			return new ResponseEntity<UserDto>(userService.login(user), HttpStatus.OK);
+			UserDto loginUser = userService.login(user);
+			
+			if (loginUser == null) {
+				response.setState("FAIL");
+				response.setMessage("아이디 혹은 비밀번호가 일치하지 않습니다.");
+			} else {
+				response.setState("SUCCESS");
+				response.setMessage("정상적으로 로그인이 진행되었습니다.");
+				response.setData(loginUser);
+			}
+			
+			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("로그인 도중 오류가 발생했습니다.");
+			
+			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 	
