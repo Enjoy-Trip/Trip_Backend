@@ -25,7 +25,16 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public int planAdd(PlanDto planDto) {
 		planMapper.planAdd(planDto);
-		return planMapper.planDetailAdd(planDto);
+		
+		if (planDto.getPlanContent() != null) {
+			planMapper.planDetailAdd(planDto);
+		}
+		
+		if (planDto.getPlanPlaces() != null) {
+			planMapper.planPlaceListAdd(planDto);
+		}
+		
+		return 1;
 	}
 	
 	@Override

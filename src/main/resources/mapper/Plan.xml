@@ -96,43 +96,73 @@
 	<insert id="planAdd" parameterType="planDto"
 		useGeneratedKeys="true" keyProperty="planNo">
 		insert into
-		plan (user_no,
-		plan_title, plan_time)
+			plan (user_no, plan_title)
 		values
-		(#{planUser.userNo}, #{planTitle}, #{planTime});
+			(#{planUser.userNo}, #{planTitle});
 	</insert>
 
 	<insert id="planDetailAdd" parameterType="planDto">
 		insert into
-		plan_detail
-		(plan_no, plan_start_date, plan_end_date, plan_content)
+			plan_detail (plan_no, plan_start_date, plan_end_date, plan_content)
 		values
-		(#{planNo}, #{planStartDate}, #{planEndDate}, #{planContent})
+			(#{planNo}, #{planStartDate}, #{planEndDate}, #{planContent})
+	</insert>
+	
+	<insert id="planPlaceListAdd" parameterType="planDto">
+		insert into
+			plan_place_list (plan_no, contentid, day)
+		values
+			<foreach collection="planPlaces" item="item" separator=" , ">
+				(#{plan_no}, #{item.contentid}, #{item.day})
+			</foreach>
 	</insert>
 
 	<delete id="planDelete" parameterType="int">
 		delete from
-		plan_detail
-		where plan_no = #{planNo};
+			plan_detail
+		where
+			plan_no = #{planNo};
+			
+		delete from
+			plan_place_list
+		where
+			plan_no = #{planNo};
 
 		delete from
-		plan
-		where plan_no = #{planNo};
+			plan
+		where
+			plan_no = #{planNo};
 	</delete>
 
 	<update id="planModify" parameterType="planDto">
-		update plan_detail
+		update 
+			plan
 		set
-		plan_start_date = #{planStartDate},
-		plan_end_date = #{planEndDate},
-		plan_content = #{planContent}
-		where plan_no = #{planNo};
-
-		update plan
+			plan_title = #{planTitle}
+		where 
+			plan_no = #{planNo};
+	
+		update 
+			plan_detail
 		set
-		plan_title = #{planTitle},
-		plan_time = #{planTime}
-		where plan_no =
-		#{planNo};
+			plan_start_date = #{planStartDate},
+			plan_end_date = #{planEndDate},
+			plan_content = #{planContent}
+		where 
+			plan_no = #{planNo};
+			
+		delete from 
+			plan_place_list
+		where 
+			plan_no = #{planNo};
+			
+		<if test="planPlaces != null and planPlaces.size() != 0">
+			insert into
+				plan_place_list (plan_no, contentid, day)
+			values
+				<foreach collection="planPlaces" item="item" separator=" , ">
+					(#{plan_no}, #{item.contentid}, #{item.day})
+				</foreach>
+		</if>
 	</update>
 </mapper>
