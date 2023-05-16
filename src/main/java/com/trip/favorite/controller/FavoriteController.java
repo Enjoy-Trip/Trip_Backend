@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.favorite.model.FavoriteDto;
 import com.trip.favorite.service.FavoriteService;
+import com.trip.response.model.ResponseDto;
 import com.trip.util.ExceptionHandler;
-import com.trip.util.ResponseDto;
 
 @RestController
 @RequestMapping("/like")

@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trip.response.model.ResponseDto;
 import com.trip.user.model.UserDto;
 import com.trip.user.service.UserService;
-import com.trip.util.ResponseDto;
+import com.trip.util.ExceptionHandler;
 
 @RestController
 @RequestMapping("/user")
@@ -46,7 +47,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("로그인 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 
@@ -71,7 +72,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("아이디 체크 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<String>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 
@@ -91,7 +92,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("회원가입 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 
@@ -116,7 +117,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("사용자 검색 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 
@@ -143,7 +144,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("회원 정보 수정 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 
@@ -170,7 +171,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("회원 정보 삭제 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 }

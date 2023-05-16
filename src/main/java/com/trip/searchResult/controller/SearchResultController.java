@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trip.response.model.ResponseDto;
 import com.trip.searchResult.model.SearchResultDto;
 import com.trip.searchResult.service.SearchResultService;
 import com.trip.util.ExceptionHandler;
-import com.trip.util.ResponseDto;
 
 @RestController
 @RequestMapping("/search-result")
