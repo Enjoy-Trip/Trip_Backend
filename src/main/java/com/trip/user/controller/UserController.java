@@ -46,7 +46,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("로그인 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -71,7 +71,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("아이디 체크 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<String>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return new ResponseEntity<ResponseDto<String>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -91,7 +91,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("회원가입 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -116,7 +116,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("사용자 검색 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -143,7 +143,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("회원 정보 수정 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -170,7 +170,7 @@ public class UserController {
 			response.setState("FAIL");
 			response.setMessage("회원 정보 삭제 도중 오류가 발생했습니다.");
 
-			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
