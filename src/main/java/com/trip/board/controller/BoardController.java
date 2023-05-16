@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trip.response.model.ResponseDto;
 import com.trip.board.model.BoardDto;
 import com.trip.board.model.BoardCommentDto;
 import com.trip.board.service.BoardService;
@@ -30,75 +31,170 @@ public class BoardController {
 	
 	@GetMapping(value = "")
 	public ResponseEntity<?> boardList() {
+		ResponseDto<List<BoardDto>> response = new ResponseDto<List<BoardDto>>();
+		
 		try {
-			return new ResponseEntity<List<BoardDto>>(boardService.boardList(), HttpStatus.OK);
+			List<BoardDto> rst = boardService.boardList();
+			
+			response.setState("SUCCESS");
+			response.setMessage("게시글 불러오기 성공");
+			response.setData(rst);
+			
+			return new ResponseEntity<ResponseDto<List<BoardDto>>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("게시글을 불러오는 중 오류가 발생했습니다.");
+			
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 	
 	@GetMapping(value = "/{boardNo}")
 	public ResponseEntity<?> boardDetail(@PathVariable("boardNo") int boardNo) {
+		ResponseDto<BoardDto> response = new ResponseDto<BoardDto>();
+		
 		try {
-			return new ResponseEntity<BoardDto>(boardService.boardDetail(boardNo), HttpStatus.OK);
+			BoardDto board = boardService.boardDetail(boardNo);
+			
+			if (board == null) {
+				response.setState("FAIL");
+				response.setMessage("해당 게시글이 존재하지 않습니다.");
+			} else {
+				response.setState("SUCCESS");
+				response.setMessage("게시글 불러오기 성공");
+				response.setData(board);
+			}
+			
+			return new ResponseEntity<ResponseDto<BoardDto>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("게시글을 불러오는 중 오류가 발생했습니다.");
+			
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 	
 	@PostMapping(value = "")
 	public ResponseEntity<?> write(@RequestBody BoardDto boardDto) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		
 		try {
-			return new ResponseEntity<Integer>(boardService.write(boardDto), HttpStatus.OK);
+			int rst = boardService.write(boardDto);
+			
+			response.setState("SUCCESS");
+			response.setMessage("게시글 작성 성공");
+			response.setData(rst);
+			
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("게시글을 작성 중 오류가 발생했습니다.");
+			
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 	
 	@PostMapping(value = "/comment")
 	public ResponseEntity<?> writeComment(@RequestBody BoardCommentDto commentDto) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		
 		try {
-			return new ResponseEntity<Integer>(boardService.writeComment(commentDto), HttpStatus.OK);
+			int rst = boardService.writeComment(commentDto);
+			
+			response.setState("SUCCESS");
+			response.setMessage("댓글 작성 성공");
+			response.setData(rst);
+			
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("댓글 작성 중 오류가 발생했습니다.");
+			
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 	
 	@PutMapping(value = "/{boardNo}")
 	public ResponseEntity<?> updateBoard(@PathVariable("boardNo") int boardNo, @RequestBody BoardDto boardDto) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		
 		try {
 			boardDto.setBoardNo(boardNo);
-			return new ResponseEntity<Integer>(boardService.updateBoard(boardDto), HttpStatus.OK);
+			
+			int rst = boardService.updateBoard(boardDto);
+			
+			response.setState("SUCCESS");
+			response.setMessage("게시글 수정 성공");
+			response.setData(rst);
+			
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("게시글을 수정 중 오류가 발생했습니다.");
+			
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 	
 	@PutMapping(value = "/comment/{commentNo}")
 	public ResponseEntity<?> updateComment(@PathVariable("commentNo") int commentNo, @RequestBody BoardCommentDto commentDto) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		
 		try {
 			commentDto.setboardCommentNo(commentNo);
-			return new ResponseEntity<Integer>(boardService.updateComment(commentDto), HttpStatus.OK);
+			
+			int rst = boardService.updateComment(commentDto);
+			
+			response.setState("SUCCESS");
+			response.setMessage("댓글 수정 성공");
+			response.setData(rst);
+			
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("댓글 수정 중 오류가 발생했습니다.");
+			
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 	
 	@DeleteMapping(value = "/{boardNo}")
 	public ResponseEntity<?> delete(@PathVariable("boardNo") int boardNo) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		
 		try {
-			return new ResponseEntity<Integer>(boardService.deleteBoard(boardNo), HttpStatus.OK);
+			int rst = boardService.deleteBoard(boardNo);
+			
+			response.setState("SUCCESS");
+			response.setMessage("게시글 삭제 성공");
+			response.setData(rst);
+			
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("게시글을 삭제 중 오류가 발생했습니다.");
+			
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 	
 	@DeleteMapping(value = "/comment/{commentNo}")
 	public ResponseEntity<?> deleteComment(@PathVariable("commentNo") int commentNo) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		
 		try {
-			return new ResponseEntity<Integer>(boardService.deleteComment(commentNo), HttpStatus.OK);
+			int rst = boardService.deleteComment(commentNo);
+			
+			response.setState("SUCCESS");
+			response.setMessage("댓글 삭제 성공");
+			response.setData(rst);
+			
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("댓글 삭제 중 오류가 발생했습니다.");
+			
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 }
