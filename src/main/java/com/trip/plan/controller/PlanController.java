@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.plan.PlanService.PlanService;
 import com.trip.plan.model.PlanDto;
+import com.trip.response.model.ResponseDto;
 import com.trip.util.ExceptionHandler;
 
 @RestController
@@ -27,47 +28,86 @@ public class PlanController {
 		super();
 		this.planService = planService;
 	}
-	
-	//계획 리스트 뿌려주기
+
+	// 계획 리스트 뿌려주기
 	@GetMapping("/{userno}")
-	ResponseEntity<?> planList(@PathVariable("userno") int userNo){
+	ResponseEntity<?> planList(@PathVariable("userno") int userNo) {
+		ResponseDto<List<PlanDto>> response = new ResponseDto<List<PlanDto>>();
 		try {
-			return new ResponseEntity<List<PlanDto>>(planService.planList(userNo), HttpStatus.OK);
+			List<PlanDto> planList = planService.planList(userNo);
+			if (planList.size() == 0) {
+				response.setState("FAIL");
+				response.setMessage("계획이 하나도 없네요.");
+			} else {
+				response.setState("SUCCESS");
+				response.setMessage("계획들을 불러옵니다.");
+				response.setData(planList);
+			}
+			return new ResponseEntity<ResponseDto<List<PlanDto>>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
-	
-	//계획 추가
+
+	// 계획 추가
 	@PostMapping("/{userno}")
-	ResponseEntity<?> planAdd(@PathVariable("userno") int userNo, @RequestBody PlanDto planDto){
+	ResponseEntity<?> planAdd(@PathVariable("userno") int userNo, @RequestBody PlanDto planDto) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		planDto.setUserNo(userNo);
 		try {
-			planDto.setUserNo(userNo);
-			return new ResponseEntity<Integer>(planService.planAdd(planDto), HttpStatus.OK);
+			int rst = planService.planAdd(planDto);
+			if (rst == 0) {
+				response.setState("FAIL");
+				response.setMessage("등록에 실패 하였습니다.");
+			}
+			else {
+				response.setState("SUCCESS");
+				response.setMessage("등록에 성공 하였습니다.");
+			}
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
-	
-	//계획 삭제
+
+	// 계획 삭제
 	@DeleteMapping("/{planno}")
-	ResponseEntity<?> planDelete(@PathVariable("planno") int planNo){
+	ResponseEntity<?> planDelete(@PathVariable("planno") int planNo) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		try {
-			return new ResponseEntity<Integer>(planService.planDelete(planNo), HttpStatus.OK);
+			int rst = planService.planDelete(planNo);
+			if (rst == 0) {
+				response.setState("FAIL");
+				response.setMessage("삭제에 실패 하였습니다.");
+			}
+			else {
+				response.setState("SUCCESS");
+				response.setMessage("삭제에 성공 하였습니다.");
+			}
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
-	
-	//계획 수정
+
+	// 계획 수정
 	@PutMapping("/{planno}")
-	ResponseEntity<?> planModify(@PathVariable("planno") int planNo, @RequestBody PlanDto planDto){
+	ResponseEntity<?> planModify(@PathVariable("planno") int planNo, @RequestBody PlanDto planDto) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		try {
 			planDto.setPlanNo(planNo);
-			System.out.println(planDto);
-			return new ResponseEntity<Integer>(planService.planModify(planDto), HttpStatus.OK);
+			int rst = planService.planModify(planDto);
+			if (rst == 0) {
+				response.setState("FAIL");
+				response.setMessage("수정에 실패 하였습니다.");
+			}
+			else {
+				response.setState("SUCCESS");
+				response.setMessage("수정에 성공 하였습니다.");
+			}
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 }
