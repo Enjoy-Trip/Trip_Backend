@@ -107,6 +107,26 @@
 		where 
 			board_no = #{boardNo}
 	</select>
+	
+	<select id="getComment" parameterType="int" resultMap="comment">
+		select 
+			board_comment_no,
+			board_no,
+			board_comment_content,
+			board_comment_time,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile
+		from 
+			board_comment
+		inner join 
+			user
+		on 
+			board_comment.user_no = user.user_no
+		where
+			board_comment_no = #{boardCommentNo}
+	</select>
 
 	<select id="getImageList" resultType="String">
 		select 

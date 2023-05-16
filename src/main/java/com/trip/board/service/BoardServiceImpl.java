@@ -68,4 +68,9 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteComment(int commentNo) {
 		return boardMapper.deleteComment(commentNo);
 	}
+
+	@Override
+	public BoardCommentDto getBoardComment(int commentNo) {
+		return boardMapper.getComment(commentNo);
+	}
 }

@@ -8,6 +8,7 @@ import com.trip.board.model.BoardCommentDto;
 public interface BoardService {
 	List<BoardDto> boardList();
 	BoardDto boardDetail(int boardNo);
+	BoardCommentDto getBoardComment(int commentNo);
 	int write(BoardDto boardDto);
 	int writeComment(BoardCommentDto commentDto);
 	int updateBoard(BoardDto boardDto);

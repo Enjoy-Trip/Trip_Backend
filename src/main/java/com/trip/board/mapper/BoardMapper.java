@@ -16,6 +16,7 @@ public interface BoardMapper {
 	void writeImages(BoardDto boardDto);
 	int writeComment(BoardCommentDto commentDto);
 	int updateBoard(BoardDto boardDto);
+	BoardCommentDto getComment (int boardCommentNo);
 	int updateComment(BoardCommentDto commentDto);
 	int deleteBoard(int boardNo);
 	int deleteComment(int commentNo);

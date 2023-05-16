@@ -119,13 +119,20 @@ public class BoardController {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		
 		try {
-			boardDto.setBoardNo(boardNo);
+			BoardDto board = boardService.boardDetail(boardNo);
 			
-			int rst = boardService.updateBoard(boardDto);
-			
-			response.setState("SUCCESS");
-			response.setMessage("게시글 수정 성공");
-			response.setData(rst);
+			if (board == null) {
+				response.setState("FAIL");
+				response.setMessage("해당 게시물이 존재하지 않습니다.");
+			} else {
+				boardDto.setBoardNo(boardNo);
+				
+				int rst = boardService.updateBoard(boardDto);
+				
+				response.setState("SUCCESS");
+				response.setMessage("게시글 수정 성공");
+				response.setData(rst);
+			}
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
@@ -141,13 +148,20 @@ public class BoardController {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		
 		try {
-			commentDto.setboardCommentNo(commentNo);
+			BoardCommentDto comment = boardService.getBoardComment(commentNo);
 			
-			int rst = boardService.updateComment(commentDto);
-			
-			response.setState("SUCCESS");
-			response.setMessage("댓글 수정 성공");
-			response.setData(rst);
+			if (comment == null) {
+				response.setState("FAIL");
+				response.setMessage("해당 댓글이 존재하지 않습니다.");
+			} else {
+				commentDto.setboardCommentNo(commentNo);
+				
+				int rst = boardService.updateComment(commentDto);
+				
+				response.setState("SUCCESS");
+				response.setMessage("댓글 수정 성공");
+				response.setData(rst);
+			}
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
