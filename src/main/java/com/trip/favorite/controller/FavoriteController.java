@@ -1,6 +1,5 @@
 package com.trip.favorite.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
