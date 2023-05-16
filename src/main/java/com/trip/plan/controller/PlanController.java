@@ -57,13 +57,18 @@ public class PlanController {
 		
 		try {
 			PlanDto planDto = planService.planDetail(planNo);
-			response.setState("SUCCESS");
-			response.setMessage("계획 상세보기를 실행합니다.");
-			response.setData(planDto);
+			
+			if (planDto == null) {
+				response.setState("FAIL");
+				response.setMessage("해당 계획이 존재하지 않습니다.");
+			} else {
+				response.setState("SUCCESS");
+				response.setMessage("계획 상세보기를 실행합니다.");
+				response.setData(planDto);
+			}
 			
 			return new ResponseEntity<ResponseDto<PlanDto>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			
 			response.setState("FAIL");
 			response.setMessage("계획 상세보기에 실패하였습니다.");
 			
@@ -78,8 +83,10 @@ public class PlanController {
 		
 		try {
 			UserDto userDto = new UserDto();
+			
 			userDto.setUserNo(userNo);
 			planDto.setPlanUser(userDto);
+			
 			int rst = planService.planAdd(planDto);
 
 			response.setState("SUCCESS");
@@ -100,17 +107,25 @@ public class PlanController {
 	@PutMapping("/{planno}")
 	ResponseEntity<?> planModify(@PathVariable("planno") int planNo, @RequestBody PlanDto planDto) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		
 		try {
-			planDto.setPlanNo(planNo);
-			int rst = planService.planModify(planDto);
+			PlanDto plan = planService.planDetail(planNo);
+			
+			if (plan == null) {
+				response.setState("FAIL");
+				response.setMessage("해당 계획이 존재하지 않습니다.");
+			} else {
+				planDto.setPlanNo(planNo);
+				
+				int rst = planService.planModify(planDto);
 
-			response.setState("SUCCESS");
-			response.setMessage("수정에 성공 하였습니다.");
-			response.setData(rst);
+				response.setState("SUCCESS");
+				response.setMessage("수정에 성공 하였습니다.");
+				response.setData(rst);
+			}
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			
 			response.setState("FAIL");
 			response.setMessage("계획 수정에 실패하였습니다.");
 			
@@ -122,6 +137,7 @@ public class PlanController {
 	@DeleteMapping("/{planno}")
 	ResponseEntity<?> planDelete(@PathVariable("planno") int planNo) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		
 		try {
 			int rst = planService.planDelete(planNo);
 
@@ -131,7 +147,6 @@ public class PlanController {
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			
 			response.setState("FAIL");
 			response.setMessage("계획 삭제에 실패하였습니다.");
 			
