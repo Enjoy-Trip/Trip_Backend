@@ -12,15 +12,12 @@ public interface PlanService {
 	//계획 추가
 	int planAdd(PlanDto planDto);
 	
+	//계획 삭제
+	int planDelete(int planNo);
+
 	//계획 수정
 	int planModify(PlanDto planDto);
-	
-	//계획 삭제
-	int planDelete(PlanDto planDto);
 
 	//리스트 눌렀을때 detail 뿌리기
 	PlanDto planDetail(int planNo);
-
-	Integer planDelete(int planNo);
-	
 }
