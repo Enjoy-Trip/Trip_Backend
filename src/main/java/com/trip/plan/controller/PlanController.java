@@ -51,7 +51,7 @@ public class PlanController {
 	@PostMapping("/{userno}")
 	ResponseEntity<?> planAdd(@PathVariable("userno") int userNo, @RequestBody PlanDto planDto) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
-		planDto.setUserNo(userNo);
+		
 		try {
 			int rst = planService.planAdd(planDto);
 
