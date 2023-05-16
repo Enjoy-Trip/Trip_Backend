@@ -254,8 +254,7 @@ CREATE TABLE `plan_place_list`(
 	`contentid` INT NOT NULL,
 	`plan_day` INT DEFAULT -1,
 	PRIMARY KEY (`plan_no`, `contentid`),
-	CONSTRAINT `plan_to_plan_place_list_plan_no_fk` FOREIGN KEY (`plan_no`) REFERENCES `plan` (`plan_no`),
-	CONSTRAINT `attraction_info_to_plan_place_list_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`)
+	CONSTRAINT `plan_to_plan_place_list_plan_no_fk` FOREIGN KEY (`plan_no`) REFERENCES `plan` (`plan_no`)
 )	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -272,8 +271,7 @@ CREATE TABLE `like_place`(
 	`like_time`  DATETIME DEFAULT CURRENT_TIMESTAMP,
 	`like_comment`    VARCHAR(100) DEFAULT NULL,
 	PRIMARY KEY (`user_no`, `contentid`),
-	CONSTRAINT `user_to_like_place_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`),
-	CONSTRAINT `attraction_info_to_like_place_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`)
+	CONSTRAINT `user_to_like_place_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`)
 )	ENGINE=innodb DEFAULT charset=utf8mb3; 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
