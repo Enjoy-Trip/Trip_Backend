@@ -46,6 +46,7 @@ public class PlanController {
 		} catch (Exception e) {
 			response.setState("FAIL");
 			response.setMessage("계획 불러오기에 실패하였습니다.");
+			
 			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}

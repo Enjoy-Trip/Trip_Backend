@@ -7,7 +7,7 @@
 		<result column="plan_no" property="planNo" />
 		<result column="plan_title" property="planTitle" />
 		<result column="plan_time" property="planTime" />
-		<association property="boardUser" javaType="UserDto">
+		<association property="planUser" javaType="UserDto">
 			<result column="user_no" property="userNo" />
 			<result column="user_id" property="userId" />
 			<result column="user_name" property="userName" />
@@ -29,7 +29,7 @@
 			<result column="user_profile" property="userProfile" />
 		</association>
 		<collection property="planPlaces"
-			column="{planNo = plan_no}" select="planList" javaType="List"
+			column="{planNo = plan_no}" select="planPlaceLisr" javaType="List"
 			ofType="PlanPlaceDto" />
 	</resultMap>
 
@@ -39,25 +39,58 @@
 	</resultMap>
 	
 	<select id="planList" parameterType="int" resultMap="planDtoSimple">
-		select *
-		from plan
-		where user_no = #{userNo};
+		select
+			plan_no,
+			plan_title,
+			plan_time,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile
+		from 
+			plan
+		inner join
+			user
+		on
+			plan.user_no = user.user_no
+		where 
+			plan.user_no = #{userNo}
 	</select>
 
 	<select id="planDetail" parameterType="int" resultMap="planDtoDetail">
-		select 
-			user_no, 
-			plan.plan_no, 
-			plan_start_date,
-			plan_end_date, 
+		select
+			plan.plan_no,
+			plan_title,
 			plan_time,
-			plan_content, 
-			plan_title
+			plan_content,
+			plan_start_date,
+			plan_end_date,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile
 		from 
-			plan inner join plan_detail
-		on plan.plan_no = plan_detail.plan_no
+			plan
+		inner join
+			user
+		on
+			plan.user_no = user.user_no
+		inner join
+			plan_detail
+		on
+			plan.plan_no = plan_detail.plan_no
+		where 
+			plan.plan_no = #{planNo};
+	</select>
+	
+	<select id="planPlaceLisr" resultMap="placeList">
+		select
+			contentid,
+			plan_day
+		from
+			plan_place_list
 		where
-			plan.plan_no = 1;
+			plan_no = #{planNo}
 	</select>
 
 	<insert id="planAdd" parameterType="planDto"

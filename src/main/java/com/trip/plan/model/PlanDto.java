@@ -2,8 +2,10 @@ package com.trip.plan.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.trip.user.model.UserDto;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PlanDto {
 	private UserDto planUser;
 	private int planNo;
