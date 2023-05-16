@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trip.searchResult.model.SearchResultDto;
 import com.trip.searchResult.service.SearchResultService;
 import com.trip.util.ExceptionHandler;
+import com.trip.util.ResponseDto;
 
 @RestController
 @RequestMapping("/search-result")
@@ -25,6 +26,7 @@ public class SearchResultController {
 		this.searchResultService = searchResultService;
 	}
 	
+	//처음에 모든 정보를 리스트로 뿌려주는 역할
 	@GetMapping(value = "")
 	public ResponseEntity<?> searchResultList() {
 		try {
@@ -34,6 +36,7 @@ public class SearchResultController {
 		}
 	}
 	
+	//
 	@PutMapping(value = "/{word}")
 	public ResponseEntity<?> updateSearchResult(@PathVariable("word") String word) {
 		try {
@@ -43,6 +46,7 @@ public class SearchResultController {
 		}
 	}
 	
+	//
 	@DeleteMapping(value = "")
 	public ResponseEntity<?> deleteSearchResult() {
 		try {
