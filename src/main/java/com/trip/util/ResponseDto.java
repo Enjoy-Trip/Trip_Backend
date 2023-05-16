@@ -1,4 +1,4 @@
-package com.trip.response.model;
+package com.trip.util;
 
 public class ResponseDto<T> {
 	private String state;
