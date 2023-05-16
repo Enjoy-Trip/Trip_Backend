@@ -177,13 +177,20 @@ public class AttractionController {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		
 		try {
-			attractionCommentDto.setAttractionCommentNo(commentNo);
+			AttractionCommentDto comment = attractionService.getAttractionComment(commentNo);
 			
-			int rst = attractionService.updateComment(attractionCommentDto);
-			
-			response.setState("SUCCESS");
-			response.setMessage("댓글 수정 성공");
-			response.setData(rst);
+			if (comment == null) {
+				response.setState("FAIL");
+				response.setMessage("해당 댓글이 존재하지 않습니다.");
+			} else {
+				attractionCommentDto.setAttractionCommentNo(commentNo);
+				
+				int rst = attractionService.updateComment(attractionCommentDto);
+				
+				response.setState("SUCCESS");
+				response.setMessage("댓글 수정 성공");
+				response.setData(rst);
+			}
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {

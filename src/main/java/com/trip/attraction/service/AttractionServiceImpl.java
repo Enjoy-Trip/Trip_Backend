@@ -69,4 +69,9 @@ public class AttractionServiceImpl implements AttractionService {
 	public int deleteComment(int commentNo) {
 		return attractionMapper.deleteComment(commentNo);
 	}
+
+	@Override
+	public AttractionCommentDto getAttractionComment(int commentNo) {
+		return attractionMapper.getAttractionComment(commentNo);
+	}
 }

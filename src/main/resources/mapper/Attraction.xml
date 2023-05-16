@@ -94,6 +94,26 @@
 			contentid = #{contentid}
 	</select>
 	
+	<select id="getAttractionComment" parameterType="int" resultMap="comment">
+		select 
+			attraction_comment_no,
+			contentid,
+			attraction_comment_content,
+			attraction_comment_time,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile
+		from 
+			attraction_comment
+		inner join 
+			user
+		on 
+			attraction_comment.user_no = user.user_no
+		where 
+			attraction_comment_no = #{attractionCommentNo}
+	</select>
+	
 	<select id="attractionList" parameterType="map" resultMap="attractionSimple">
 		select
 			contentid,
