@@ -31,21 +31,17 @@ public class FavoriteController {
 
 		try {
 			List<FavoriteDto> FavoriteDtoList = favoriteService.myFavoriteList(userNo);
-			System.out.println(FavoriteDtoList);
-			if(!FavoriteDtoList.isEmpty()) {
-				response.setState("SUCCESS");
-				response.setMessage("정상적으로 여행지 리스트를 불러 왔습니다.");
-				response.setData(FavoriteDtoList);
-			}
-			else {
-				response.setState("FALE");
-				response.setMessage("여행지 리스트를 불러오지 못했습니다.");
-			}
+
+			response.setState("SUCCESS");
+			response.setMessage("정상적으로 여행지 리스트를 불러 왔습니다.");
+			response.setData(FavoriteDtoList);
+			
 			return new ResponseEntity<ResponseDto<List<FavoriteDto>>>(response, HttpStatus.OK);
 			
 		} catch (Exception e) {
-			response.setState("FALE");
+			response.setState("FAIL");
 			response.setMessage("여행지 리스트를 불러오는 중에 오류가 발생했습니다.");
+			
 			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
@@ -57,19 +53,15 @@ public class FavoriteController {
 
 		try {
 			List<FavoriteDto> FavoriteDtoList = favoriteService.likeUserList(contentid);
-			if(!FavoriteDtoList.isEmpty()) {
-				response.setState("SUCCESS");
-				response.setMessage("정상적으로 이용자의 리스트를 불러 왔습니다.");
-				response.setData(FavoriteDtoList);
-			}
-			else {
-				response.setState("FALE");
-				response.setMessage("이용자 리스트를 불러 오지 못했습니다.");
-			}
+
+			response.setState("SUCCESS");
+			response.setMessage("정상적으로 이용자의 리스트를 불러 왔습니다.");
+			response.setData(FavoriteDtoList);
+			
 			return new ResponseEntity<ResponseDto<List<FavoriteDto>>>(response, HttpStatus.OK);
 			
 		} catch (Exception e) {
-			response.setState("FALE");
+			response.setState("FAIL");
 			response.setMessage("이용자 리스트를 불러 오는 중에 오류가 발생했습니다.");
 			return ExceptionHandler.exceptionResponse(response, e);
 		}
