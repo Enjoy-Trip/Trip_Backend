@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +43,16 @@ public class PlanController {
 		try {
 			planDto.setUserNo(userNo);
 			return new ResponseEntity<Integer>(planService.planAdd(planDto), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
+	
+	//계획 삭제
+	@DeleteMapping("/{planno}")
+	ResponseEntity<?> planDelete(@PathVariable("planno") int planNo){
+		try {
+			return new ResponseEntity<Integer>(planService.planDelete(planNo), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}

@@ -30,16 +30,28 @@
 			user_no = #{userNo}
 	</select>
 
-	<insert id="planAdd" parameterType="planDto">
+	<insert id="planAdd" parameterType="planDto" useGeneratedKeys="true" keyProperty="planNo">
 		insert into
-			plan (plan_no, user_no, plan_title, plan_time)
+			plan (user_no, plan_title, plan_time)
 		values
-			(#{planNo}, #{userNo}, #{planTitle}, #{planTime});
-			
-		insert into
-			plan_detail	(plan_no, plan_start_date, plan_end_date, plan_content)
-		values
-			(#{planNo}, #{planStartDate}, #{planEndDate}, #{planContent})
+			(#{userNo}, #{planTitle}, #{planTime});
 	</insert>
+	
+	<insert id="planDetailAdd" parameterType="planDto">
+			insert into
+				plan_detail	(plan_no, plan_start_date, plan_end_date, plan_content)
+			values
+				(#{planNo}, #{planStartDate}, #{planEndDate}, #{planContent})
+	</insert>
+	
+	<delete id="planDelete" parameterType="int">
+		delete from
+			plan
+		where plan_no = #{planNo};
+		
+		delete from
+			plan_detail
+		where plan_no = #{planNo};
+	</delete>
 
 </mapper>

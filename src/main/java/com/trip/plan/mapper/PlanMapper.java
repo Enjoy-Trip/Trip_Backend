@@ -13,6 +13,7 @@ public interface PlanMapper {
 	
 	//계획 추가
 	int planAdd(PlanDto planDto);
+	int planDetailAdd(PlanDto planDto);
 	
 	//계획 수정
 	int planModify(PlanDto planDto);
@@ -22,4 +23,6 @@ public interface PlanMapper {
 
 	//리스트 눌렀을때 detail 뿌리기
 	PlanDto planDetail(int planNo);
+
+	Integer planDelete(int planNo);
 }

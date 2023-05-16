@@ -24,7 +24,8 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public int planAdd(PlanDto planDto) {
-		return planMapper.planAdd(planDto);
+		planMapper.planAdd(planDto);
+		return planMapper.planDetailAdd(planDto);
 	}
 
 	@Override
@@ -40,6 +41,11 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public PlanDto planDetail(int planNo) {
 		return planMapper.planDetail(planNo);
+	}
+
+	@Override
+	public Integer planDelete(int planNo) {
+		return planMapper.planDelete(planNo);
 	}
 
 }
