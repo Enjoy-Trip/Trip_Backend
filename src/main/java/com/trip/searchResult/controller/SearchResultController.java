@@ -26,27 +26,57 @@ public class SearchResultController {
 		this.searchResultService = searchResultService;
 	}
 	
-	//처음에 모든 정보를 리스트로 뿌려주는 역할
+	//검색어에 대한 횟수
 	@GetMapping(value = "")
-	public ResponseEntity<?> searchResultList() {
+	public ResponseEntity<?> searchResultList() {		
+		
+		ResponseDto<List<SearchResultDto>> response = new ResponseDto<List<SearchResultDto>>();
+		
 		try {
-			return new ResponseEntity<List<SearchResultDto>>(searchResultService.searchResultList(), HttpStatus.OK);
+			List<SearchResultDto> searchResultDtoList= searchResultService.searchResultList();
+			if(!searchResultDtoList.isEmpty()) {
+				response.setState("SUCCESS");
+				response.setMessage("정상적으로 검색어 정보를 불러왔습니다.");
+				response.setData(searchResultDtoList);
+			}
+			else {
+				response.setState("FAIL");
+				response.setMessage("검색어 정보를 불러오지 못했습니다.");
+			}
+			return new ResponseEntity<ResponseDto<List<SearchResultDto>>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("검색어 정보를 불러오는 중에 오류가 발생했습니다.");
+			return new ResponseEntity<ResponseDto<List<SearchResultDto>>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 	
-	//
+	//카운트 늘려주기
 	@PutMapping(value = "/{word}")
 	public ResponseEntity<?> updateSearchResult(@PathVariable("word") String word) {
+		
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		
 		try {
-			return new ResponseEntity<Integer>(searchResultService.updateSearchResult(word), HttpStatus.OK);
+			int count = searchResultService.updateSearchResult(word);
+			if(count != 0) {
+				response.setState("SUCCESS");
+				response.setMessage("정상적으로 검색 횟수를 늘렸습니다.");
+				response.setData(count);
+			}
+			else {
+				response.setState("FAIL");
+				response.setMessage("검색 횟수를 증가시키지 못했습니다.");
+			}
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			return ExceptionHandler.exceptionHandling(e);
+			response.setState("FAIL");
+			response.setMessage("검색 횟수를 증가시키는 중에 오류가 발생했습니다.");
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 	
-	//
+	//주기적으로 초기화 할 때 사용.
 	@DeleteMapping(value = "")
 	public ResponseEntity<?> deleteSearchResult() {
 		try {

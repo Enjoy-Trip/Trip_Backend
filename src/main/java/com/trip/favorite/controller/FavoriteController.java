@@ -46,7 +46,7 @@ public class FavoriteController {
 			
 		} catch (Exception e) {
 			response.setState("FALE");
-			response.setMessage("여행지 리스트를 불러오지 못했습니다.");
+			response.setMessage("여행지 리스트를 불러오는 중에 오류가 발생했습니다.");
 			return new ResponseEntity<ResponseDto<List<FavoriteDto>>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
@@ -71,7 +71,7 @@ public class FavoriteController {
 			
 		} catch (Exception e) {
 			response.setState("FALE");
-			response.setMessage("이용자 리스트를 불러 오지 못했습니다.");
+			response.setMessage("이용자 리스트를 불러 오는 중에 오류가 발생했습니다.");
 			return new ResponseEntity<ResponseDto<List<FavoriteDto>>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
