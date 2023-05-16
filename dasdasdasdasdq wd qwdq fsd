@@ -1,0 +1,270 @@
+[33mcommit b8d29c335a088486e030e01f7732fbc971529cf3[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Merge: 4bbd2fa 68721bb
+Author: Kimjeonghwan <doyun30@naver.com>
+Date:   Sat May 13 01:16:37 2023 +0900
+
+    Merge branch 'main' of https://github.com/Enjoy-Trip/Trip_Backend
+
+[33mcommit 4bbd2faa4f3e5ed26796a9a2d7b56d52d3251c50[m
+Author: Kimjeonghwan <doyun30@naver.com>
+Date:   Sat May 13 01:15:44 2023 +0900
+
+    Feat : 뉴스 리스트 출력
+
+[33mcommit 68721bb79f1c46e681920246cbcbf3082b16878d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Sat May 13 01:08:01 2023 +0900
+
+    Refactor : 회원 관련 Query 수정
+
+[33mcommit 78c04845492498508b49d9ee804a9437bcbf60c0[m
+Author: Kimjeonghwan <doyun30@naver.com>
+Date:   Sat May 13 00:48:38 2023 +0900
+
+    Feat: 뉴스 관리 패키지 생성
+
+[33mcommit 5ac2e35514d882fb019ac3270b6f77d845aefb16[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Fri May 12 17:29:43 2023 +0900
+
+    Refactor : ERD 수정
+
+[33mcommit f652c503d9d290f43680b9f33a3201225db15fa3[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Fri May 12 17:22:07 2023 +0900
+
+    Refactor : 공공 데이터 API로 처리 가능한 부분 삭제
+
+[33mcommit 4e8b08f7b9e02aac0ffd1b50e0d1c986686117a5[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Fri May 12 17:20:24 2023 +0900
+
+    Refactor : DB 설계 수정
+
+[33mcommit 6840b831e5d32566a48a674b2ffe0366805ef031[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Fri May 12 11:55:53 2023 +0900
+
+    Feat : 검색 결과 갱신, 삭제 REST API 추가
+
+[33mcommit 2dcb700db4871e5e411fcd113855ca150515f621[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 11 17:46:15 2023 +0900
+
+    Feat : 검색 결과 중간 저장
+
+[33mcommit 49629bc82f70c93e7dca7252bc3c11f132e45a42[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 11 16:22:27 2023 +0900
+
+    Refactor : REST API URL 리팩토링
+
+[33mcommit 8033c87c2b5e51f05d6ebab39bff4beacb5bc12c[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 11 16:09:55 2023 +0900
+
+    Feat : 검색 결과 조회, 업데이트, 삭제 REST API 구현
+
+[33mcommit 1112f7fde0a153e610fe593d0b8b496a1a5480ba[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 11 14:18:11 2023 +0900
+
+    Feat : 여행지 댓글 수정 REST API 구현, Web Configuration 수정
+
+[33mcommit 0aaee0107615bfaec69a15285cc4fd542e393dee[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 11 13:49:09 2023 +0900
+
+    Feat : JWT Interceptor 프로토타입 구현
+
+[33mcommit b8cb4604b4dc9cb61183e04cefbfa7e676509b53[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 11 13:46:10 2023 +0900
+
+    Feat : JWT Service 프로토타입 구현
+
+[33mcommit 8c81e2d38456e628e16f0e13449514e8ce7af1bf[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 11 13:41:48 2023 +0900
+
+    Feat : AOP 활용한 Log 출력 구현
+
+[33mcommit 11e9991667e4f277c5477d2b95f325b0a45c7cc4[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 11 13:28:31 2023 +0900
+
+    Feat : JWT config 파일 초기화
+
+[33mcommit d6c483f8784e82821fe229178739c1234165eeb1[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 11 09:48:18 2023 +0900
+
+    Refactor : Config 파일 역할에 따라 분리
+
+[33mcommit 5bb7b025f85bd1fa5c3e3c92dff9b44f72ef60b0[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Sat May 6 20:17:30 2023 +0900
+
+    Feat : Database ERD 추가, 쿼리문 추가
+
+[33mcommit 528da99b857d13b9a9a8e8d074a180268deafedf[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Sat May 6 01:45:44 2023 +0900
+
+    Feat : 여행지 댓글 삭제 REST API 구현
+
+[33mcommit 337fed5559317559b95f882fa38244ccb52d1271[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Sat May 6 01:36:31 2023 +0900
+
+    Feat : 관광지 상세 검색 REST API 구현
+
+[33mcommit 48d89f8412cb995b41e472f901b7c43d7a7ccc78[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Fri May 5 22:01:00 2023 +0900
+
+    Refactor : 관광지 검색 REST API 최적화
+
+[33mcommit bbaa418668c7baecc3626acad9efb7791ac3873e[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 4 17:45:10 2023 +0900
+
+    Feat : 관광지 조회 REST API 구현
+
+[33mcommit c10f1f1840c6ded881b3d283a17f7358554c983c[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Thu May 4 11:45:40 2023 +0900
+
+    Refactor : xml 형식 수정, Transactional 어노테이션 추가
+
+[33mcommit 13d8592903ba48713960b776f6a6230a4236ea00[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Thu May 4 02:08:47 2023 +0900
+
+    Feat : 게시물, 댓글 삭제 REST API 구현
+
+[33mcommit 19b88fb3eeb4271f9728943abcd680ae4d24c11b[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Thu May 4 01:52:36 2023 +0900
+
+    Feat : 댓글 수정 REST API 구현
+
+[33mcommit 4ecd19966d993b373302f5e49040d5099ec1b613[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Thu May 4 01:32:11 2023 +0900
+
+    Feat : 게시판 수정 REST API 구현
+
+[33mcommit a9dc5f93bf06d10c651b2d1ea48acf7cd3a3bf4f[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Thu May 4 00:34:28 2023 +0900
+
+    Feat : 댓글 등록 REST API 구현
+
+[33mcommit 825d7f74920eb2ec41e5df9d64e25cc73f3872d4[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Wed May 3 17:50:16 2023 +0900
+
+    Feat : 게시판등록REST API 구현
+
+[33mcommit cab96b7c10b5f2e0a26fe25fc44a4218ad37ebc6[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Wed May 3 00:20:56 2023 +0900
+
+    Feat : JSON 반환 시 NULL인 필드는 포함되지 않도록 구현
+
+[33mcommit 78de57ae9f430220024a4dcaa6fb04534f7ae491[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Tue May 2 23:51:45 2023 +0900
+
+    Feat : 사용자 검색 REST API 구현
+
+[33mcommit 1a2514c083591a9d9520a79064c0b3c861d6d10e[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Tue May 2 23:40:39 2023 +0900
+
+    Refactor ; 시도, 구군 Dto 수정
+
+[33mcommit 86d34a53619a7e4731d0ff65a8799de9c4bf99f0[m
+Author: donghyeon.seo <sdh20282@gmail.com>
+Date:   Tue May 2 23:10:53 2023 +0900
+
+    Feat : 게시판 조회/상세조회 REST API 구현
+
+[33mcommit 6ee5c0e5a50f1c02e86a5221771e7dc91b31b224[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Tue May 2 17:52:43 2023 +0900
+
+    Feat : Board REST API 중간 저장
+
+[33mcommit 69ac780d494a7766b2325e75e10fadeb5812256b[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Tue May 2 17:16:32 2023 +0900
+
+    Feat : 지역 정보 REST API 구현
+
+[33mcommit 765059eaa3c941015fd6f278a54eecfca2b3a777[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Tue May 2 16:45:33 2023 +0900
+
+    Refactor : mapper scan 경로 수정
+
+[33mcommit ecf1dd571f312f52e451339bd5e7f1204d0d8d79[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Tue May 2 16:43:35 2023 +0900
+
+    Refactor : mapper scan 명시
+
+[33mcommit 153f6bc030dc964f9961fcd2f206ced7f28e717f[m
+Author: sdh20282 <sdh20282@gmail.com>
+Date:   Tue May 2 15:35:45 2023 +0900
+
+    Refactor : AOP 초기화
+
+[33mcommit f80dddc283826ef88f4d8f33a1808029371f7acc[m
+Author: sdh20282 <=>
+Date:   Tue May 2 15:32:16 2023 +0900
+
+    Refactor : Component-Scan 명시
+
+[33mcommit db16aa9888949650ae13370839080ca153160a87[m
+Author: 서동현 <=>
+Date:   Tue May 2 15:28:07 2023 +0900
+
+    Feat : CORS 정책 추가
+
+[33mcommit c3ef1d6dcc8027fa2f53eb1cf51a0e58fe8d2ffa[m
+Author: 서동현 <=>
+Date:   Tue May 2 15:23:05 2023 +0900
+
+    Feat : 회원 정보 수정, 회원 탈퇴 구현
+
+[33mcommit d30fc7107c85900363d0dc53f4b8050476306830[m
+Author: 서동현 <=>
+Date:   Tue May 2 14:47:36 2023 +0900
+
+    Refactor : 사용하지 않는 코드 삭제
+
+[33mcommit 81772a199edeabfb250b14e9d99c5a7358e191c5[m
+Author: 서동현 <=>
+Date:   Tue May 2 14:45:15 2023 +0900
+
+    Feat : 회원가입 REST API 구현
+
+[33mcommit c0affbb637dfb523f553123e516564ff969f26f2[m
+Author: 서동현 <=>
+Date:   Tue May 2 14:05:07 2023 +0900
+
+    Feat : 로그인 REST API 구현
+
+[33mcommit 1aa5b5258e24f0b235547313f432cce95f886a55[m
+Author: 서동현 <=>
+Date:   Tue May 2 13:12:00 2023 +0900
+
+    Feat : 백엔드 초기 설정 완료
+
+[33mcommit 92b6bb3737acad1d8edf62c240fb47ff8f50afbc[m
+Author: donghyeon.seo <82585734+sdh20282@users.noreply.github.com>
+Date:   Tue May 2 12:01:39 2023 +0900
+
+    Initial commit
