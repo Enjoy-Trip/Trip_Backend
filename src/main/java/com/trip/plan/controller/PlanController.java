@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +54,18 @@ public class PlanController {
 	ResponseEntity<?> planDelete(@PathVariable("planno") int planNo){
 		try {
 			return new ResponseEntity<Integer>(planService.planDelete(planNo), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionHandler.exceptionHandling(e);
+		}
+	}
+	
+	//계획 수정
+	@PutMapping("/{planno}")
+	ResponseEntity<?> planModify(@PathVariable("planno") int planNo, @RequestBody PlanDto planDto){
+		try {
+			planDto.setPlanNo(planNo);
+			System.out.println(planDto);
+			return new ResponseEntity<Integer>(planService.planModify(planDto), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionHandler.exceptionHandling(e);
 		}

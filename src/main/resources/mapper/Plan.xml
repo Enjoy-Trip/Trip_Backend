@@ -54,4 +54,18 @@
 		where plan_no = #{planNo};
 	</delete>
 
+	<update id="planModify" parameterType="planDto">
+		update plan_detail
+		set 
+			plan_start_date = #{planStartDate},
+			plan_end_date = #{planEndDate},
+			plan_content = #{planContent}
+		where plan_no = #{planNo};
+		
+		update plan
+		set 
+			plan_title = #{planTitle},
+			plan_time = #{planTime}
+		where plan_no = #{planNo};
+	</update>
 </mapper>

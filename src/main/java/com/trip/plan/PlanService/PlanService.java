@@ -20,4 +20,5 @@ public interface PlanService {
 
 	//리스트 눌렀을때 detail 뿌리기
 	PlanDto planDetail(int planNo);
+
 }
