@@ -26,11 +26,7 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public int planAdd(PlanDto planDto) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		
 		planMapper.planAdd(planDto);
-		
-		System.out.println(planDto);
 		
 		if (planDto.getPlanContent() != null) {
 			planMapper.planDetailAdd(planDto);
