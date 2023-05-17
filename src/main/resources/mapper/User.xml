@@ -24,6 +24,15 @@
 			and
 			user_password = #{userPassword}
 	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update
+			user
+		set
+			token = #{refreshToken}
+		where
+			user_no = #{userNo}
+	</update>
 
 	<insert id="signup" parameterType="userDto">
 		insert into 

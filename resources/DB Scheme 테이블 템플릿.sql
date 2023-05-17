@@ -138,6 +138,7 @@ CREATE TABLE `user` (
 	`user_password` VARCHAR(40) NOT NULL,
 	`user_name`     VARCHAR(40) NOT NULL,
 	`user_profile`  VARCHAR(100) DEFAULT NULL,
+  	`token` VARCHAR(1000) NULL DEFAULT NULL,
 	PRIMARY KEY (`user_no`)
 ) 	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;

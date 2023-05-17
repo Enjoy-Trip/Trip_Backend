@@ -1,6 +1,7 @@
 package com.trip.user.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto login(UserDto user) throws SQLException {
 		return userMapper.login(user);
+	}
+
+	@Override
+	public int saveRefreshToken(int userNo, String refreshToken) throws SQLException {
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("userNo", "" + userNo);
+		map.put("refreshToken", refreshToken);
+		
+		return userMapper.saveRefreshToken(map);
 	}
 
 	@Override

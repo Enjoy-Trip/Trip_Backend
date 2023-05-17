@@ -1,12 +1,20 @@
 package com.trip.config;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.trip.interceptor.JwtInterceptor;
+
 
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
+	private final List<String> patterns = Arrays.asList();
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
@@ -17,5 +25,10 @@ public class WebConfiguration implements WebMvcConfigurer {
 				HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
 				HttpMethod.PATCH.name())
 		.maxAge(1800);
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new JwtInterceptor()).addPathPatterns(patterns);
 	}
 }
