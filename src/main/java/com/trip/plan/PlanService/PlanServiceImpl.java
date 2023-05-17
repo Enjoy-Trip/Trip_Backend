@@ -3,11 +3,13 @@ package com.trip.plan.PlanService;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.trip.plan.mapper.PlanMapper;
 import com.trip.plan.model.PlanDto;
 
 @Service
+@Transactional
 public class PlanServiceImpl implements PlanService {
 
 	private PlanMapper planMapper;
@@ -24,7 +26,11 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public int planAdd(PlanDto planDto) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
 		planMapper.planAdd(planDto);
+		
+		System.out.println(planDto);
 		
 		if (planDto.getPlanContent() != null) {
 			planMapper.planDetailAdd(planDto);

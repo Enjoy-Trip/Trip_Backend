@@ -110,10 +110,10 @@
 	
 	<insert id="planPlaceListAdd" parameterType="planDto">
 		insert into
-			plan_place_list (plan_no, contentid, day)
+			plan_place_list (plan_no, contentid, plan_day)
 		values
 			<foreach collection="planPlaces" item="item" separator=" , ">
-				(#{plan_no}, #{item.contentid}, #{item.day})
+				(#{planNo}, #{item.contentid}, #{item.planDay})
 			</foreach>
 	</insert>
 
