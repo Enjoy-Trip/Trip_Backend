@@ -14,7 +14,7 @@ import com.trip.interceptor.JwtInterceptor;
 
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
-	private final List<String> patterns = Arrays.asList("/user/**", "/attraction/**", "/like/**");
+	private final List<String> patterns = Arrays.asList("/user/**", "/attraction/**", "/like/**", "/plan/**");
 	
 	@Autowired
 	private JwtInterceptor jwtInterceptor;
