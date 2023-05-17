@@ -10,4 +10,5 @@ import com.trip.favorite.model.FavoriteDto;
 public interface FavoriteMapper {
 	List<FavoriteDto> myFavoriteList(int userNo);
 	List<FavoriteDto> likeUserList(int contentid);
+	int makeLike(FavoriteDto favoriteDto);
 }

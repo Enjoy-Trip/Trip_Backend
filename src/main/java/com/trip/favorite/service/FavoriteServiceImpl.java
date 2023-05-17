@@ -28,4 +28,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return favoriteMapper.likeUserList(contentid);
 	}
 
+	@Override
+	public int makeLike(FavoriteDto favoriteDto) {
+		return favoriteMapper.makeLike(favoriteDto);
+	}
+
 }

@@ -31,6 +31,10 @@ public class JwtInterceptor implements HandlerInterceptor {
 		if (request.getRequestURI().startsWith("/attraction") && request.getMethod().equals("GET")) {
 			return true;
 		}
+		
+		if (request.getRequestURI().startsWith("/like/attraction") && request.getMethod().equals("GET")) {
+			return true;
+		}
 
 		final String token = request.getHeader(HEADER_AUTH);
 

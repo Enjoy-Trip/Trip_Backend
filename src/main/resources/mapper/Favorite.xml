@@ -46,5 +46,10 @@
 			contentid = #{contentid}
 	</select>
 	
-	
+	<insert id="makeLike" parameterType="map">
+		insert into
+			like_place (user_no, contentid, like_comment)
+		values
+			(#{userDto.userNo}, #{contentid} #{favotiteComment})
+	</insert>
 </mapper>
