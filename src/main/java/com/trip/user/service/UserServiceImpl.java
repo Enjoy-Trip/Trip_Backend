@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public int refresh(String refreshToken) {
+		return 0;
+	}
+
+	@Override
 	public UserDto login(UserDto user) throws SQLException {
 		return userMapper.login(user);
 	}

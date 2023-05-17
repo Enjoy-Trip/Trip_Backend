@@ -9,6 +9,7 @@ import com.trip.user.model.UserDto;
 
 @Mapper
 public interface UserMapper {
+	int refresh(String refreshToken) throws SQLException;
 	UserDto login(UserDto user) throws SQLException;
 	int saveRefreshToken(HashMap<String, String> map) throws SQLException;
 	int signup(UserDto user) throws SQLException;

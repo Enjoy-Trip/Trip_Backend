@@ -10,6 +10,15 @@
 		<result column="user_name" property="userName" />
 		<result column="user_profile" property="userProfile" />
 	</resultMap>
+	
+	<select id="refresh" parameterType="String" resultType="int">
+		select
+			user_no
+		from
+			user
+		where
+			token = #{refreshToken}
+	</select>
 
 	<select id="login" resultMap="user">
 		select 

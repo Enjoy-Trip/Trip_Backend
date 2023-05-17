@@ -33,6 +33,28 @@ public class UserController {
 		this.userService = userService;
 		this.jwtService = jwtService;
 	}
+	
+	@PostMapping(value = "/refresh")
+	public ResponseEntity<?> login(@RequestBody String refreshToken) {
+		ResponseDto<String> response = new ResponseDto<String>();
+		
+		try {
+			int userNo = userService.refresh(refreshToken);
+			
+			String AccessToken = jwtService.createAccessToken("userNo", userNo);
+			
+			response.setState("SUCCESS");
+			response.setMessage("정상적으로 로그인이 진행되었습니다.");
+			response.setData(AccessToken);
+
+			return new ResponseEntity<ResponseDto<String>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.setState("FAIL");
+			response.setMessage("로그인 도중 오류가 발생했습니다.");
+
+			return ExceptionHandler.exceptionResponse(response, e);
+		}
+	}
 
 	@PostMapping(value = "/login")
 	public ResponseEntity<?> login(@RequestBody UserDto user) {
