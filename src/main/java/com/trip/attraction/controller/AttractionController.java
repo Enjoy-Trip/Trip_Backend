@@ -3,6 +3,8 @@ package com.trip.attraction.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,19 +18,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.response.model.ResponseDto;
+import com.trip.user.model.UserDto;
 import com.trip.attraction.model.AttractionCommentDto;
 import com.trip.attraction.model.AttractionDto;
 import com.trip.attraction.service.AttractionService;
+import com.trip.jwt.JwtService;
 import com.trip.util.ExceptionHandler;
 
 @RestController
 @RequestMapping("/attraction")
 public class AttractionController {
+	private final String TOKEN = "Access-Token";
 	private AttractionService attractionService;
+	private JwtService jwtService;
 	
-	public AttractionController(AttractionService attractionService) {
+	public AttractionController(AttractionService attractionService, JwtService jwtService) {
 		super();
 		this.attractionService = attractionService;
+		this.jwtService = jwtService;
 	}
 
 	@GetMapping("")
@@ -77,10 +84,17 @@ public class AttractionController {
 	}
 	
 	@PostMapping(value = "")
-	public ResponseEntity<?> createAttraction(@RequestBody AttractionDto attractionDto) {
+	public ResponseEntity<?> createAttraction(@RequestBody AttractionDto attractionDto, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
+			if (attractionDto.getAttractionUser() == null) {
+				attractionDto.setAttractionUser(new UserDto());
+			}
+			
+			attractionDto.getAttractionUser().setUserNo(jwtService.getData(token, "userNo"));
+			
 			int rst = attractionService.createAttraction(attractionDto);
 			
 			response.setState("SUCCESS");
@@ -97,8 +111,9 @@ public class AttractionController {
 	}
 	
 	@PutMapping(value = "/{contentid}")
-	public ResponseEntity<?> updateAttraction(@PathVariable("contentid") int contentid, @RequestBody AttractionDto attractiontDto) {
+	public ResponseEntity<?> updateAttraction(@PathVariable("contentid") int contentid, @RequestBody AttractionDto attractionDto, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
 			AttractionDto attr = attractionService.attractionDetail(contentid);
@@ -107,9 +122,14 @@ public class AttractionController {
 				response.setState("FAIL");
 				response.setMessage("수정하고자 하는 여행지가 존재하지 않습니다.");
 			} else {
-				attractiontDto.setContentid(contentid);
+				if (attractionDto.getAttractionUser() == null) {
+					attractionDto.setAttractionUser(new UserDto());
+				}
 				
-				int rst = attractionService.updateAttraction(attractiontDto);
+				attractionDto.setContentid(contentid);
+				attractionDto.getAttractionUser().setUserNo(jwtService.getData(token, "userNo"));
+				
+				int rst = attractionService.updateAttraction(attractionDto);
 				
 				response.setState("SUCCESS");
 				response.setMessage("여행지 수정 성공");
@@ -126,8 +146,9 @@ public class AttractionController {
 	}
 	
 	@DeleteMapping(value = "/{contentid}")
-	public ResponseEntity<?> deleteAttraction(@PathVariable("contentid") int contentid) {
+	public ResponseEntity<?> deleteAttraction(@PathVariable("contentid") int contentid, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
 			AttractionDto attr = attractionService.attractionDetail(contentid);
@@ -136,11 +157,19 @@ public class AttractionController {
 				response.setState("FAIL");
 				response.setMessage("삭제하고자 하는 여행지가 존재하지 않습니다.");
 			} else {
-				int rst = attractionService.deleteAttraction(contentid);
+				int userNo = jwtService.getData(token, "userNo");
+				AttractionDto attractionDto = attractionService.attractionDetail(contentid);
 				
-				response.setState("SUCCESS");
-				response.setMessage("여행지 삭제 성공");
-				response.setData(rst);
+				if (userNo != attractionDto.getAttractionUser().getUserNo()) {
+					response.setState("FAIL");
+					response.setMessage("다른 사람의 여행지는 삭제할 수 없습니다.");
+				} else {
+					int rst = attractionService.deleteAttraction(contentid);
+					
+					response.setState("SUCCESS");
+					response.setMessage("여행지 삭제 성공");
+					response.setData(rst);
+				}
 			}
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
@@ -153,10 +182,20 @@ public class AttractionController {
 	}
 	
 	@PostMapping(value = "/comment")
-	public ResponseEntity<?> writeAttractionComment(@RequestBody AttractionCommentDto attractionCommentDto) {
+	public ResponseEntity<?> writeAttractionComment(@RequestBody AttractionCommentDto attractionCommentDto, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
+		
+		System.out.println("##################");
+		System.out.println(token);
 		
 		try {
+			if (attractionCommentDto.getAttractionCommentUser() == null) {
+				attractionCommentDto.setAttractionCommentUser(new UserDto());
+			}
+			
+			attractionCommentDto.getAttractionCommentUser().setUserNo(jwtService.getData(token, "userNo"));
+			
 			int rst = attractionService.writeComment(attractionCommentDto);
 			
 			response.setState("SUCCESS");
@@ -173,8 +212,9 @@ public class AttractionController {
 	}
 	
 	@PutMapping("/comment/{commentNo}")
-	public ResponseEntity<?> updateAttractionComment(@PathVariable("commentNo") int commentNo, @RequestBody AttractionCommentDto attractionCommentDto) {
+	public ResponseEntity<?> updateAttractionComment(@PathVariable("commentNo") int commentNo, @RequestBody AttractionCommentDto attractionCommentDto, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
 			AttractionCommentDto comment = attractionService.getAttractionComment(commentNo);
@@ -183,7 +223,12 @@ public class AttractionController {
 				response.setState("FAIL");
 				response.setMessage("해당 댓글이 존재하지 않습니다.");
 			} else {
+				if (attractionCommentDto.getAttractionCommentUser() == null) {
+					attractionCommentDto.setAttractionCommentUser(new UserDto());
+				}
+				
 				attractionCommentDto.setAttractionCommentNo(commentNo);
+				attractionCommentDto.getAttractionCommentUser().setUserNo(jwtService.getData(token, "userNo"));
 				
 				int rst = attractionService.updateComment(attractionCommentDto);
 				
@@ -202,15 +247,24 @@ public class AttractionController {
 	}
 	
 	@DeleteMapping("/comment/{commentNo}")
-	public ResponseEntity<?> deleteAttractionComment(@PathVariable("commentNo") int commentNo) {
+	public ResponseEntity<?> deleteAttractionComment(@PathVariable("commentNo") int commentNo, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
-			int rst = attractionService.deleteComment(commentNo);
+			int userNo = jwtService.getData(token, "userNo");
+			AttractionCommentDto attractionCommentDto = attractionService.getAttractionComment(commentNo);
 			
-			response.setState("SUCCESS");
-			response.setMessage("댓글 삭제 성공");
-			response.setData(rst);
+			if (userNo != attractionCommentDto.getAttractionCommentUser().getUserNo()) {
+				response.setState("FAIL");
+				response.setMessage("다른 사람의 댓글은 삭제할 수 없습니다.");
+			} else {
+				int rst = attractionService.deleteComment(commentNo);
+				
+				response.setState("SUCCESS");
+				response.setMessage("댓글 삭제 성공");
+				response.setData(rst);
+			}
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {

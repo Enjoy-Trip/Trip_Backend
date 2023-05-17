@@ -24,6 +24,7 @@ import com.trip.util.ExceptionHandler;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+	private final String TOKEN = "Access-Token";
 	private UserService userService;
 	private JwtService jwtService;
 
@@ -141,9 +142,7 @@ public class UserController {
 	@PutMapping(value = "")
 	public ResponseEntity<?> modify(@RequestBody UserDto user, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
-		String token = request.getHeader("Access-Token");
-		
-		System.out.println("hihi");
+		String token = request.getHeader(TOKEN);
 		
 		try {
 			int userNo = jwtService.getData(token, "userNo");
@@ -175,7 +174,8 @@ public class UserController {
 	@DeleteMapping(value = "")
 	public ResponseEntity<?> delete(HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
-		String token = request.getHeader("Access-Token");
+		String token = request.getHeader(TOKEN);
+		
 		try {
 			int userNo = jwtService.getData(token, "userNo");
 
