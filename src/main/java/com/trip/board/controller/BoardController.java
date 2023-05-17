@@ -148,12 +148,17 @@ public class BoardController {
 				response.setMessage("해당 게시물이 존재하지 않습니다.");
 			} else {
 				int userNo = jwtService.getData(token, "userNo");
-				BoardDto targetBoard = boardService.boardDetail(boardNo);
 				
-				if (false) {
-					
+				if (userNo != board.getBoardUser().getUserNo()) {
+					response.setState("FAIL");
+					response.setMessage("다른 사람의 게시글은 수정할 수 없습니다.");
 				} else {
+					if (boardDto.getBoardUser() == null) {
+						boardDto.setBoardUser(new UserDto());
+					}
+					
 					boardDto.setBoardNo(boardNo);
+					boardDto.getBoardUser().setUserNo(userNo);
 					
 					int rst = boardService.updateBoard(boardDto);
 					
@@ -173,8 +178,9 @@ public class BoardController {
 	}
 	
 	@PutMapping(value = "/comment/{commentNo}")
-	public ResponseEntity<?> updateComment(@PathVariable("commentNo") int commentNo, @RequestBody BoardCommentDto commentDto) {
+	public ResponseEntity<?> updateComment(@PathVariable("commentNo") int commentNo, @RequestBody BoardCommentDto commentDto, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
 			BoardCommentDto comment = boardService.getBoardComment(commentNo);
@@ -183,13 +189,25 @@ public class BoardController {
 				response.setState("FAIL");
 				response.setMessage("해당 댓글이 존재하지 않습니다.");
 			} else {
-				commentDto.setboardCommentNo(commentNo);
+				int userNo = jwtService.getData(token, "userNo");
 				
-				int rst = boardService.updateComment(commentDto);
-				
-				response.setState("SUCCESS");
-				response.setMessage("댓글 수정 성공");
-				response.setData(rst);
+				if (userNo != comment.getboardCommentUser().getUserNo()) {
+					response.setState("FAIL");
+					response.setMessage("다른 사람의 댓글은 수정할 수 없습니다.");
+				} else {
+					if (commentDto.getboardCommentUser() == null) {
+						commentDto.setboardCommentUser(new UserDto());
+					}
+					
+					commentDto.setboardCommentNo(commentNo);
+					commentDto.getboardCommentUser().setUserNo(userNo);
+					
+					int rst = boardService.updateComment(commentDto);
+					
+					response.setState("SUCCESS");
+					response.setMessage("댓글 수정 성공");
+					response.setData(rst);
+				}
 			}
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
@@ -202,15 +220,30 @@ public class BoardController {
 	}
 	
 	@DeleteMapping(value = "/{boardNo}")
-	public ResponseEntity<?> delete(@PathVariable("boardNo") int boardNo) {
+	public ResponseEntity<?> delete(@PathVariable("boardNo") int boardNo, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
-			int rst = boardService.deleteBoard(boardNo);
+			BoardDto board = boardService.boardDetail(boardNo);
 			
-			response.setState("SUCCESS");
-			response.setMessage("게시글 삭제 성공");
-			response.setData(rst);
+			if (board == null) {
+				response.setState("FAIL");
+				response.setMessage("삭제하고자 하는 게시글이 존재하지 않습니다.");
+			} else {
+				int userNo = jwtService.getData(token, "userNo");
+				
+				if (userNo != board.getBoardUser().getUserNo()) {
+					response.setState("FAIL");
+					response.setMessage("다른 사람의 게시글은 삭제할 수 없습니다.");
+				} else {
+					int rst = boardService.deleteBoard(boardNo);
+					
+					response.setState("SUCCESS");
+					response.setMessage("게시글 삭제 성공");
+					response.setData(rst);
+				}
+			}
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
@@ -222,15 +255,30 @@ public class BoardController {
 	}
 	
 	@DeleteMapping(value = "/comment/{commentNo}")
-	public ResponseEntity<?> deleteComment(@PathVariable("commentNo") int commentNo) {
+	public ResponseEntity<?> deleteComment(@PathVariable("commentNo") int commentNo, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
-			int rst = boardService.deleteComment(commentNo);
+			BoardCommentDto comment = boardService.getBoardComment(commentNo);
 			
-			response.setState("SUCCESS");
-			response.setMessage("댓글 삭제 성공");
-			response.setData(rst);
+			if (comment == null) {
+				response.setState("FAIL");
+				response.setMessage("해당 댓글이 존재하지 않습니다.");
+			} else {
+				int userNo = jwtService.getData(token, "userNo");
+				
+				if (userNo != comment.getboardCommentUser().getUserNo()) {
+					response.setState("FAIL");
+					response.setMessage("다른 사람의 댓글은 삭제할 수 없습니다.");
+				} else {
+					int rst = boardService.deleteComment(commentNo);
+					
+					response.setState("SUCCESS");
+					response.setMessage("댓글 삭제 성공");
+					response.setData(rst);
+				}
+			}
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
