@@ -142,38 +142,33 @@ public class UserController {
 	public ResponseEntity<?> modify(@RequestBody UserDto user, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader("Access-Token");
+		
+		System.out.println("hihi");
+		
+		try {
+			int userNo = jwtService.getData(token, "userNo");
 
-		if (jwtService.checkToken(token)) {
-			try {
-				int userNo = jwtService.getData(token, "userNo");
+			UserDto modifyUser = userService.info(userNo);
 
-				UserDto modifyUser = userService.info(userNo);
-
-				if (modifyUser == null) {
-					response.setState("FAIL");
-					response.setMessage("수정하고자 하는 사용자가 존재하지 않습니다.");
-				} else {
-					user.setUserNo(userNo);
-
-					int rst = userService.modify(user);
-
-					response.setState("SUCCESS");
-					response.setMessage("정상적으로 회원 정보 수정이 진행되었습니다.");
-					response.setData(rst);
-				}
-
-				return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
-			} catch (Exception e) {
+			if (modifyUser == null) {
 				response.setState("FAIL");
-				response.setMessage("회원 정보 수정 도중 오류가 발생했습니다.");
+				response.setMessage("수정하고자 하는 사용자가 존재하지 않습니다.");
+			} else {
+				user.setUserNo(userNo);
 
-				return ExceptionHandler.exceptionResponse(response, e);
+				int rst = userService.modify(user);
+
+				response.setState("SUCCESS");
+				response.setMessage("정상적으로 회원 정보 수정이 진행되었습니다.");
+				response.setData(rst);
 			}
-		} else {
-			response.setState("FAIL");
-			response.setMessage("토큰 기한이 만료되었습니다.");
 
-			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.setState("FAIL");
+			response.setMessage("회원 정보 수정 도중 오류가 발생했습니다.");
+
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 
@@ -181,36 +176,28 @@ public class UserController {
 	public ResponseEntity<?> delete(HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader("Access-Token");
+		try {
+			int userNo = jwtService.getData(token, "userNo");
 
-		if (jwtService.checkToken(token)) {
-			try {
-				int userNo = jwtService.getData(token, "userNo");
-				
-				UserDto modifyUser = userService.info(userNo);
+			UserDto modifyUser = userService.info(userNo);
 
-				if (modifyUser == null) {
-					response.setState("FAIL");
-					response.setMessage("삭제하고자 하는 사용자가 존재하지 않습니다.");
-				} else {
-					int rst = userService.delete(userNo);
-
-					response.setState("SUCCESS");
-					response.setMessage("정상적으로 회원 정보 삭제가 완료되었습니다.");
-					response.setData(rst);
-				}
-
-				return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
-			} catch (Exception e) {
+			if (modifyUser == null) {
 				response.setState("FAIL");
-				response.setMessage("회원 정보 삭제 도중 오류가 발생했습니다.");
+				response.setMessage("삭제하고자 하는 사용자가 존재하지 않습니다.");
+			} else {
+				int rst = userService.delete(userNo);
 
-				return ExceptionHandler.exceptionResponse(response, e);
+				response.setState("SUCCESS");
+				response.setMessage("정상적으로 회원 정보 삭제가 완료되었습니다.");
+				response.setData(rst);
 			}
-		} else {
-			response.setState("FAIL");
-			response.setMessage("토큰 기한이 만료되었습니다.");
 
-			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.setState("FAIL");
+			response.setMessage("회원 정보 삭제 도중 오류가 발생했습니다.");
+
+			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
 }

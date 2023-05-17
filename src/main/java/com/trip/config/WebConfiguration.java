@@ -3,6 +3,7 @@ package com.trip.config;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -11,10 +12,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.trip.interceptor.JwtInterceptor;
 
-
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
-	private final List<String> patterns = Arrays.asList();
+	private final List<String> patterns = Arrays.asList("/user");
+	
+	@Autowired
+	private JwtInterceptor jwtInterceptor;
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
@@ -29,6 +32,6 @@ public class WebConfiguration implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new JwtInterceptor()).addPathPatterns(patterns);
+		registry.addInterceptor(jwtInterceptor).addPathPatterns(patterns);
 	}
 }

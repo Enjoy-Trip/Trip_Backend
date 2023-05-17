@@ -9,22 +9,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.trip.exception.UnAuthorizedException;
 import com.trip.jwt.JwtService;
 
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
-
 	public static final Logger logger = LoggerFactory.getLogger(JwtInterceptor.class);
-
-	private static final String HEADER_AUTH = "auth-token";
-
+	private static final String HEADER_AUTH = "Access-Token";
+	
 	@Autowired
 	private JwtService jwtService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		if (request.getRequestURI().equals("/user/login") 
+				|| request.getRequestURI().startsWith("/user") && request.getMethod().equals("GET") 
+				|| request.getRequestURI().equals("/user") && request.getMethod().equals("POST")) {
+			return true;
+		}
+
 		final String token = request.getHeader(HEADER_AUTH);
 
 		if (token != null && jwtService.checkToken(token)) {
@@ -32,7 +35,15 @@ public class JwtInterceptor implements HandlerInterceptor {
 			return true;
 		} else {
 			logger.info("토큰 사용 불가능 : {}", token);
-			throw new UnAuthorizedException();
+
+			String str = "{\"state\": \"FAIL\", \"message\": \"토큰이 유효하지 않습니다.\"}";
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.getWriter().print(str);
+
+			return false;
 		}
 	}
 
