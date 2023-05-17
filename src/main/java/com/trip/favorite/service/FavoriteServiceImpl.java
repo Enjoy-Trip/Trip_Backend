@@ -1,5 +1,6 @@
 package com.trip.favorite.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -33,4 +34,8 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return favoriteMapper.makeLike(favoriteDto);
 	}
 
+	@Override
+	public int delteLike(HashMap<String, String> map) {
+		return favoriteMapper.delteLike(map);
+	}
 }

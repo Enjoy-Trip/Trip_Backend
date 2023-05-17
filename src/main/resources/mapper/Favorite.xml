@@ -34,6 +34,7 @@
 	<select id="likeUserList" parameterType="int" resultMap="FavoriteUser">
 		select
 			user.user_no,
+			user_name,
 			like_time,
 			like_comment
 		from
@@ -46,10 +47,19 @@
 			contentid = #{contentid}
 	</select>
 	
-	<insert id="makeLike" parameterType="map">
+	<insert id="makeLike" parameterType="FavoriteDto">
 		insert into
 			like_place (user_no, contentid, like_comment)
 		values
 			(#{userDto.userNo}, #{contentid} #{favotiteComment})
 	</insert>
+	
+	<delete id="delteLike" parameterType="map">
+		delete from
+			like_place
+		where
+			user_no = #{userNo}
+			and
+			contentid = #{contentid}
+	</delete>
 </mapper>
