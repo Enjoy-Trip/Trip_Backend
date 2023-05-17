@@ -2,6 +2,8 @@
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,19 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.response.model.ResponseDto;
+import com.trip.user.model.UserDto;
 import com.trip.board.model.BoardDto;
 import com.trip.board.model.BoardCommentDto;
 import com.trip.board.service.BoardService;
+import com.trip.jwt.JwtService;
 import com.trip.util.ExceptionHandler;
 
 @RestController
 @RequestMapping("/board")
 public class BoardController {
+	private final String TOKEN = "Access-Token";
 	private BoardService boardService;
+	private JwtService jwtService;
 
-	public BoardController(BoardService boardService) {
+	public BoardController(BoardService boardService, JwtService jwtService) {
 		super();
 		this.boardService = boardService;
+		this.jwtService = jwtService;
 	}
 	
 	@GetMapping(value = "")
@@ -75,10 +82,17 @@ public class BoardController {
 	}
 	
 	@PostMapping(value = "")
-	public ResponseEntity<?> write(@RequestBody BoardDto boardDto) {
+	public ResponseEntity<?> write(@RequestBody BoardDto boardDto, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
+			if (boardDto.getBoardUser() == null) {
+				boardDto.setBoardUser(new UserDto());
+			}
+			
+			boardDto.getBoardUser().setUserNo(jwtService.getData(token, "userNo"));
+			
 			int rst = boardService.write(boardDto);
 			
 			response.setState("SUCCESS");
@@ -95,10 +109,17 @@ public class BoardController {
 	}
 	
 	@PostMapping(value = "/comment")
-	public ResponseEntity<?> writeComment(@RequestBody BoardCommentDto commentDto) {
+	public ResponseEntity<?> writeComment(@RequestBody BoardCommentDto commentDto, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
+			if (commentDto.getboardCommentUser() == null) {
+				commentDto.setboardCommentUser(new UserDto());
+			}
+			
+			commentDto.getboardCommentUser().setUserNo(jwtService.getData(token, "userNo"));
+			
 			int rst = boardService.writeComment(commentDto);
 			
 			response.setState("SUCCESS");
@@ -115,8 +136,9 @@ public class BoardController {
 	}
 	
 	@PutMapping(value = "/{boardNo}")
-	public ResponseEntity<?> updateBoard(@PathVariable("boardNo") int boardNo, @RequestBody BoardDto boardDto) {
+	public ResponseEntity<?> updateBoard(@PathVariable("boardNo") int boardNo, @RequestBody BoardDto boardDto, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
 		
 		try {
 			BoardDto board = boardService.boardDetail(boardNo);
@@ -125,13 +147,20 @@ public class BoardController {
 				response.setState("FAIL");
 				response.setMessage("해당 게시물이 존재하지 않습니다.");
 			} else {
-				boardDto.setBoardNo(boardNo);
+				int userNo = jwtService.getData(token, "userNo");
+				BoardDto targetBoard = boardService.boardDetail(boardNo);
 				
-				int rst = boardService.updateBoard(boardDto);
-				
-				response.setState("SUCCESS");
-				response.setMessage("게시글 수정 성공");
-				response.setData(rst);
+				if (false) {
+					
+				} else {
+					boardDto.setBoardNo(boardNo);
+					
+					int rst = boardService.updateBoard(boardDto);
+					
+					response.setState("SUCCESS");
+					response.setMessage("게시글 수정 성공");
+					response.setData(rst);
+				}
 			}
 			
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
