@@ -152,6 +152,7 @@ DROP TABLE IF EXISTS `board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `board` (
 	`board_no` INT auto_increment NOT NULL,
+    `board_type` INT default 0,
 	`user_no`  INT NOT NULL,
 	`board_title`    VARCHAR(100) NOT NULL,
 	`board_time`     DATETIME DEFAULT CURRENT_TIMESTAMP,

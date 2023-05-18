@@ -32,7 +32,6 @@ public class LoggingAspect {
 		stopWatch.start();
 
 		Object proceed = joinPoint.proceed();
-
 		stopWatch.stop();
 
 		logger.debug("summary : {}", stopWatch.shortSummary());
