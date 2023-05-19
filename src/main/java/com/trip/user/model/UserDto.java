@@ -9,6 +9,15 @@ public class UserDto {
 	private String userPassword;
 	private String userName;
 	private String userProfile;
+	private String userNickName;
+
+	public String getUserNickName() {
+		return userNickName;
+	}
+
+	public void setUserNickName(String userNickName) {
+		this.userNickName = userNickName;
+	}
 
 	public int getUserNo() {
 		return userNo;
@@ -42,6 +51,7 @@ public class UserDto {
 		this.userName = userName;
 	}
 
+
 	public String getUserProfile() {
 		return userProfile;
 	}
@@ -53,6 +63,6 @@ public class UserDto {
 	@Override
 	public String toString() {
 		return "UserDto [userNo=" + userNo + ", userId=" + userId + ", userPassword=" + userPassword + ", userName="
-				+ userName + ", userProfile=" + userProfile + "]";
+				+ userName + ", userProfile=" + userProfile + ", userNickName=" + userNickName + "]";
 	}
 }
