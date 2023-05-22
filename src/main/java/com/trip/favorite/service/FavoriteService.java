@@ -9,5 +9,5 @@ public interface FavoriteService {
 	List<FavoriteDto> myFavoriteList(int userNo);
 	List<FavoriteDto> likeUserList(int contentid);
 	int makeLike(FavoriteDto favoriteDto);
-	int delteLike(HashMap<String, String> map);
+	int deleteLike(HashMap<String, String> map);
 }

@@ -54,7 +54,7 @@
 			(#{userDto.userNo}, #{contentid} #{favotiteComment})
 	</insert>
 	
-	<delete id="delteLike" parameterType="map">
+	<delete id="deleteLike" parameterType="map">
 		delete from
 			like_place
 		where

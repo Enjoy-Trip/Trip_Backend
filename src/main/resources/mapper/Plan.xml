@@ -118,7 +118,7 @@
 	</insert>
 
 	<delete id="planDelete" parameterType="int">
-		delete from
+<!-- 		delete from
 			plan_detail
 		where
 			plan_no = #{planNo};
@@ -126,7 +126,7 @@
 		delete from
 			plan_place_list
 		where
-			plan_no = #{planNo};
+			plan_no = #{planNo}; -->
 
 		delete from
 			plan

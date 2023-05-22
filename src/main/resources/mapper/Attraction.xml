@@ -293,7 +293,7 @@
 	</update>
 	
 	<delete id="deleteAttraction" parameterType="int">
-		delete from
+<!-- 		delete from
 			attraction_comment
 		where
 			contentid = #{contentid};
@@ -307,7 +307,7 @@
 			attraction_detail_info
 		where
 			contentid = #{contentid};
-			
+			 -->
 		delete from
 			attraction_info
 		where
