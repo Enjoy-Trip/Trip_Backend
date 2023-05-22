@@ -119,7 +119,7 @@ public class UserController {
 	@PostMapping(value = "")
 	public ResponseEntity<?> signup(@RequestBody UserDto user) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
-
+		System.out.println(user.toString());
 		try {
 			int rst = userService.signup(user);
 
