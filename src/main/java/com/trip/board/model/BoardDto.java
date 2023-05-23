@@ -15,10 +15,6 @@ public class BoardDto {
 	private List<String> boardImages;
 	private boolean boardLoginCheck;
 	private List<BoardCommentDto> boardCommentList;
-	
-	public void setBoardCommentList(List<BoardCommentDto> boardCommentList) {
-		this.boardCommentList = boardCommentList;
-	}
 
 	public boolean isBoardLoginCheck() {
 		return boardLoginCheck;

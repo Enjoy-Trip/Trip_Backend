@@ -100,11 +100,8 @@ public class BoardController {
 	public ResponseEntity<?> commentList(@PathVariable("boardNo") int boardNo, HttpServletRequest request) {
 		ResponseDto<List<BoardCommentDto>> response = new ResponseDto<List<BoardCommentDto>>();
 		
-		System.out.println("called");
-		
 		String token = request.getHeader(TOKEN);
 		
-		System.out.println(token);
 		try {
 			BoardDto board = boardService.boardDetail(boardNo);
 
@@ -126,9 +123,6 @@ public class BoardController {
 							temp.setBoardCommentLoginCheck(true);
 					}
 				}
-				
-				System.out.println("=============");
-				System.out.println(list);
 				
 				response.setState("SUCCESS");
 				response.setMessage("댓글 불러오기 성공");
