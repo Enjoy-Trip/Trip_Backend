@@ -10,6 +10,15 @@ public class AttractionCommentDto {
 	private String attractionCommentContent;
 	private String attractionCommentTime;
 	private UserDto attractionCommentUser;
+	private boolean attractionUserCheck;
+
+	public boolean isAttractionUserCheck() {
+		return attractionUserCheck;
+	}
+
+	public void setAttractionUserCheck(boolean attractionUserCheck) {
+		this.attractionUserCheck = attractionUserCheck;
+	}
 
 	public int getAttractionCommentNo() {
 		return attractionCommentNo;

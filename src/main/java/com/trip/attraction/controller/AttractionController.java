@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -85,11 +86,23 @@ public class AttractionController {
 	
 	
 	@GetMapping("/{contentid}/comment")
-	public ResponseEntity<?> attractionDetailComment(@PathVariable("contentid") int contentid) {
+	public ResponseEntity<?> attractionDetailComment(@PathVariable("contentid") int contentid ,HttpServletRequest request) {
 		ResponseDto<List<AttractionCommentDto>> response = new ResponseDto<List<AttractionCommentDto>>();
+		String token = request.getHeader(TOKEN);
+		
 		try {
 			List<AttractionCommentDto> rst = attractionService.attractionCommentList(contentid);
-
+			
+			if(token !=null) {
+				int userNo = jwtService.getData(token, "userNo");
+				for(int i = 0 ; i < rst.size(); i++) {
+					AttractionCommentDto temp = rst.get(i);
+					if(temp.getAttractionCommentUser().getUserNo() == userNo) {
+						temp.setAttractionUserCheck(true);
+					}
+				}
+			}				
+			
 			if (rst == null) {
 				response.setState("FAIL");
 				response.setMessage("해당 여행지의 댓글이 존재하지 않습니다.");
