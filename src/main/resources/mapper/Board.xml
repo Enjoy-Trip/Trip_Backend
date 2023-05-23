@@ -13,6 +13,9 @@
 			<result column="user_name" property="userName" />
 			<result column="user_profile" property="userProfile" />
 		</association>
+		<collection property="boardImages"
+			column="{boardNo = board_no}" select="getImageList" javaType="List"
+			ofType="String" />
 	</resultMap>
 
 	<resultMap type="boardDto" id="boardDetail">

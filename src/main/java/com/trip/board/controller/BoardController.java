@@ -47,6 +47,8 @@ public class BoardController {
 			response.setMessage("게시글 불러오기 성공");
 			response.setData(rst);
 			
+			System.out.println(rst);
+			
 			return new ResponseEntity<ResponseDto<List<BoardDto>>>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			response.setState("FAIL");
