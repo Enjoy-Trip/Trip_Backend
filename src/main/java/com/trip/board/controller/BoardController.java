@@ -48,8 +48,6 @@ public class BoardController {
 			response.setMessage("게시글 불러오기 성공");
 			response.setData(rst);
 			
-			System.out.println(rst);
-			
 			return new ResponseEntity<ResponseDto<List<BoardDto>>>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			response.setState("FAIL");
@@ -64,8 +62,6 @@ public class BoardController {
 		ResponseDto<BoardDto> response = new ResponseDto<BoardDto>();
 		
 		String token = request.getHeader(TOKEN);
-		
-		System.out.println(token);
 		try {
 			BoardDto board = boardService.boardDetail(boardNo);
 
@@ -76,7 +72,7 @@ public class BoardController {
 				
 				if(token != null) {
 					int userNo = jwtService.getData(token, "userNo");
-					System.out.println(userNo);
+
 					board.setBoardLoginCheck(true);
 					List<BoardCommentDto> list = board.getboardCommentList();
 					BoardCommentDto temp;
@@ -104,6 +100,8 @@ public class BoardController {
 	public ResponseEntity<?> commentList(@PathVariable("boardNo") int boardNo, HttpServletRequest request) {
 		ResponseDto<List<BoardCommentDto>> response = new ResponseDto<List<BoardCommentDto>>();
 		
+		System.out.println("called");
+		
 		String token = request.getHeader(TOKEN);
 		
 		System.out.println(token);
@@ -114,12 +112,10 @@ public class BoardController {
 				response.setState("FAIL");
 				response.setMessage("해당 게시글이 존재하지 않습니다.");
 			} else {
-				List<BoardCommentDto> list = new ArrayList<BoardCommentDto>();
+				List<BoardCommentDto> list = board.getboardCommentList();
 				
 				if(token != null) {
 					int userNo = jwtService.getData(token, "userNo");
-					
-					list = board.getboardCommentList();
 					
 					BoardCommentDto temp;
 					
@@ -130,6 +126,9 @@ public class BoardController {
 							temp.setBoardCommentLoginCheck(true);
 					}
 				}
+				
+				System.out.println("=============");
+				System.out.println(list);
 				
 				response.setState("SUCCESS");
 				response.setMessage("댓글 불러오기 성공");
