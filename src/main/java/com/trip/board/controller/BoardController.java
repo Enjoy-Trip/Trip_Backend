@@ -1,5 +1,6 @@
 	package com.trip.board.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,6 +95,51 @@ public class BoardController {
 		} catch (Exception e) {
 			response.setState("FAIL");
 			response.setMessage("게시글을 불러오는 중 오류가 발생했습니다.");
+			
+			return ExceptionHandler.exceptionResponse(response, e);
+		}
+	}
+	
+	@GetMapping(value = "/{boardNo}/comment")
+	public ResponseEntity<?> commentList(@PathVariable("boardNo") int boardNo, HttpServletRequest request) {
+		ResponseDto<List<BoardCommentDto>> response = new ResponseDto<List<BoardCommentDto>>();
+		
+		String token = request.getHeader(TOKEN);
+		
+		System.out.println(token);
+		try {
+			BoardDto board = boardService.boardDetail(boardNo);
+
+			if (board == null) {
+				response.setState("FAIL");
+				response.setMessage("해당 게시글이 존재하지 않습니다.");
+			} else {
+				List<BoardCommentDto> list = new ArrayList<BoardCommentDto>();
+				
+				if(token != null) {
+					int userNo = jwtService.getData(token, "userNo");
+					
+					list = board.getboardCommentList();
+					
+					BoardCommentDto temp;
+					
+					for(int i = 0 ; i < list.size(); i++) {
+						temp = list.get(i);
+						
+						if(temp.getboardCommentUser().getUserNo() == userNo)
+							temp.setBoardCommentLoginCheck(true);
+					}
+				}
+				
+				response.setState("SUCCESS");
+				response.setMessage("댓글 불러오기 성공");
+				response.setData(list);
+			}
+			
+			return new ResponseEntity<ResponseDto<List<BoardCommentDto>>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.setState("FAIL");
+			response.setMessage("댓글을 불러오는 중 오류가 발생했습니다.");
 			
 			return ExceptionHandler.exceptionResponse(response, e);
 		}
