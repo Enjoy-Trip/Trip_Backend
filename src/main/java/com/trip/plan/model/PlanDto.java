@@ -14,6 +14,7 @@ public class PlanDto {
 	private String planContent;
 	private String planTime;
 	private String planTitle;
+	private boolean planLoginCheck;
 	private List<PlanPlaceDto> planPlaces;
 
 	public UserDto getPlanUser() {
@@ -70,6 +71,14 @@ public class PlanDto {
 
 	public void setPlanTitle(String planTitle) {
 		this.planTitle = planTitle;
+	}
+
+	public boolean isPlanLoginCheck() {
+		return planLoginCheck;
+	}
+
+	public void setPlanLoginCheck(boolean planLoginCheck) {
+		this.planLoginCheck = planLoginCheck;
 	}
 
 	public List<PlanPlaceDto> getPlanPlaces() {

@@ -35,18 +35,19 @@ public class PlanController {
 		this.jwtService = jwtService;
 	}
 
-	// 계획 리스트 뿌려주기
-	@GetMapping("/{userno}")
-	ResponseEntity<?> planList(@PathVariable("userno") int userNo) {
+	// 나의 계획 리스트 뿌려주기
+	@GetMapping("")
+	ResponseEntity<?> planList(HttpServletRequest request) {
 		ResponseDto<List<PlanDto>> response = new ResponseDto<List<PlanDto>>();
-
+		String token = request.getHeader(TOKEN);
 		try {
-			List<PlanDto> planList = planService.planList(userNo);
-
-			response.setState("SUCCESS");
-			response.setMessage("계획들을 불러옵니다.");
-			response.setData(planList);
-
+			if (token != null) {
+				int userNo = jwtService.getData(token, "userNo");
+				List<PlanDto> planList = planService.planList(userNo);
+				response.setState("SUCCESS");
+				response.setMessage("계획들을 불러옵니다.");
+				response.setData(planList);
+			}
 			return new ResponseEntity<ResponseDto<List<PlanDto>>>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			response.setState("FAIL");
@@ -57,17 +58,23 @@ public class PlanController {
 	}
 
 	// 계획 디테일 뿌려주기
-	@GetMapping("/detail/{planno}")
-	ResponseEntity<?> planDetail(@PathVariable("planno") int planNo) {
+	@GetMapping("/{planNo}")
+	ResponseEntity<?> planDetail(@PathVariable("planNo") int planNo, HttpServletRequest request) {
 		ResponseDto<PlanDto> response = new ResponseDto<PlanDto>();
-
 		try {
 			PlanDto planDto = planService.planDetail(planNo);
-
 			if (planDto == null) {
 				response.setState("FAIL");
 				response.setMessage("해당 계획이 존재하지 않습니다.");
-			} else {
+			} 
+			else {
+				String token = request.getHeader(TOKEN);
+				if (token != null) {
+					int userNo = jwtService.getData(token, "userNo");
+					if (planDto.getPlanUser().getUserNo() == userNo) {
+						planDto.setPlanLoginCheck(true);
+					}
+				}
 				response.setState("SUCCESS");
 				response.setMessage("계획 상세보기를 실행합니다.");
 				response.setData(planDto);

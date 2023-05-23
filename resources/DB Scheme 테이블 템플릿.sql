@@ -182,7 +182,7 @@ DROP TABLE IF EXISTS `board_image`;
 CREATE TABLE `board_image`(
 	`image_no` INT NOT NULL AUTO_INCREMENT,
 	`board_no` INT NOT NULL,
-	`board_image`  VARCHAR(1000) NOT NULL,
+	`board_image` MEDIUMTEXT NOT NULL,
 	PRIMARY KEY (`image_no`),
 	CONSTRAINT `board_to_board_image_board_no_fk` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`) ON DELETE CASCADE
 ) 	ENGINE=innodb DEFAULT charset=utf8mb3;
