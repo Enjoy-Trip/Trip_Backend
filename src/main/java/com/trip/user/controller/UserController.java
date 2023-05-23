@@ -34,6 +34,34 @@ public class UserController {
 		this.jwtService = jwtService;
 	}
 	
+	
+	@GetMapping(value = "")
+	public ResponseEntity<?> myInfo(HttpServletRequest request){
+		
+		ResponseDto<UserDto> response = new ResponseDto<UserDto>();
+		
+		try {
+			String token = request.getHeader(TOKEN);
+			if(token!=null) {
+				int userNo = jwtService.getData(token, "userNo");
+				UserDto userDto = userService.info(userNo);
+				response.setState("SUCCESS");
+				response.setMessage("유저 정보 불러오기가 실행되었습니다.");
+				response.setData(userDto);
+			}else {
+				response.setState("FAIL");
+				response.setMessage("로그인을 진행하여 주세요.");
+			}
+			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.OK);
+		}
+		catch(Exception e){
+			response.setState("FAIL");
+			response.setMessage("유저 정보 불러오기에 오류가 발생했습니다.");
+			return ExceptionHandler.exceptionResponse(response, e);
+		}
+	}
+	
+	
 	@PostMapping(value = "/refresh")
 	public ResponseEntity<?> login(@RequestBody HashMap<String, String> map) {
 		ResponseDto<String> response = new ResponseDto<String>();
@@ -91,6 +119,7 @@ public class UserController {
 		}
 	}
 
+	
 	@GetMapping(value = "/check/{userid}")
 	public ResponseEntity<?> check(@PathVariable("userid") String userId) {
 		ResponseDto<String> response = new ResponseDto<String>();
@@ -136,9 +165,8 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/{userNo}")
-	public ResponseEntity<?> info(@PathVariable("userNo") int userNo) {
+	public ResponseEntity<?> info(@PathVariable("userNo") int userNo, HttpServletRequest request) {
 		ResponseDto<UserDto> response = new ResponseDto<UserDto>();
-
 		try {
 			UserDto user = userService.info(userNo);
 
@@ -146,6 +174,14 @@ public class UserController {
 				response.setState("FAIL");
 				response.setMessage("찾으시는 사용자가 존재하지 않습니다.");
 			} else {
+				String token = request.getHeader(TOKEN);
+				
+				if(token!=null) {
+					int loginUserNo = jwtService.getData(token, "userNo");
+					if(userNo == loginUserNo) {
+						user.setUserLoginCheck(true);
+					}
+				}
 				response.setState("SUCCESS");
 				response.setMessage("찾으시는 사용자가 존재합니다.");
 				response.setData(user);
