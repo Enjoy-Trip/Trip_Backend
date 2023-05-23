@@ -120,11 +120,6 @@ public class UserController {
 	@PostMapping(value = "")
 	public ResponseEntity<?> signup(@RequestBody UserDto user) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
-<<<<<<< HEAD
-		System.out.println(user.toString());
-=======
-		
->>>>>>> f6ce628bac3934d073d4eab3338a7b7bc62c0cfa
 		try {
 			int rst = userService.signup(user);
 
