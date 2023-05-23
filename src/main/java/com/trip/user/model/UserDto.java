@@ -10,6 +10,15 @@ public class UserDto {
 	private String userName;
 	private String userProfile;
 	private String userNickname;
+	private boolean userLoginCheck;
+	
+	public boolean isUserLoginCheck() {
+		return userLoginCheck;
+	}
+
+	public void setUserLoginCheck(boolean userLoginCheck) {
+		this.userLoginCheck = userLoginCheck;
+	}
 
 	public String getUserNickname() {
 		return userNickname;
