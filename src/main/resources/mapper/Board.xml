@@ -234,4 +234,6 @@
 		where 
 			board_comment_no = #{boardCommentNo};
 	</delete>
+	
+	
 </mapper>

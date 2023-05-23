@@ -74,4 +74,9 @@ public class AttractionServiceImpl implements AttractionService {
 	public AttractionCommentDto getAttractionComment(int commentNo) {
 		return attractionMapper.getAttractionComment(commentNo);
 	}
+
+	@Override
+	public List<AttractionCommentDto> attractionCommentList(int contentid) {
+		return attractionMapper.attractionCommentList(contentid);
+	}
 }
