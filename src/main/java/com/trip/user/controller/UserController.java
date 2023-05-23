@@ -35,8 +35,9 @@ public class UserController {
 	}
 	
 	@PostMapping(value = "/refresh")
-	public ResponseEntity<?> login(@RequestBody String refreshToken) {
+	public ResponseEntity<?> login(@RequestBody HashMap<String, String> map) {
 		ResponseDto<String> response = new ResponseDto<String>();
+		String refreshToken = map.get("refreshToken");
 		
 		try {
 			int userNo = userService.refresh(refreshToken);
@@ -69,7 +70,7 @@ public class UserController {
 			} else {
 				String accessToken = jwtService.createAccessToken("userNo", loginUser.getUserNo());
 				String refreshToken = jwtService.createRefreshToken("userNo", loginUser.getUserNo());
-
+				
 				userService.saveRefreshToken(loginUser.getUserNo(), refreshToken);
 
 				HashMap<String, String> map = new HashMap<String, String>();
@@ -119,7 +120,11 @@ public class UserController {
 	@PostMapping(value = "")
 	public ResponseEntity<?> signup(@RequestBody UserDto user) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
+<<<<<<< HEAD
 		System.out.println(user.toString());
+=======
+		
+>>>>>>> f6ce628bac3934d073d4eab3338a7b7bc62c0cfa
 		try {
 			int rst = userService.signup(user);
 
