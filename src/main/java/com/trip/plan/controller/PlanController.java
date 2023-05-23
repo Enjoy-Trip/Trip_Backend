@@ -89,7 +89,7 @@ public class PlanController {
 		}
 	}
 
-	// 계획 추가
+	// 큰 여행 계획 추가
 	@PostMapping("")
 	ResponseEntity<?> planAdd(@RequestBody PlanDto planDto, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
@@ -109,6 +109,43 @@ public class PlanController {
 			response.setData(rst);
 
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+
+			response.setState("FAIL");
+			response.setMessage("계획 추가에 실패하였습니다.");
+
+			return ExceptionHandler.exceptionResponse(response, e);
+		}
+	}
+	
+	//작은 여행 계획 추가
+	@PostMapping("/detail")
+	ResponseEntity<?> planDetailAdd(@RequestBody PlanDto planDto, HttpServletRequest request) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
+
+		try {
+			int userNo = jwtService.getData(token, "userNo");
+			
+			if (planDto.getPlanUser() == null) {
+				planDto.setPlanUser(new UserDto());
+				planDto.getPlanUser().setUserNo(userNo);
+			}
+			
+			if(userNo != planDto.getPlanUser().getUserNo()) {
+				response.setState("FAIL");
+				response.setMessage("다른 사람의 계획에 추가할 수 없습니다.");
+			} else {
+				
+				//고칠 부분
+				int rst = planService.planDetailAdd(planDto);
+
+				response.setState("SUCCESS");
+				response.setMessage("계획에 세부사항을 성공적으로 추가하였습니다!");
+				response.setData(rst);
+			}
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
+			
 		} catch (Exception e) {
 
 			response.setState("FAIL");

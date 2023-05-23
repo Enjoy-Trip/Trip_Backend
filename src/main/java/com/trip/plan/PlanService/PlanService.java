@@ -11,6 +11,7 @@ public interface PlanService {
 	
 	//계획 추가
 	int planAdd(PlanDto planDto);
+	int planDetailAdd(PlanDto planDto);
 	
 	//계획 삭제
 	int planDelete(int planNo);

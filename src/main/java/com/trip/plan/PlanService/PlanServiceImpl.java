@@ -26,8 +26,11 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public int planAdd(PlanDto planDto) {
-		planMapper.planAdd(planDto);
-		
+		 return planMapper.planAdd(planDto);
+	}
+	
+	@Override
+	public int planDetailAdd(PlanDto planDto) {
 		if (planDto.getPlanContent() != null) {
 			planMapper.planDetailAdd(planDto);
 		}
@@ -35,7 +38,6 @@ public class PlanServiceImpl implements PlanService {
 		if (planDto.getPlanPlaces() != null) {
 			planMapper.planPlaceListAdd(planDto);
 		}
-		
 		return 1;
 	}
 	
@@ -53,5 +55,7 @@ public class PlanServiceImpl implements PlanService {
 	public PlanDto planDetail(int planNo) {
 		return planMapper.planDetail(planNo);
 	}
+
+
 
 }

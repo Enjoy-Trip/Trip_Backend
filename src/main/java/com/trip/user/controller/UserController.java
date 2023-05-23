@@ -63,7 +63,6 @@ public class UserController {
 
 		try {
 			UserDto loginUser = userService.login(user);
-
 			if (loginUser == null) {
 				response.setState("FAIL");
 				response.setMessage("아이디 혹은 비밀번호가 일치하지 않습니다.");
