@@ -210,7 +210,7 @@
 	</update>
 	
 	<delete id="deleteBoard" parameterType="int">
-		delete from 
+<!-- 		delete from 
 			board_comment
 		where 
 			board_no = #{boardNo};
@@ -225,7 +225,7 @@
 		where 
 			board_no = #{boardNo};
 		
-		delete from 
+ -->		delete from 
 			board
 		where 
 			board_no = #{boardNo};
@@ -237,4 +237,6 @@
 		where 
 			board_comment_no = #{boardCommentNo};
 	</delete>
+	
+	
 </mapper>

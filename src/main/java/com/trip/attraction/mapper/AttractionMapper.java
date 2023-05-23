@@ -21,4 +21,5 @@ public interface AttractionMapper {
 	int writeComment(AttractionCommentDto attractionCommentDto);
 	int updateComment(AttractionCommentDto attractionCommentDto);
 	int deleteComment(int commentNo);
+	List<AttractionCommentDto> attractionCommentList(int contentid);
 }

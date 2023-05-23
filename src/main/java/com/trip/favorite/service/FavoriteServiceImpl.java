@@ -35,7 +35,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 	}
 
 	@Override
-	public int delteLike(HashMap<String, String> map) {
-		return favoriteMapper.delteLike(map);
+	public int deleteLike(HashMap<String, String> map) {
+		return favoriteMapper.deleteLike(map);
 	}
 }

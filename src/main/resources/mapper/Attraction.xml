@@ -56,9 +56,6 @@
 			<result column="user_name" property="userName" />
 			<result column="user_profile" property="userProfile" />
 		</association>
-		<collection property="attractionCommentList"
-			column="contentid = contentid" select="getCommentList" javaType="List"
-			ofType="comment" />
 	</resultMap>
 	
 	<resultMap type="attractionCommentDto" id="comment">
@@ -293,7 +290,7 @@
 	</update>
 	
 	<delete id="deleteAttraction" parameterType="int">
-		delete from
+<!-- 		delete from
 			attraction_comment
 		where
 			contentid = #{contentid};
@@ -307,7 +304,7 @@
 			attraction_detail_info
 		where
 			contentid = #{contentid};
-			
+			 -->
 		delete from
 			attraction_info
 		where
@@ -336,4 +333,24 @@
 		where
 			attraction_comment_no = #{attractionCommentNo}
 	</delete>
+	
+	<select id="attractionCommentList" parameterType="int" resultMap="comment">
+		select 
+			attraction_comment_no,
+			contentid,
+			attraction_comment_content,
+			attraction_comment_time,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile
+		from 
+			attraction_comment
+		inner join 
+			user
+		on 
+			attraction_comment.user_no = user.user_no
+		where 
+			contentid = #{contentid} 
+	 </select>
 </mapper>

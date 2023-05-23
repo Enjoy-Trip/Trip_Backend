@@ -9,7 +9,7 @@
 		<result column="user_password" property="userPassword" />
 		<result column="user_name" property="userName" />
 		<result column="user_profile" property="userProfile" />
-		<result column="user_nickname" property="userNickName" />
+		<result column="user_nickname" property="userNickname" />
 	</resultMap>
 	
 	<select id="refresh" parameterType="String" resultType="int">
@@ -49,7 +49,7 @@
 		insert into 
 			user (user_id, user_password, user_name, user_profile, user_nickname)
 		values 
-			(#{userId}, #{userPassword}, #{userName}, #{userProfile} ,#{userNickName})
+			(#{userId}, #{userPassword}, #{userName}, #{userProfile} ,#{userNickname})
 	</insert>
 	
 	<select id="check" parameterType="String" resultType="String">
@@ -81,7 +81,7 @@
 			user_password = #{userPassword}, 
 			user_name = #{userName}, 
 			user_profile = #{userProfile},
-			user_nickname = #{userNickName}
+			user_nickname = #{userNickname}
 		where 
 			user_no = #{userNo}
 	</update>

@@ -1,7 +1,5 @@
 package com.trip.attraction.model;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.trip.user.model.UserDto;
 
@@ -31,7 +29,7 @@ public class AttractionDto {
 	private String createdtime;
 	private String modifiedtime;
 	private String booktour;
-	private List<AttractionCommentDto> attractionCommentList;
+//	private List<AttractionCommentDto> attractionCommentList;
 
 	public int getContentid() {
 		return contentid;
@@ -225,14 +223,6 @@ public class AttractionDto {
 		this.booktour = booktour;
 	}
 
-	public List<AttractionCommentDto> getAttractionCommentList() {
-		return attractionCommentList;
-	}
-
-	public void setAttractionCommentList(List<AttractionCommentDto> attractionCommentList) {
-		this.attractionCommentList = attractionCommentList;
-	}
-
 	@Override
 	public String toString() {
 		return "AttractionDto [contentid=" + contentid + ", attractionUser=" + attractionUser + ", contenttypeid="
@@ -241,6 +231,6 @@ public class AttractionDto {
 				+ areacode + ", sigungucode=" + sigungucode + ", mapx=" + mapx + ", mapy=" + mapy + ", mlevel=" + mlevel
 				+ ", homepage=" + homepage + ", overview=" + overview + ", telname=" + telname + ", cat1=" + cat1
 				+ ", cat2=" + cat2 + ", cat3=" + cat3 + ", createdtime=" + createdtime + ", modifiedtime="
-				+ modifiedtime + ", booktour=" + booktour + ", attractionCommentList=" + attractionCommentList + "]";
+				+ modifiedtime + ", booktour=" + booktour + "]";
 	}
 }

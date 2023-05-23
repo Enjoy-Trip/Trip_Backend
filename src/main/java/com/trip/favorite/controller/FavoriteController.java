@@ -119,7 +119,7 @@ public class FavoriteController {
 		try {
 			map.put("userNo", "" + userNo);
 			
-			int rst = favoriteService.delteLike(map);
+			int rst = favoriteService.deleteLike(map);
 
 			response.setState("SUCCESS");
 			response.setMessage("좋아요 삭제 완료");

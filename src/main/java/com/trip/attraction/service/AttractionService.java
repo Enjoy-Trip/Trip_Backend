@@ -16,4 +16,6 @@ public interface AttractionService {
 	Integer writeComment(AttractionCommentDto attractionCommentDto);
 	Integer updateComment(AttractionCommentDto attractionCommentDto);
 	int deleteComment(int commentNo);
+	List<AttractionCommentDto> attractionCommentList(int contentid);
+	
 }

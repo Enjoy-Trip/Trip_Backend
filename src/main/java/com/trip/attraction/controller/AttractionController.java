@@ -82,6 +82,31 @@ public class AttractionController {
 			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
+	
+	
+	@GetMapping("/{contentid}/comment")
+	public ResponseEntity<?> attractionDetailComment(@PathVariable("contentid") int contentid) {
+		ResponseDto<List<AttractionCommentDto>> response = new ResponseDto<List<AttractionCommentDto>>();
+		try {
+			List<AttractionCommentDto> rst = attractionService.attractionCommentList(contentid);
+
+			if (rst == null) {
+				response.setState("FAIL");
+				response.setMessage("해당 여행지의 댓글이 존재하지 않습니다.");
+			} else {
+				response.setState("SUCCESS");
+				response.setMessage("댓글 불러오기 성공");
+				response.setData(rst);
+			}
+
+			return new ResponseEntity<ResponseDto<List<AttractionCommentDto>>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.setState("FAIL");
+			response.setMessage("서버에 문제가 발생했습니다.");
+
+			return ExceptionHandler.exceptionResponse(response, e);
+		}
+	}
 
 	@PostMapping(value = "")
 	public ResponseEntity<?> createAttraction(@RequestBody AttractionDto attractionDto, HttpServletRequest request) {
