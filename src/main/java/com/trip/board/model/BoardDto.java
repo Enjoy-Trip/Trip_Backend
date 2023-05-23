@@ -13,7 +13,20 @@ public class BoardDto {
 	private String boardContent;
 	private UserDto boardUser;
 	private List<String> boardImages;
+	private boolean boardLoginCheck;
 	private List<BoardCommentDto> boardCommentList;
+	
+	public void setBoardCommentList(List<BoardCommentDto> boardCommentList) {
+		this.boardCommentList = boardCommentList;
+	}
+
+	public boolean isBoardLoginCheck() {
+		return boardLoginCheck;
+	}
+
+	public void setBoardLoginCheck(boolean boardLoginCheck) {
+		this.boardLoginCheck = boardLoginCheck;
+	}
 
 	public int getBoardNo() {
 		return boardNo;
@@ -71,10 +84,4 @@ public class BoardDto {
 		this.boardCommentList = boardCommentList;
 	}
 
-	@Override
-	public String toString() {
-		return "BoardDto [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardTime=" + boardTime
-				+ ", boardContent=" + boardContent + ", boardImages=" + boardImages + ", boardUser=" + boardUser
-				+ ", boardCommentList=" + boardCommentList + "]";
-	}
 }

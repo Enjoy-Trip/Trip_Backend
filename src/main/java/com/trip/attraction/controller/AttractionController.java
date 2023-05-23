@@ -98,7 +98,7 @@ public class AttractionController {
 				for(int i = 0 ; i < rst.size(); i++) {
 					AttractionCommentDto temp = rst.get(i);
 					if(temp.getAttractionCommentUser().getUserNo() == userNo) {
-						temp.setAttractionUserCheck(true);
+						temp.setAttractionCommentLoginCheck(true);
 					}
 				}
 			}				

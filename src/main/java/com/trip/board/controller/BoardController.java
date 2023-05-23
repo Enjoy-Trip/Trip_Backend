@@ -59,16 +59,32 @@ public class BoardController {
 	}
 	
 	@GetMapping(value = "/{boardNo}")
-	public ResponseEntity<?> boardDetail(@PathVariable("boardNo") int boardNo) {
+	public ResponseEntity<?> boardDetail(@PathVariable("boardNo") int boardNo, HttpServletRequest request) {
 		ResponseDto<BoardDto> response = new ResponseDto<BoardDto>();
 		
+		String token = request.getHeader(TOKEN);
+		
+		System.out.println(token);
 		try {
 			BoardDto board = boardService.boardDetail(boardNo);
-			
+
 			if (board == null) {
 				response.setState("FAIL");
 				response.setMessage("해당 게시글이 존재하지 않습니다.");
 			} else {
+				
+				if(token != null) {
+					int userNo = jwtService.getData(token, "userNo");
+					System.out.println(userNo);
+					board.setBoardLoginCheck(true);
+					List<BoardCommentDto> list = board.getboardCommentList();
+					BoardCommentDto temp;
+					for(int i = 0 ; i < list.size(); i++) {
+						temp = list.get(i);
+						if(temp.getboardCommentUser().getUserNo() == userNo)
+							temp.setBoardCommentLoginCheck(true);
+					}
+				}					
 				response.setState("SUCCESS");
 				response.setMessage("게시글 불러오기 성공");
 				response.setData(board);
@@ -89,6 +105,7 @@ public class BoardController {
 		String token = request.getHeader(TOKEN);
 		
 		try {
+			
 			if (boardDto.getBoardUser() == null) {
 				boardDto.setBoardUser(new UserDto());
 			}

@@ -10,6 +10,15 @@ public class BoardCommentDto {
 	private String boardCommentContent;
 	private String boardCommentTime;
 	private UserDto boardCommentUser;
+	private boolean boardCommentLoginCheck;
+
+	public boolean isBoardCommentLoginCheck() {
+		return boardCommentLoginCheck;
+	}
+
+	public void setBoardCommentLoginCheck(boolean boardCommentLoginCheck) {
+		this.boardCommentLoginCheck = boardCommentLoginCheck;
+	}
 
 	public int getboardCommentNo() {
 		return boardCommentNo;
@@ -53,7 +62,10 @@ public class BoardCommentDto {
 
 	@Override
 	public String toString() {
-		return "CommentDto [boardCommentNo=" + boardCommentNo + ", boardNo=" + boardNo + ", boardCommentContent=" + boardCommentContent
-				+ ", boardCommentTime=" + boardCommentTime + ", boardCommentUser=" + boardCommentUser + "]";
+		return "BoardCommentDto [boardCommentNo=" + boardCommentNo + ", boardNo=" + boardNo + ", boardCommentContent="
+				+ boardCommentContent + ", boardCommentTime=" + boardCommentTime + ", boardCommentUser="
+				+ boardCommentUser + ", boardCommentLoginCheck=" + boardCommentLoginCheck + "]";
 	}
+
+	
 }
