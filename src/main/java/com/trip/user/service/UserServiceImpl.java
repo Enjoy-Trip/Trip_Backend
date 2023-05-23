@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int refresh(String refreshToken) {
-		return 0;
+	public int refresh(String refreshToken) throws SQLException {
+		return userMapper.refresh(refreshToken);
 	}
 
 	@Override

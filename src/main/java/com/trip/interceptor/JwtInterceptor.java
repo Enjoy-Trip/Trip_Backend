@@ -22,6 +22,10 @@ public class JwtInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		if (request.getMethod().equals("OPTIONS")) {
+			return true;
+		}
+		
 		if (request.getRequestURI().equals("/user/login") || request.getRequestURI().equals("/user/refresh")
 				|| request.getRequestURI().startsWith("/user") && request.getMethod().equals("GET") 
 				|| request.getRequestURI().equals("/user") && request.getMethod().equals("POST")) {
@@ -41,7 +45,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 		}
 
 		final String token = request.getHeader(HEADER_AUTH);
-
+		
 		if (token != null && jwtService.checkToken(token)) {
 			logger.info("토큰 사용 가능 : {}", token);
 			return true;

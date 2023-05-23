@@ -193,6 +193,7 @@ public class AttractionController {
 			HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader(TOKEN);
+		
 
 		try {
 			if (attractionCommentDto.getAttractionCommentUser() == null) {
@@ -200,7 +201,7 @@ public class AttractionController {
 			}
 
 			attractionCommentDto.getAttractionCommentUser().setUserNo(jwtService.getData(token, "userNo"));
-
+			
 			int rst = attractionService.writeComment(attractionCommentDto);
 
 			response.setState("SUCCESS");
