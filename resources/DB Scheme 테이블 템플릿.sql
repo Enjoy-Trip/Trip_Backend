@@ -84,11 +84,7 @@ CREATE TABLE `attraction_detail_info` (
 	`createdtime` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	`modifiedtime` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	`booktour` varchar(5) DEFAULT NULL,
-	PRIMARY KEY (`contentid`),
-<<<<<<< HEAD
-	CONSTRAINT `attraction_info_to_attraction_detail_info_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`) ON DELETE CASCADE
-=======
->>>>>>> f6ce628bac3934d073d4eab3338a7b7bc62c0cfa
+	PRIMARY KEY (`contentid`)
 ) 	ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -104,11 +100,7 @@ CREATE TABLE `attraction_description` (
 	`homepage` varchar(100) DEFAULT NULL,
 	`overview` varchar(10000) DEFAULT NULL,
 	`telname` varchar(45) DEFAULT NULL,
-	PRIMARY KEY (`contentid`),
-<<<<<<< HEAD
-	CONSTRAINT `attraction_info_to_attraction_description_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`) ON DELETE CASCADE
-=======
->>>>>>> f6ce628bac3934d073d4eab3338a7b7bc62c0cfa
+	PRIMARY KEY (`contentid`)
 ) 	ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -126,12 +118,7 @@ CREATE TABLE `attraction_comment` (
 	`attraction_comment_content` VARCHAR(1000) DEFAULT NULL,
 	`attraction_comment_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`attraction_comment_no`),
-<<<<<<< HEAD
-	CONSTRAINT `user_to_attraction_comment_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE,
-	CONSTRAINT `attraction_info_to_attraction_comment_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`) ON DELETE CASCADE
-=======
 	CONSTRAINT `user_to_attraction_comment_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`)
->>>>>>> f6ce628bac3934d073d4eab3338a7b7bc62c0cfa
 )	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
