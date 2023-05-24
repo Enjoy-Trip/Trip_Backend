@@ -43,6 +43,10 @@ public class JwtInterceptor implements HandlerInterceptor {
 		if (request.getRequestURI().startsWith("/plan") && request.getMethod().equals("GET")) {
 			return true;
 		}
+		
+		if (request.getRequestURI().startsWith("/user/findPw") && request.getMethod().equals("POST")) {
+			return true;
+		}
 
 		final String token = request.getHeader(HEADER_AUTH);
 		

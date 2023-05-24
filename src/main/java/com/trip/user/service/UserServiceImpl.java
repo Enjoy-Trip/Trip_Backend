@@ -64,4 +64,9 @@ public class UserServiceImpl implements UserService {
 		return userMapper.delete(userNo);
 	}
 
+	@Override
+	public UserDto findPw(UserDto user) throws SQLException {
+		return userMapper.findPw(user);
+	}
+
 }

@@ -21,6 +21,16 @@
 			token = #{refreshToken}
 	</select>
 
+	<select id="findPw" parameterType="userDto" resultMap ="user">
+		select
+			user_no
+		from
+			user
+		where
+			user_id = #{userId}
+		and
+			user_name = #{userName}
+	</select>
 	<select id="login" resultMap="user">
 		select 
 			user_no,
