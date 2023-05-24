@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.jwt.JwtService;
 import com.trip.response.model.ResponseDto;
+import com.trip.user.model.EmailDto;
 import com.trip.user.model.UserDto;
+import com.trip.user.service.SendEmailService;
 import com.trip.user.service.UserService;
 import com.trip.util.ExceptionHandler;
 
@@ -27,51 +29,51 @@ public class UserController {
 	private final String TOKEN = "Access-Token";
 	private UserService userService;
 	private JwtService jwtService;
-
-	public UserController(UserService userService, JwtService jwtService) {
+	
+	private SendEmailService sendEmailService;
+	
+	public UserController(UserService userService, JwtService jwtService, SendEmailService sendEmailService) {
 		super();
 		this.userService = userService;
 		this.jwtService = jwtService;
+		this.sendEmailService = sendEmailService;
 	}
-	
-	
+
 	@GetMapping(value = "")
-	public ResponseEntity<?> myInfo(HttpServletRequest request){
-		
+	public ResponseEntity<?> myInfo(HttpServletRequest request) {
+
 		ResponseDto<UserDto> response = new ResponseDto<UserDto>();
-		
+
 		try {
 			String token = request.getHeader(TOKEN);
-			if(token!=null) {
+			if (token != null) {
 				int userNo = jwtService.getData(token, "userNo");
 				UserDto userDto = userService.info(userNo);
 				response.setState("SUCCESS");
 				response.setMessage("유저 정보 불러오기가 실행되었습니다.");
 				response.setData(userDto);
-			}else {
+			} else {
 				response.setState("FAIL");
 				response.setMessage("로그인을 진행하여 주세요.");
 			}
 			return new ResponseEntity<ResponseDto<UserDto>>(response, HttpStatus.OK);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			response.setState("FAIL");
 			response.setMessage("유저 정보 불러오기에 오류가 발생했습니다.");
 			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
-	
-	
+
 	@PostMapping(value = "/refresh")
-	public ResponseEntity<?> login(@RequestBody HashMap<String, String> map) {
+	public ResponseEntity<?> login(@RequestBody HashMap<String, String> map) {     
 		ResponseDto<String> response = new ResponseDto<String>();
 		String refreshToken = map.get("refreshToken");
-		
+
 		try {
 			int userNo = userService.refresh(refreshToken);
-			
+
 			String AccessToken = jwtService.createAccessToken("userNo", userNo);
-			
+
 			response.setState("SUCCESS");
 			response.setMessage("정상적으로 로그인이 진행되었습니다.");
 			response.setData(AccessToken);
@@ -97,7 +99,7 @@ public class UserController {
 			} else {
 				String accessToken = jwtService.createAccessToken("userNo", loginUser.getUserNo());
 				String refreshToken = jwtService.createRefreshToken("userNo", loginUser.getUserNo());
-				
+
 				userService.saveRefreshToken(loginUser.getUserNo(), refreshToken);
 
 				HashMap<String, String> map = new HashMap<String, String>();
@@ -119,7 +121,50 @@ public class UserController {
 		}
 	}
 
-	
+	@PostMapping(value = "/findPw")
+	public ResponseEntity<?> findPw(UserDto user) {
+		ResponseDto<Boolean> response = new ResponseDto<Boolean>();
+		try {
+			UserDto checkUser = userService.findPw(user);
+
+			if (checkUser != null) {
+				response.setState("SUCCESS");
+				response.setMessage("임시 비밀번호를 받을 이메일을 입력하세요.");
+				response.setData(true);
+			} else {
+				response.setState("FAIL");
+				response.setMessage("해당 유저가 존재하지 않습니다.");
+				response.setData(false);
+			}
+			return new ResponseEntity<ResponseDto<Boolean>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.setState("FAIL");
+			response.setMessage("패스워드를 찾는 도중 오류가 발생했습니다.");
+			response.setData(false);
+			return ExceptionHandler.exceptionResponse(response, e);
+		}
+	}
+
+	@PostMapping(value = "/findPw/{userNo}")
+	public ResponseEntity<?> tempPw(@PathVariable("userNo") int userNo,  @RequestBody EmailDto emailDto) {
+		ResponseDto<Boolean> response = new ResponseDto<Boolean>();
+		try {
+			UserDto user = userService.info(userNo);
+			user.setUserPassword(sendEmailService.createPassword(emailDto.getEmail()));
+			userService.modify(user);
+			response.setState("SUCCESS");
+			response.setMessage("임시 비밀번호를 생성하였습니다.");
+			response.setData(true);
+
+			return new ResponseEntity<ResponseDto<Boolean>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.setState("FAIL");
+			response.setMessage("메일을 보내는 중 오류가 발생했습니다.");
+			response.setData(false);
+			return ExceptionHandler.exceptionResponse(response, e);
+		}
+	}
+
 	@GetMapping(value = "/check/{userid}")
 	public ResponseEntity<?> check(@PathVariable("userid") String userId) {
 		ResponseDto<String> response = new ResponseDto<String>();
@@ -175,10 +220,10 @@ public class UserController {
 				response.setMessage("찾으시는 사용자가 존재하지 않습니다.");
 			} else {
 				String token = request.getHeader(TOKEN);
-				
-				if(token!=null) {
+
+				if (token != null) {
 					int loginUserNo = jwtService.getData(token, "userNo");
-					if(userNo == loginUserNo) {
+					if (userNo == loginUserNo) {
 						user.setUserLoginCheck(true);
 					}
 				}
@@ -200,7 +245,7 @@ public class UserController {
 	public ResponseEntity<?> modify(@RequestBody UserDto user, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader(TOKEN);
-		
+
 		try {
 			int userNo = jwtService.getData(token, "userNo");
 
@@ -232,7 +277,7 @@ public class UserController {
 	public ResponseEntity<?> delete(HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader(TOKEN);
-		
+
 		try {
 			int userNo = jwtService.getData(token, "userNo");
 
