@@ -122,25 +122,25 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/findPw")
-	public ResponseEntity<?> findPw(UserDto user) {
-		ResponseDto<Boolean> response = new ResponseDto<Boolean>();
+	public ResponseEntity<?> findPw(@RequestBody UserDto user) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		try {
 			UserDto checkUser = userService.findPw(user);
 
 			if (checkUser != null) {
 				response.setState("SUCCESS");
 				response.setMessage("임시 비밀번호를 받을 이메일을 입력하세요.");
-				response.setData(true);
+				response.setData(checkUser.getUserNo());
 			} else {
 				response.setState("FAIL");
 				response.setMessage("해당 유저가 존재하지 않습니다.");
-				response.setData(false);
+				response.setData(-1);
 			}
-			return new ResponseEntity<ResponseDto<Boolean>>(response, HttpStatus.OK);
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			response.setState("FAIL");
 			response.setMessage("패스워드를 찾는 도중 오류가 발생했습니다.");
-			response.setData(false);
+			response.setData(-1);
 			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
@@ -148,11 +148,23 @@ public class UserController {
 	@PostMapping(value = "/findPw/{userNo}")
 	public ResponseEntity<?> tempPw(@PathVariable("userNo") int userNo, @RequestBody Map<String, String> map) {
 		ResponseDto<Boolean> response = new ResponseDto<Boolean>();
+		
+		System.out.println("=======================");
+		System.out.println("hihi");
+		
 		try {
 			String email = map.get("email");
+			
+			System.out.println(email);
+			
 			UserDto user = userService.info(userNo);
+			
+			System.out.println(user);
+			
 			user.setUserPassword(sendEmailService.createPassword(email));
+			
 			userService.modify(user);
+			
 			response.setState("SUCCESS");
 			response.setMessage("임시 비밀번호를 생성하였습니다.");
 			response.setData(true);
@@ -278,6 +290,8 @@ public class UserController {
 	public ResponseEntity<?> delete(HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader(TOKEN);
+		
+		System.out.println("===========================");
 
 		try {
 			int userNo = jwtService.getData(token, "userNo");
