@@ -1,6 +1,7 @@
 package com.trip.user.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.jwt.JwtService;
 import com.trip.response.model.ResponseDto;
-import com.trip.user.model.EmailDto;
 import com.trip.user.model.UserDto;
 import com.trip.user.service.SendEmailService;
 import com.trip.user.service.UserService;
@@ -146,11 +146,12 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/findPw/{userNo}")
-	public ResponseEntity<?> tempPw(@PathVariable("userNo") int userNo,  @RequestBody EmailDto emailDto) {
+	public ResponseEntity<?> tempPw(@PathVariable("userNo") int userNo, @RequestBody Map<String, String> map) {
 		ResponseDto<Boolean> response = new ResponseDto<Boolean>();
 		try {
+			String email = map.get("email");
 			UserDto user = userService.info(userNo);
-			user.setUserPassword(sendEmailService.createPassword(emailDto.getEmail()));
+			user.setUserPassword(sendEmailService.createPassword(email));
 			userService.modify(user);
 			response.setState("SUCCESS");
 			response.setMessage("임시 비밀번호를 생성하였습니다.");

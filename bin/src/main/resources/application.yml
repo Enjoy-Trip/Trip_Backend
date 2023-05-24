@@ -23,7 +23,19 @@ spring:
   servlet:
     multipart:
       max-file-size: 25MB
-      
+  mail:
+    host: smtp.google.com
+    port: 587
+    username: {userid}
+    password: {userpw}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            enable: true
 mybatis:
   mapper-locations: /mapper/**/*.xml
   type-aliases-package: com.trip.*.model

@@ -49,7 +49,8 @@ DROP TABLE IF EXISTS `attraction_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `attraction_info` (
-	`contentid` int NOT NULL,
+	`contentid` int NOT NULL AUTO_INCREMENT,
+   	`user_no` int NOT NULL,
 	`contenttypeid` int DEFAULT NULL,
 	`title` varchar(100) DEFAULT NULL,
 	`addr1` varchar(100) DEFAULT NULL,
@@ -63,7 +64,8 @@ CREATE TABLE `attraction_info` (
 	`mapx` decimal(20, 17) DEFAULT NULL,
 	`mapy` decimal(20, 17) DEFAULT NULL,
 	`mlevel` varchar(2) DEFAULT NULL,
-	PRIMARY KEY (`contentid`)
+	PRIMARY KEY (`contentid`),
+    	CONSTRAINT `user_to_attraction_info_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE
 ) 	ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -79,11 +81,10 @@ CREATE TABLE `attraction_detail_info` (
 	`cat1` varchar(3) DEFAULT NULL,
 	`cat2` varchar(5) DEFAULT NULL,
 	`cat3` varchar(9) DEFAULT NULL,
-	`createdtime` varchar(14) DEFAULT NULL,
-	`modifiedtime` varchar(14) DEFAULT NULL,--__
+	`createdtime` DATETIME DEFAULT CURRENT_TIMESTAMP,
+	`modifiedtime` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	`booktour` varchar(5) DEFAULT NULL,
-	PRIMARY KEY (`contentid`),
-	CONSTRAINT `attraction_info_to_attraction_detail_info_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`)
+	PRIMARY KEY (`contentid`)
 ) 	ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -99,8 +100,7 @@ CREATE TABLE `attraction_description` (
 	`homepage` varchar(100) DEFAULT NULL,
 	`overview` varchar(10000) DEFAULT NULL,
 	`telname` varchar(45) DEFAULT NULL,
-	PRIMARY KEY (`contentid`),
-	CONSTRAINT `attraction_info_to_attraction_description_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`)
+	PRIMARY KEY (`contentid`)
 ) 	ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -118,8 +118,7 @@ CREATE TABLE `attraction_comment` (
 	`attraction_comment_content` VARCHAR(1000) DEFAULT NULL,
 	`attraction_comment_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`attraction_comment_no`),
-	CONSTRAINT `user_to_attraction_comment_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`),
-	CONSTRAINT `attraction_info_to_attraction_comment_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`)
+	CONSTRAINT `user_to_attraction_comment_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`)
 )	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -136,6 +135,8 @@ CREATE TABLE `user` (
 	`user_password` VARCHAR(40) NOT NULL,
 	`user_name`     VARCHAR(40) NOT NULL,
 	`user_profile`  VARCHAR(100) DEFAULT NULL,
+	`user_nickname` VARCHAR(40) NOT NULL,
+  	`token` VARCHAR(1000) NULL DEFAULT NULL,
 	PRIMARY KEY (`user_no`)
 ) 	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -149,11 +150,12 @@ DROP TABLE IF EXISTS `board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `board` (
 	`board_no` INT auto_increment NOT NULL,
+    `board_type` INT default 0,
 	`user_no`  INT NOT NULL,
 	`board_title`    VARCHAR(100) NOT NULL,
 	`board_time`     DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`board_no`),
-	CONSTRAINT `user_to_board_board_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`)
+	CONSTRAINT `user_to_board_board_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE
 ) 	ENGINE=innodb DEFAULT charset=utf8mb3;
 
 
@@ -167,10 +169,9 @@ CREATE TABLE `board_detail` (
 	`board_no` INT NOT NULL,
 	`board_content`  VARCHAR(1000) DEFAULT NULL,
 	PRIMARY KEY (`board_no`),
-	CONSTRAINT `board_to_board_detail_board_no_fk` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`)
+	CONSTRAINT `board_to_board_detail_board_no_fk` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`) ON DELETE CASCADE
 )	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 
 --
 -- Table structure for table `board_image`
@@ -181,9 +182,9 @@ DROP TABLE IF EXISTS `board_image`;
 CREATE TABLE `board_image`(
 	`image_no` INT NOT NULL AUTO_INCREMENT,
 	`board_no` INT NOT NULL,
-	`board_image`  VARCHAR(1000) NOT NULL,
+	`board_image` MEDIUMTEXT NOT NULL,
 	PRIMARY KEY (`image_no`),
-	CONSTRAINT `board_to_board_image_board_no_fk` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`)
+	CONSTRAINT `board_to_board_image_board_no_fk` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`) ON DELETE CASCADE
 ) 	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -201,8 +202,8 @@ CREATE TABLE `board_comment`(
 	`board_comment_content`    VARCHAR(1000) DEFAULT NULL,
 	`board_comment_time`       DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`board_comment_no`),
-	CONSTRAINT `user_to_board_comment_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`),
-	CONSTRAINT `board_to_board_comment_user_no_fk` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`)
+	CONSTRAINT `user_to_board_comment_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE,
+	CONSTRAINT `board_to_board_comment_user_no_fk` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`) ON DELETE CASCADE
 ) 	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -219,7 +220,7 @@ CREATE TABLE `plan`(
 	`plan_title`      VARCHAR(100) NOT NULL,
 	`plan_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`plan_no`),
-	CONSTRAINT `user_to_plan_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`)
+	CONSTRAINT `user_to_plan_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE
 ) 	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -236,7 +237,7 @@ CREATE TABLE `plan_detail` (
 	`plan_end_date`   DATETIME DEFAULT NULL,
 	`plan_content`    VARCHAR(1000) DEFAULT NULL,
 	PRIMARY KEY (`plan_no`),
-	CONSTRAINT `plan_to_plan_detail_plan_no_fk` FOREIGN KEY (`plan_no`) REFERENCES `plan` (`plan_no`)
+	CONSTRAINT `plan_to_plan_detail_plan_no_fk` FOREIGN KEY (`plan_no`) REFERENCES `plan` (`plan_no`) ON DELETE CASCADE
 ) 	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -252,8 +253,7 @@ CREATE TABLE `plan_place_list`(
 	`contentid` INT NOT NULL,
 	`plan_day` INT DEFAULT -1,
 	PRIMARY KEY (`plan_no`, `contentid`),
-	CONSTRAINT `plan_to_plan_place_list_plan_no_fk` FOREIGN KEY (`plan_no`) REFERENCES `plan` (`plan_no`),
-	CONSTRAINT `attraction_info_to_plan_place_list_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`)
+	CONSTRAINT `plan_to_plan_place_list_plan_no_fk` FOREIGN KEY (`plan_no`) REFERENCES `plan` (`plan_no`) ON DELETE CASCADE
 )	ENGINE=innodb DEFAULT charset=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -270,8 +270,7 @@ CREATE TABLE `like_place`(
 	`like_time`  DATETIME DEFAULT CURRENT_TIMESTAMP,
 	`like_comment`    VARCHAR(100) DEFAULT NULL,
 	PRIMARY KEY (`user_no`, `contentid`),
-	CONSTRAINT `user_to_like_place_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`),
-	CONSTRAINT `attraction_info_to_like_place_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `attraction_info` (`contentid`)
+	CONSTRAINT `user_to_like_place_user_no_fk` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE
 )	ENGINE=innodb DEFAULT charset=utf8mb3; 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
