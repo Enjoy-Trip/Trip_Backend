@@ -14,7 +14,7 @@ import com.trip.plan.model.PlanPlaceDto;
 public class PlanServiceImpl implements PlanService {
 
 	private PlanMapper planMapper;
-	
+
 	public PlanServiceImpl(PlanMapper planMapper) {
 		super();
 		this.planMapper = planMapper;
@@ -27,22 +27,21 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public int planAdd(PlanDto planDto) {
-		 planMapper.planAdd(planDto);
-		 planMapper.planDetailAdd(planDto);
-		 return 1;
+		planMapper.planAdd(planDto);
+		planMapper.planDetailAdd(planDto);
+		return 1;
 	}
-	
+
 	@Override
 	public int planPlaceListAdd(List<PlanPlaceDto> planPlaceDto) {
 		return planMapper.planPlaceListAdd(planPlaceDto);
 	}
-	
-	
+
 	@Override
 	public int planDelete(int planNo) {
 		return planMapper.planDelete(planNo);
 	}
-	
+
 	@Override
 	public int planModify(PlanDto planDto) {
 		return planMapper.planModify(planDto);
@@ -53,6 +52,9 @@ public class PlanServiceImpl implements PlanService {
 		return planMapper.planDetail(planNo);
 	}
 
-
+	@Override
+	public int planDeleteDetail(int planNo, int contentId) {
+		return planMapper.planDeleteDetail(planNo, contentId);
+	}
 
 }

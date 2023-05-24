@@ -25,4 +25,8 @@ public interface PlanMapper {
 
 	//리스트 눌렀을때 detail 뿌리기
 	PlanDto planDetail(int planNo);
+	
+	//세부 계획 삭제. 
+	int planDeleteDetail(int planNo, int contentId);
+
 }

@@ -8,7 +8,6 @@ public class PlanPlaceDto {
 	private int contentid;
 	private String planDay;
 
-
 	public int getPlanNo() {
 		return planNo;
 	}
@@ -24,7 +23,7 @@ public class PlanPlaceDto {
 	public void setContentid(int contentid) {
 		this.contentid = contentid;
 	}
-	
+
 	public String getPlanDay() {
 		return planDay;
 	}

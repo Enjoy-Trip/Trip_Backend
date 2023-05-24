@@ -100,7 +100,14 @@
 		where
 			plan_no = #{planNo};
 	</delete>
-
+	
+	<delete id="planDeleteDetail" parameterType="int">
+		delete from
+			plan_place_list
+		where
+			plan_no = #{planNo} and
+			contentid = #{contentId}
+	</delete>
 
 	
 	<update id="planModify" parameterType="planDto">

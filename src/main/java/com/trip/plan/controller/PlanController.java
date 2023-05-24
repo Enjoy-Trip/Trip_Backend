@@ -67,8 +67,7 @@ public class PlanController {
 			if (planDto == null) {
 				response.setState("FAIL");
 				response.setMessage("해당 계획이 존재하지 않습니다.");
-			} 
-			else {
+			} else {
 				String token = request.getHeader(TOKEN);
 				if (token != null) {
 					int userNo = jwtService.getData(token, "userNo");
@@ -100,7 +99,7 @@ public class PlanController {
 			if (planDto.getPlanUser() == null) {
 				planDto.setPlanUser(new UserDto());
 			}
-			
+
 			planDto.getPlanUser().setUserNo(jwtService.getData(token, "userNo"));
 			int rst = planService.planAdd(planDto);
 			response.setState("SUCCESS");
@@ -116,23 +115,24 @@ public class PlanController {
 			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
-	
-	//작은 여행 계획 추가
+
+	// 작은 여행 계획 추가
 	@PostMapping("/{planNo}")
-	ResponseEntity<?> planPlaceListAdd(@PathVariable("planNo")int planNo, @RequestBody List<PlanPlaceDto> planPlaceDto, HttpServletRequest request) {
+	ResponseEntity<?> planPlaceListAdd(@PathVariable("planNo") int planNo, @RequestBody List<PlanPlaceDto> planPlaceDto,
+			HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader(TOKEN);
 		try {
-			
+
 			PlanDto plan = planService.planDetail(planNo);
-			
+
 			int userNo = jwtService.getData(token, "userNo");
-			
-			if(userNo != plan.getPlanUser().getUserNo()) {
+
+			if (userNo != plan.getPlanUser().getUserNo()) {
 				response.setState("FAIL");
 				response.setMessage("다른 사람의 계획에 추가할 수 없습니다.");
 			} else {
-				for(PlanPlaceDto tempPlanPlaceDto : planPlaceDto) {
+				for (PlanPlaceDto tempPlanPlaceDto : planPlaceDto) {
 					tempPlanPlaceDto.setPlanNo(planNo);
 				}
 				int rst = planService.planPlaceListAdd(planPlaceDto);
@@ -142,7 +142,7 @@ public class PlanController {
 				response.setData(rst);
 			}
 			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
-			
+
 		} catch (Exception e) {
 
 			response.setState("FAIL");
@@ -231,4 +231,43 @@ public class PlanController {
 			return ExceptionHandler.exceptionResponse(response, e);
 		}
 	}
+
+	// 작은 계획 삭제
+
+	@DeleteMapping("/{planNo}/{contentId}")
+	ResponseEntity<?> planDeleteDetail(@PathVariable("planNo") int planNo, @PathVariable("contentId") int contentId,
+			HttpServletRequest request) {
+		ResponseDto<Integer> response = new ResponseDto<Integer>();
+		String token = request.getHeader(TOKEN);
+
+		try {
+			PlanDto plan = planService.planDetail(planNo);
+
+			if (plan == null) {
+				response.setState("FAIL");
+				response.setMessage("해당 세부 계획이 존재하지 않습니다.");
+			} else {
+				int userNo = jwtService.getData(token, "userNo");
+
+				if (userNo != plan.getPlanUser().getUserNo()) {
+					response.setState("FAIL");
+					response.setMessage("다른 사람의 세부 계획은 삭제할 수 없습니다.");
+				} else {
+					int rst = planService.planDeleteDetail(planNo, contentId);
+
+					response.setState("SUCCESS");
+					response.setMessage("삭제에 성공 하였습니다.");
+					response.setData(rst);
+				}
+			}
+
+			return new ResponseEntity<ResponseDto<Integer>>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.setState("FAIL");
+			response.setMessage("계획 삭제에 실패하였습니다.");
+
+			return ExceptionHandler.exceptionResponse(response, e);
+		}
+	}
+
 }
