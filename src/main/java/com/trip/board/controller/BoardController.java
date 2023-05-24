@@ -70,10 +70,19 @@ public class BoardController {
 				response.setMessage("해당 게시글이 존재하지 않습니다.");
 			} else {
 				
+				System.out.println("======================");
+				System.out.println(token);
+				
 				if(token != null) {
 					int userNo = jwtService.getData(token, "userNo");
+					
+					System.out.println(userNo);
+					
+					if (board.getBoardUser().getUserNo() == userNo) {						
+						board.setBoardLoginCheck(true);
+					}
 
-					board.setBoardLoginCheck(true);
+					
 					List<BoardCommentDto> list = board.getboardCommentList();
 					BoardCommentDto temp;
 					for(int i = 0 ; i < list.size(); i++) {
