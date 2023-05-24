@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.trip.plan.mapper.PlanMapper;
 import com.trip.plan.model.PlanDto;
+import com.trip.plan.model.PlanPlaceDto;
 
 @Service
 @Transactional
@@ -26,20 +27,16 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public int planAdd(PlanDto planDto) {
-		 return planMapper.planAdd(planDto);
+		 planMapper.planAdd(planDto);
+		 planMapper.planDetailAdd(planDto);
+		 return 1;
 	}
 	
 	@Override
-	public int planDetailAdd(PlanDto planDto) {
-		if (planDto.getPlanContent() != null) {
-			planMapper.planDetailAdd(planDto);
-		}
-		
-		if (planDto.getPlanPlaces() != null) {
-			planMapper.planPlaceListAdd(planDto);
-		}
-		return 1;
+	public int planPlaceListAdd(List<PlanPlaceDto> planPlaceDto) {
+		return planMapper.planPlaceListAdd(planPlaceDto);
 	}
+	
 	
 	@Override
 	public int planDelete(int planNo) {

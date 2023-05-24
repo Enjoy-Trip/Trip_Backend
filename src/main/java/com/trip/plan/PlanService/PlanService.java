@@ -3,6 +3,7 @@ package com.trip.plan.PlanService;
 import java.util.List;
 
 import com.trip.plan.model.PlanDto;
+import com.trip.plan.model.PlanPlaceDto;
 
 public interface PlanService {
 
@@ -11,7 +12,7 @@ public interface PlanService {
 	
 	//계획 추가
 	int planAdd(PlanDto planDto);
-	int planDetailAdd(PlanDto planDto);
+	int planPlaceListAdd(List<PlanPlaceDto> PlanPlaceDto);
 	
 	//계획 삭제
 	int planDelete(int planNo);

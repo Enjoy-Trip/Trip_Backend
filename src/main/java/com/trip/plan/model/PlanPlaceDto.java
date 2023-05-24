@@ -4,9 +4,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PlanPlaceDto {
+	private int planNo;
 	private int contentid;
-	private int planDay;
-	
+	private String planDay;
+
+
+	public int getPlanNo() {
+		return planNo;
+	}
+
+	public void setPlanNo(int planNo) {
+		this.planNo = planNo;
+	}
+
 	public int getContentid() {
 		return contentid;
 	}
@@ -14,12 +24,12 @@ public class PlanPlaceDto {
 	public void setContentid(int contentid) {
 		this.contentid = contentid;
 	}
-
-	public int getPlanDay() {
+	
+	public String getPlanDay() {
 		return planDay;
 	}
 
-	public void setPlanDay(int planDay) {
+	public void setPlanDay(String planDay) {
 		this.planDay = planDay;
 	}
 

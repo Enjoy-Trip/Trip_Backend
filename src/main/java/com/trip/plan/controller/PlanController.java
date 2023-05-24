@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trip.jwt.JwtService;
 import com.trip.plan.PlanService.PlanService;
 import com.trip.plan.model.PlanDto;
+import com.trip.plan.model.PlanPlaceDto;
 import com.trip.response.model.ResponseDto;
 import com.trip.user.model.UserDto;
 import com.trip.util.ExceptionHandler;
@@ -99,11 +100,9 @@ public class PlanController {
 			if (planDto.getPlanUser() == null) {
 				planDto.setPlanUser(new UserDto());
 			}
-
+			
 			planDto.getPlanUser().setUserNo(jwtService.getData(token, "userNo"));
-
 			int rst = planService.planAdd(planDto);
-
 			response.setState("SUCCESS");
 			response.setMessage("등록에 성공 하였습니다.");
 			response.setData(rst);
@@ -119,26 +118,24 @@ public class PlanController {
 	}
 	
 	//작은 여행 계획 추가
-	@PostMapping("/detail")
-	ResponseEntity<?> planDetailAdd(@RequestBody PlanDto planDto, HttpServletRequest request) {
+	@PostMapping("/{planNo}")
+	ResponseEntity<?> planPlaceListAdd(@PathVariable("planNo")int planNo, @RequestBody List<PlanPlaceDto> planPlaceDto, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader(TOKEN);
-
 		try {
+			
+			PlanDto plan = planService.planDetail(planNo);
+			
 			int userNo = jwtService.getData(token, "userNo");
 			
-			if (planDto.getPlanUser() == null) {
-				planDto.setPlanUser(new UserDto());
-				planDto.getPlanUser().setUserNo(userNo);
-			}
-			
-			if(userNo != planDto.getPlanUser().getUserNo()) {
+			if(userNo != plan.getPlanUser().getUserNo()) {
 				response.setState("FAIL");
 				response.setMessage("다른 사람의 계획에 추가할 수 없습니다.");
 			} else {
-				
-				//고칠 부분
-				int rst = planService.planDetailAdd(planDto);
+				for(PlanPlaceDto tempPlanPlaceDto : planPlaceDto) {
+					tempPlanPlaceDto.setPlanNo(planNo);
+				}
+				int rst = planService.planPlaceListAdd(planPlaceDto);
 
 				response.setState("SUCCESS");
 				response.setMessage("계획에 세부사항을 성공적으로 추가하였습니다!");
@@ -156,8 +153,8 @@ public class PlanController {
 	}
 
 	// 계획 수정
-	@PutMapping("/{planno}")
-	ResponseEntity<?> planModify(@PathVariable("planno") int planNo, @RequestBody PlanDto planDto,
+	@PutMapping("/{planNo}")
+	ResponseEntity<?> planModify(@PathVariable("planNo") int planNo, @RequestBody PlanDto planDto,
 			HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader(TOKEN);
@@ -200,8 +197,8 @@ public class PlanController {
 	}
 
 	// 계획 삭제
-	@DeleteMapping("/{planno}")
-	ResponseEntity<?> planDelete(@PathVariable("planno") int planNo, HttpServletRequest request) {
+	@DeleteMapping("/{planNo}")
+	ResponseEntity<?> planDelete(@PathVariable("planNo") int planNo, HttpServletRequest request) {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader(TOKEN);
 

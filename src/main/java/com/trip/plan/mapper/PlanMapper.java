@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.trip.plan.model.PlanDto;
+import com.trip.plan.model.PlanPlaceDto;
 
 @Mapper
 public interface PlanMapper {
@@ -14,7 +15,7 @@ public interface PlanMapper {
 	//계획 추가
 	int planAdd(PlanDto planDto);
 	int planDetailAdd(PlanDto planDto);
-	int planPlaceListAdd(PlanDto planDto);
+	int planPlaceListAdd(List<PlanPlaceDto> planPlaceDto);
 	
 	//계획 삭제
 	int planDelete(int planNo);

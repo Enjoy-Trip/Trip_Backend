@@ -3,6 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.trip.plan.mapper.PlanMapper">
+
 	<resultMap type="PlanDto" id="planDtoSimple">
 		<result column="plan_no" property="planNo" />
 		<result column="plan_title" property="planTitle" />
@@ -29,11 +30,12 @@
 			<result column="user_profile" property="userProfile" />
 		</association>
 		<collection property="planPlaces"
-			column="{planNo = plan_no}" select="planPlaceLisr" javaType="List"
+			column="{planNo = plan_no}" select="planPlaceList" javaType="List"
 			ofType="PlanPlaceDto" />
 	</resultMap>
 
 	<resultMap type="PlanPlaceDto" id="placeList">
+		<result column="plan_no" property="planNo" />
 		<result column="contentid" property="contentid" />
 		<result column="plan_day" property="planDay" />
 	</resultMap>
@@ -56,43 +58,7 @@
 		where 
 			plan.user_no = #{userNo}
 	</select>
-
-	<select id="planDetail" parameterType="int" resultMap="planDtoDetail">
-		select
-			plan.plan_no,
-			plan_title,
-			plan_time,
-			plan_content,
-			plan_start_date,
-			plan_end_date,
-			user.user_no,
-			user_id,
-			user_name,
-			user_profile
-		from 
-			plan
-		inner join
-			user
-		on
-			plan.user_no = user.user_no
-		inner join
-			plan_detail
-		on
-			plan.plan_no = plan_detail.plan_no
-		where 
-			plan.plan_no = #{planNo};
-	</select>
 	
-	<select id="planPlaceLisr" resultMap="placeList">
-		select
-			contentid,
-			plan_day
-		from
-			plan_place_list
-		where
-			plan_no = #{planNo}
-	</select>
-
 	<insert id="planAdd" parameterType="planDto"
 		useGeneratedKeys="true" keyProperty="planNo">
 		insert into
@@ -100,7 +66,7 @@
 		values
 			(#{planUser.userNo}, #{planTitle});
 	</insert>
-
+	
 	<insert id="planDetailAdd" parameterType="planDto">
 		insert into
 			plan_detail (plan_no, plan_start_date, plan_end_date, plan_content)
@@ -108,15 +74,16 @@
 			(#{planNo}, #{planStartDate}, #{planEndDate}, #{planContent})
 	</insert>
 	
-	<insert id="planPlaceListAdd" parameterType="planDto">
+	<insert id="planPlaceListAdd" parameterType="List">
 		insert into
 			plan_place_list (plan_no, contentid, plan_day)
 		values
-			<foreach collection="planPlaces" item="item" separator=" , ">
-				(#{planNo}, #{item.contentid}, #{item.planDay})
-			</foreach>
+<!-- 			(#{planNo}, #{contentid}, #{planDay}) -->
+ 			<foreach collection="placeList" item="item" separator=" , ">
+				(#{item.planNo}, #{item.contentid}, #{item.planDay})
+			</foreach>	 
 	</insert>
-
+	
 	<delete id="planDelete" parameterType="int">
 <!-- 		delete from
 			plan_detail
@@ -134,6 +101,8 @@
 			plan_no = #{planNo};
 	</delete>
 
+
+	
 	<update id="planModify" parameterType="planDto">
 		update 
 			plan
@@ -165,4 +134,41 @@
 				</foreach>
 		</if>
 	</update>
+	
+	<select id="planDetail" parameterType="int" resultMap="planDtoDetail">
+		select
+			plan.plan_no,
+			plan_title,
+			plan_time,
+			plan_content,
+			plan_start_date,
+			plan_end_date,
+			user.user_no,
+			user_id,
+			user_name,
+			user_profile
+		from 
+			plan
+		inner join
+			user
+		on
+			plan.user_no = user.user_no
+		inner join
+			plan_detail
+		on
+			plan.plan_no = plan_detail.plan_no
+		where 
+			plan.plan_no = #{planNo};
+	</select>
+	
+	<select id="planPlaceList" resultMap="placeList">
+		select
+			plan_no,
+			contentid,
+			plan_day
+		from
+			plan_place_list
+		where
+			plan_no = #{planNo}
+	</select>
 </mapper>
