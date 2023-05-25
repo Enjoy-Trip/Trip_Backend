@@ -17,6 +17,7 @@
 			<result column="user_id" property="userId" />
 			<result column="user_name" property="userName" />
 			<result column="user_profile" property="userProfile" />
+			<result column="user_nickname" property="userNickname" />
 		</association>
 	</resultMap>
 	

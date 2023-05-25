@@ -13,6 +13,7 @@
 			<result column="user_id" property="userId" />
 			<result column="user_name" property="userName" />
 			<result column="user_profile" property="userProfile" />
+			<result column="user_nickname" property="userNickname" />
 		</association>
 	</resultMap>
 
@@ -28,6 +29,7 @@
 			<result column="user_id" property="userId" />
 			<result column="user_name" property="userName" />
 			<result column="user_profile" property="userProfile" />
+			<result column="user_nickname" property="userNickname" />
 		</association>
 		<collection property="planPlaces"
 			column="{planNo = plan_no}" select="planPlaceList" javaType="List"
@@ -39,143 +41,136 @@
 		<result column="contentid" property="contentid" />
 		<result column="plan_day" property="planDay" />
 	</resultMap>
-	
-	<select id="planList" parameterType="int" resultMap="planDtoSimple">
+
+	<select id="planList" parameterType="int"
+		resultMap="planDtoSimple">
 		select
-			plan_no,
-			plan_title,
-			plan_time,
-			user.user_no,
-			user_id,
-			user_name,
-			user_profile
-		from 
-			plan
+		plan_no,
+		plan_title,
+		plan_time,
+		user.user_no,
+		user_id,
+		user_name,
+		user_profile,
+		user_nickname
+		from
+		plan
 		inner join
-			user
+		user
 		on
-			plan.user_no = user.user_no
-		where 
-			plan.user_no = #{userNo}
+		plan.user_no = user.user_no
+		where
+		plan.user_no = #{userNo}
 	</select>
-	
+
 	<insert id="planAdd" parameterType="planDto"
 		useGeneratedKeys="true" keyProperty="planNo">
 		insert into
-			plan (user_no, plan_title)
+		plan (user_no, plan_title)
 		values
-			(#{planUser.userNo}, #{planTitle});
+		(#{planUser.userNo}, #{planTitle});
 	</insert>
-	
+
 	<insert id="planDetailAdd" parameterType="planDto">
 		insert into
-			plan_detail (plan_no, plan_start_date, plan_end_date, plan_content)
+		plan_detail (plan_no, plan_start_date, plan_end_date, plan_content)
 		values
-			(#{planNo}, #{planStartDate}, #{planEndDate}, #{planContent})
+		(#{planNo}, #{planStartDate}, #{planEndDate}, #{planContent})
 	</insert>
-	
+
 	<insert id="planPlaceListAdd" parameterType="List">
 		insert into
-			plan_place_list (plan_no, contentid, plan_day)
+		plan_place_list (plan_no, contentid, plan_day)
 		values
-<!-- 			(#{planNo}, #{contentid}, #{planDay}) -->
- 			<foreach collection="list" item="item" separator=" ,">
-				(#{item.planNo}, #{item.contentid}, #{item.planDay})
-			</foreach>	 
+		<foreach collection="list" item="item" separator=" ,">
+			(#{item.planNo}, #{item.contentid}, #{item.planDay})
+		</foreach>
 	</insert>
-	
-	<delete id="planDelete" parameterType="int">
-<!-- 		delete from
-			plan_detail
-		where
-			plan_no = #{planNo};
-			
-		delete from
-			plan_place_list
-		where
-			plan_no = #{planNo}; -->
 
+	<delete id="planDelete" parameterType="int">
 		delete from
-			plan
+		plan
 		where
-			plan_no = #{planNo};
+		plan_no = #{planNo};
 	</delete>
-	
+
 	<delete id="planDeleteDetail" parameterType="int">
 		delete from
-			plan_place_list
+		plan_place_list
 		where
-			plan_no = #{planNo} and
-			contentid = #{contentId}
+		plan_no = #{planNo} and
+		contentid = #{contentId}
 	</delete>
 
-	
+
 	<update id="planModify" parameterType="planDto">
-		update 
-			plan
+		update
+		plan
 		set
-			plan_title = #{planTitle}
-		where 
-			plan_no = #{planNo};
-	
-		update 
-			plan_detail
+		plan_title = #{planTitle}
+		where
+		plan_no = #{planNo};
+
+		update
+		plan_detail
 		set
-			plan_start_date = #{planStartDate},
-			plan_end_date = #{planEndDate},
-			plan_content = #{planContent}
-		where 
-			plan_no = #{planNo};
-			
-		delete from 
-			plan_place_list
-		where 
-			plan_no = #{planNo};
-			
+		plan_start_date = #{planStartDate},
+		plan_end_date = #{planEndDate},
+		plan_content = #{planContent}
+		where
+		plan_no = #{planNo};
+
+		delete from
+		plan_place_list
+		where
+		plan_no = #{planNo};
+
 		<if test="planPlaces != null and planPlaces.size() != 0">
 			insert into
-				plan_place_list (plan_no, contentid, day)
+			plan_place_list (plan_no, contentid, day)
 			values
-				<foreach collection="list" item="item" separator=" , ">
-					(#{plan_no}, #{item.contentid}, #{item.day})
-				</foreach>
+			<foreach collection="list" item="item" separator=" , ">
+				(#{plan_no}, #{item.contentid}, #{item.day})
+			</foreach>
 		</if>
 	</update>
-	
-	<select id="planDetail" parameterType="int" resultMap="planDtoDetail">
+
+	<select id="planDetail" parameterType="int"
+		resultMap="planDtoDetail">
 		select
-			plan.plan_no,
-			plan_title,
-			plan_time,
-			plan_content,
-			plan_start_date,
-			plan_end_date,
-			user.user_no,
-			user_id,
-			user_name,
-			user_profile
-		from 
-			plan
+		plan.plan_no,
+		plan_title,
+		plan_time,
+		plan_content,
+		plan_start_date,
+		plan_end_date,
+		user.user_no,
+		user_id,
+		user_name,
+		user_profile,
+		user_nickname
+		from
+		plan
 		inner join
-			user
+		user
 		on
-			plan.user_no = user.user_no
+		plan.user_no = user.user_no
 		inner join
-			plan_detail
+		plan_detail
 		on
-			plan.plan_no = plan_detail.plan_no
-		where 
-			plan.plan_no = #{planNo};
+		plan.plan_no = plan_detail.plan_no
+		where
+		plan.plan_no = #{planNo};
 	</select>
-	
+
 	<select id="planPlaceList" resultMap="placeList">
 		select
-			plan_no,
-			contentid,
-			plan_day
+		plan_no,
+		contentid,
+		plan_day
 		from
-			plan_place_list
+		plan_place_list
 		where
-			plan_no = #{planNo}
+		plan_no = #{planNo}
 	</select>
 </mapper>
