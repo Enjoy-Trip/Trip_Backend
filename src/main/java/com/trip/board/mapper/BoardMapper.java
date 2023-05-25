@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.trip.board.model.BoardDto;
 import com.trip.board.model.BoardCommentDto;
+import com.trip.board.model.BoardDto;
 
 @Mapper
 public interface BoardMapper {

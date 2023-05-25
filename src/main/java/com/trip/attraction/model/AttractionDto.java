@@ -29,7 +29,6 @@ public class AttractionDto {
 	private String createdtime;
 	private String modifiedtime;
 	private String booktour;
-//	private List<AttractionCommentDto> attractionCommentList;
 
 	public int getContentid() {
 		return contentid;

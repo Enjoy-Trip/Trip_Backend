@@ -13,7 +13,7 @@ import com.trip.user.model.UserDto;
 @Transactional
 public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
-	
+
 	public UserServiceImpl(UserMapper userMapper) {
 		super();
 		this.userMapper = userMapper;
@@ -32,10 +32,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int saveRefreshToken(int userNo, String refreshToken) throws SQLException {
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("userNo", "" + userNo);
 		map.put("refreshToken", refreshToken);
-		
+
 		return userMapper.saveRefreshToken(map);
 	}
 

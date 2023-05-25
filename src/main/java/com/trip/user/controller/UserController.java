@@ -149,17 +149,12 @@ public class UserController {
 	public ResponseEntity<?> tempPw(@PathVariable("userNo") int userNo, @RequestBody Map<String, String> map) {
 		ResponseDto<Boolean> response = new ResponseDto<Boolean>();
 		
-		System.out.println("=======================");
-		System.out.println("hihi");
 		
 		try {
 			String email = map.get("email");
 			
-			System.out.println(email);
 			
 			UserDto user = userService.info(userNo);
-			
-			System.out.println(user);
 			
 			user.setUserPassword(sendEmailService.createPassword(email));
 			
@@ -291,8 +286,6 @@ public class UserController {
 		ResponseDto<Integer> response = new ResponseDto<Integer>();
 		String token = request.getHeader(TOKEN);
 		
-		System.out.println("===========================");
-
 		try {
 			int userNo = jwtService.getData(token, "userNo");
 

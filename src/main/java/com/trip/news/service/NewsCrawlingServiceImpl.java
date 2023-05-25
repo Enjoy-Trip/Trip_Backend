@@ -21,11 +21,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class NewsCrawlingServiceImpl implements NewsCrawlingService {
 
-	// String clientId = "YOUR_CLIENT_ID"; //애플리케이션 클라이언트
-	// String clientSecret = "YOUR_CLIENT_SECRET"; //애플리케이션 클라이언트 시크릿
-
-	static String clientId = "J7wq3q9QAOuAj2IYkWix"; // 애플리케이션 클라이언트 아이디 static
-	String clientSecret = "IQie6vKTv8"; // 애플리케이션 클라이언트 시크릿
+	String clientId = "YOUR_CLIENT_ID"; //애플리케이션 클라이언트
+	String clientSecret = "YOUR_CLIENT_SECRET"; //애플리케이션 클라이언트 시크릿
 
 	public String research(String word) {
 
@@ -42,7 +39,7 @@ public class NewsCrawlingServiceImpl implements NewsCrawlingService {
 		requestHeaders.put("X-Naver-Client-Id", clientId);
 		requestHeaders.put("X-Naver-Client-Secret", clientSecret);
 		String responseBody = get(apiURL, requestHeaders);
-		
+
 		return responseBody;
 	}
 

@@ -1,6 +1,5 @@
 	package com.trip.board.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trip.response.model.ResponseDto;
-import com.trip.user.model.UserDto;
-import com.trip.board.model.BoardDto;
 import com.trip.board.model.BoardCommentDto;
+import com.trip.board.model.BoardDto;
 import com.trip.board.service.BoardService;
 import com.trip.jwt.JwtService;
+import com.trip.response.model.ResponseDto;
+import com.trip.user.model.UserDto;
 import com.trip.util.ExceptionHandler;
 
 @RestController
@@ -70,13 +69,8 @@ public class BoardController {
 				response.setMessage("해당 게시글이 존재하지 않습니다.");
 			} else {
 				
-				System.out.println("======================");
-				System.out.println(token);
-				
 				if(token != null) {
 					int userNo = jwtService.getData(token, "userNo");
-					
-					System.out.println(userNo);
 					
 					if (board.getBoardUser().getUserNo() == userNo) {						
 						board.setBoardLoginCheck(true);
